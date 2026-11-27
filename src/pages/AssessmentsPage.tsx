@@ -26,10 +26,10 @@ export const AssessmentsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-[26px] sm:text-[30px] font-bold text-[#0F172A] tracking-tight">
+        <h1 className="font-serif-display text-[28px] sm:text-[34px] leading-[1.1] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">
           {t.nav.assessments}
         </h1>
-        <p className="text-[14.5px] text-[#475569] mt-1">
+        <p className="text-[14.5px] text-[#4c4842] dark:text-[#D5D1C8] mt-1">
           Complete graded certification exams to validate your skills and earn official credentials.
         </p>
       </div>
@@ -41,7 +41,7 @@ export const AssessmentsPage: React.FC = () => {
           return (
             <div
               key={assess.id}
-              className="glass-card glass-card-interactive rounded-[18px] p-5 flex flex-col justify-between gap-4"
+              className="card-tile group rounded-[18px] p-5 flex flex-col justify-between gap-4"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-2">
@@ -55,14 +55,14 @@ export const AssessmentsPage: React.FC = () => {
                   )}
                 </div>
 
-                <h2 className="text-[17px] font-bold text-[#0F172A] leading-snug">
+                <h2 className="text-[17px] font-bold text-[#141312] dark:text-[#f6f3ec] leading-snug">
                   {pickText(assess.title)}
                 </h2>
-                <p className="text-[13.5px] text-[#64748B] leading-relaxed">
+                <p className="text-[13.5px] text-[#6e6a62] dark:text-[#A3ACA6] leading-relaxed">
                   {pickText(assess.description)}
                 </p>
 
-                <div className="flex flex-wrap gap-3 text-[12px] text-[#64748B] pt-1">
+                <div className="flex flex-wrap gap-3 text-[12px] text-[#6e6a62] dark:text-[#A3ACA6] pt-1">
                   <span className="inline-flex items-center gap-1">
                     <Clock className="h-3.5 w-3.5" />
                     {assess.durationMinutes} min
@@ -102,8 +102,8 @@ export const AssessmentRunnerPage: React.FC = () => {
 
   if (!assessment) {
     return (
-      <div className="glass-card rounded-[16px] p-10 text-center space-y-4">
-        <h2 className="text-[20px] font-bold text-[#0F172A]">Assessment not found</h2>
+      <div className="card-note rounded-[16px] p-10 text-center space-y-4">
+        <h2 className="text-[20px] font-bold text-[#141312] dark:text-[#f6f3ec]">Assessment not found</h2>
         <Link to="/assessments">
           <Button>{t.nav.assessments}</Button>
         </Link>
@@ -127,21 +127,21 @@ export const AssessmentRunnerPage: React.FC = () => {
     <div className="max-w-3xl mx-auto space-y-6">
       <Link
         to="/assessments"
-        className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#64748B] hover:text-[#2563EB]"
+        className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#6e6a62] dark:text-[#A3ACA6] hover:text-[#1c5b48] dark:text-[#7CD4B5]"
       >
         <ArrowLeft className="h-4 w-4" />
         <span>Back to {t.nav.assessments}</span>
       </Link>
 
-      <div className="glass-panel rounded-[20px] p-6 space-y-3">
+      <div className="card-note rounded-[20px] p-6 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <Badge tone="primary">{assessment.durationMinutes} min</Badge>
-          <span className="text-[13px] font-medium text-[#64748B]">
+          <span className="text-[13px] font-medium text-[#6e6a62] dark:text-[#A3ACA6]">
             Passing score: {assessment.passingScore}%
           </span>
         </div>
-        <h1 className="text-[24px] font-bold text-[#0F172A]">{pickText(assessment.title)}</h1>
-        <p className="text-[14px] text-[#475569]">{pickText(assessment.description)}</p>
+        <h1 className="font-serif-display text-[26px] font-medium text-[#141312] dark:text-[#f6f3ec]">{pickText(assessment.title)}</h1>
+        <p className="text-[14px] text-[#4c4842] dark:text-[#D5D1C8]">{pickText(assessment.description)}</p>
         {prevAttempt && !result && (
           <Alert tone={prevAttempt.passed ? 'success' : 'info'}>
             Previous attempt on {prevAttempt.completedAt}: <strong>{prevAttempt.score}%</strong> (
@@ -152,7 +152,7 @@ export const AssessmentRunnerPage: React.FC = () => {
       </div>
 
       {result ? (
-        <div className="glass-card rounded-[20px] p-6 sm:p-8 space-y-5">
+        <div className="card-note rounded-[20px] p-6 sm:p-8 space-y-5">
           <Alert tone={result.passed ? 'success' : 'warning'}>
             <div className="space-y-1">
               <p className="text-[16px] font-bold">
@@ -173,10 +173,10 @@ export const AssessmentRunnerPage: React.FC = () => {
               return (
                 <div
                   key={q.id}
-                  className="p-4 rounded-[12px] bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 space-y-2"
+                  className="p-4 rounded-[12px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-2"
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <p className="font-semibold text-[14.5px] text-[#0F172A]">
+                    <p className="font-semibold text-[14.5px] text-[#141312] dark:text-[#f6f3ec]">
                       {idx + 1}. {pickText(q.question)}
                     </p>
                     <Badge tone={isCorrect ? 'success' : 'error'}>
@@ -186,7 +186,7 @@ export const AssessmentRunnerPage: React.FC = () => {
                   <p className="text-[13px] text-[#16A34A] font-medium">
                     Correct answer: {pickText(q.options[q.correctIndex])}
                   </p>
-                  <p className="text-[13px] text-[#64748B]">{pickText(q.explanation)}</p>
+                  <p className="text-[13px] text-[#6e6a62] dark:text-[#A3ACA6]">{pickText(q.explanation)}</p>
                 </div>
               );
             })}
@@ -213,8 +213,8 @@ export const AssessmentRunnerPage: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {assessment.questions.map((q, idx) => (
-            <div key={q.id} className="glass-card rounded-[16px] p-5 space-y-3">
-              <p className="text-[15.5px] font-bold text-[#0F172A]">
+            <div key={q.id} className="card-note rounded-[16px] p-5 space-y-3">
+              <p className="text-[15.5px] font-bold text-[#141312] dark:text-[#f6f3ec]">
                 {idx + 1}. {pickText(q.question)}
               </p>
               <div className="space-y-2">
@@ -227,13 +227,13 @@ export const AssessmentRunnerPage: React.FC = () => {
                       onClick={() => setAnswers((prev) => ({ ...prev, [q.id]: optIdx }))}
                       className={`w-full text-left p-3.5 rounded-[10px] border text-[14px] flex items-center gap-3 transition-colors cursor-pointer ${
                         selected
-                          ? 'border-[#2563EB] bg-[#EFF6FF] dark:bg-blue-950/40 text-[#1D4ED8] font-medium'
-                          : 'border-[#E2E8F0] dark:border-slate-700 bg-white dark:bg-slate-900 text-[#0F172A] hover:border-[#2563EB]/60'
+                          ? 'border-[#1c5b48] dark:border-[#7CD4B5] bg-[#e4ede7] dark:bg-[#1B3028] dark:bg-[#1B3028]/40 text-[#1D4ED8] font-medium'
+                          : 'border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[#141312] dark:text-[#f6f3ec] hover:border-[#1c5b48] dark:border-[#7CD4B5]/60'
                       }`}
                     >
                       <span
                         className={`h-4.5 w-4.5 rounded-full border flex items-center justify-center shrink-0 ${
-                          selected ? 'border-[#2563EB] bg-[#2563EB] text-white' : 'border-[#CBD5E1]'
+                          selected ? 'border-[#1c5b48] dark:border-[#7CD4B5] bg-[#1c5b48] dark:bg-[#2D7A62] text-white' : 'border-[#c2baa8] dark:border-[#3A4740]'
                         }`}
                       >
                         {selected && <CheckCircle2 className="h-3 w-3" />}
@@ -247,7 +247,7 @@ export const AssessmentRunnerPage: React.FC = () => {
           ))}
 
           <div className="flex items-center justify-between pt-2">
-            <span className="text-[13px] text-[#64748B]">
+            <span className="text-[13px] text-[#6e6a62] dark:text-[#A3ACA6]">
               {answeredCount} of {totalQuestions} answered
             </span>
             <Button

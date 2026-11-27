@@ -16,23 +16,23 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-[#2563EB] text-white border border-transparent hover:bg-[#1D4ED8] active:bg-[#1E40AF] focus-visible:ring-2 focus-visible:ring-[#2563EB]/40 focus-visible:ring-offset-2',
+    'bg-[#1c5b48] text-white border border-[#1c5b48] hover:bg-[#15463a] hover:border-[#15463a] active:bg-[#0F2E24] dark:bg-[#2D7A62] dark:border-[#2D7A62] dark:hover:bg-[#23634F] focus-visible:ring-2 focus-visible:ring-[#1c5b48]/40 focus-visible:ring-offset-2',
   secondary:
-    'bg-[#0F172A] text-white border border-transparent hover:bg-[#1E293B] focus-visible:ring-2 focus-visible:ring-[#0F172A]/40 focus-visible:ring-offset-2 dark:bg-[#1E293B] dark:hover:bg-[#334155]',
+    'bg-[#e5dfd2] text-[#141312] border border-[#ded8ca] hover:border-[#1c5b48] hover:bg-[#E2DDD1] dark:bg-[#181E1B] dark:text-[#f6f3ec] dark:border-[#2A332E] dark:hover:border-[#2D7A62] focus-visible:ring-2 focus-visible:ring-[#1c5b48]/30',
   outline:
-    'bg-white text-[#0F172A] border border-[#E2E8F0] hover:bg-[#F8FAFC] hover:border-[#CBD5E1] focus-visible:ring-2 focus-visible:ring-[#2563EB]/30 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-800',
+    'bg-[#efebe1] text-[#141312] border border-[#ded8ca] hover:border-[#1c5b48] hover:bg-[#e5dfd2]/55 dark:bg-[#151A17] dark:text-[#f6f3ec] dark:border-[#2A332E] dark:hover:border-[#2D7A62] focus-visible:ring-2 focus-visible:ring-[#1c5b48]/30',
   ghost:
-    'bg-transparent text-[#2563EB] border border-transparent hover:bg-[#EFF6FF] dark:hover:bg-blue-950/40',
+    'bg-transparent text-[#1c5b48] dark:text-[#7CD4B5] border border-transparent hover:bg-[#e5dfd2]/70 dark:hover:bg-[#181E1B] focus-visible:ring-2 focus-visible:ring-[#1c5b48]/25',
   danger:
-    'bg-[#DC2626] text-white border border-transparent hover:bg-[#B91C1C]',
+    'bg-[#a5331f] text-white border border-[#a5331f] hover:bg-[#991B1B] active:bg-[#7F1D1D] focus-visible:ring-2 focus-visible:ring-[#a5331f]/40 focus-visible:ring-offset-2',
   success:
-    'bg-[#16A34A] text-white border border-transparent hover:bg-[#15803D]',
+    'bg-[#1c5b48] text-white border border-[#1c5b48] hover:bg-[#15463a] active:bg-[#0F2E24] focus-visible:ring-2 focus-visible:ring-[#1c5b48]/40 focus-visible:ring-offset-2',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'h-9 px-3.5 text-[13px]',
-  md: 'h-10 px-4.5 text-[14px]',
-  lg: 'h-12 px-6 text-[15px]',
+  sm: 'h-9 px-4 text-[13px]',
+  md: 'h-10 px-5 text-[14px]',
+  lg: 'h-12 px-6 text-[14.5px]',
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -56,7 +56,7 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       type={type}
       disabled={isDisabled}
-      className={`inline-flex items-center justify-center gap-2 rounded-[8px] font-medium transition-colors duration-150 outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${variantClasses[effectiveVariant]} ${sizeClasses[size]} ${fullWidth ? 'w-full' : ''} ${className}`}
+      className={`group inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-[-0.01em] whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${variantClasses[effectiveVariant]} ${sizeClasses[size]} ${fullWidth ? 'w-full' : ''} ${className}`}
       {...props}
     >
       {loading ? (
@@ -73,4 +73,3 @@ export const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
-

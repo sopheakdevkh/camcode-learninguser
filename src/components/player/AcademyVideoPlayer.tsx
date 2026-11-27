@@ -193,8 +193,8 @@ export const AcademyVideoPlayer: React.FC<AcademyVideoPlayerProps> = ({
             {/* Top presentation metadata */}
             <div className="relative z-10 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <span className="px-2.5 py-1 rounded-md bg-[#2563EB]/25 border border-[#60A5FA]/30 text-[11px] font-semibold tracking-wide uppercase text-blue-200">
-                  CamcodeLearn Academy
+                <span className="px-2.5 py-1 rounded-md bg-[#1c5b48] dark:bg-[#2D7A62]/25 border border-[#60A5FA]/30 text-[11px] font-semibold tracking-wide uppercase text-blue-200">
+                  Camcode Academy
                 </span>
                 {initialPositionSeconds > 15 && (
                   <span className="hidden sm:inline-flex px-2.5 py-1 rounded-md bg-emerald-500/20 border border-emerald-400/30 text-[11px] font-medium text-emerald-200">
@@ -248,7 +248,7 @@ export const AcademyVideoPlayer: React.FC<AcademyVideoPlayerProps> = ({
                 type="button"
                 onClick={() => setIsPlaying(true)}
                 aria-label={t.player.play}
-                className="absolute inset-0 z-10 m-auto h-16 w-16 rounded-full bg-[#2563EB]/95 hover:bg-[#1D4ED8] text-white flex items-center justify-center shadow-2xl border-2 border-white/30 transition-transform hover:scale-105 cursor-pointer"
+                className="absolute inset-0 z-10 m-auto h-16 w-16 rounded-full bg-[#1c5b48] dark:bg-[#2D7A62]/95 hover:bg-[#15463a] dark:hover:bg-[#23634F] text-white flex items-center justify-center shadow-2xl border-2 border-white/30 transition-transform hover:scale-105 cursor-pointer"
               >
                 <Play className="h-7 w-7 fill-current ml-1" />
               </button>
@@ -369,7 +369,7 @@ export const AcademyVideoPlayer: React.FC<AcademyVideoPlayerProps> = ({
                 title={t.player.captions}
                 className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[12px] font-medium cursor-pointer transition-colors ${
                   captionsOn
-                    ? 'bg-[#2563EB]/25 text-blue-300 border border-blue-500/40'
+                    ? 'bg-[#1c5b48] dark:bg-[#2D7A62]/25 text-blue-300 border border-blue-500/40'
                     : 'text-slate-300 hover:bg-slate-800'
                 }`}
               >
@@ -411,7 +411,7 @@ export const AcademyVideoPlayer: React.FC<AcademyVideoPlayerProps> = ({
                           type="button"
                           onClick={() => setSpeed(s)}
                           className={`px-2 py-1 rounded cursor-pointer ${
-                            speed === s ? 'bg-[#2563EB] text-white' : 'bg-slate-800 text-slate-300'
+                            speed === s ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white' : 'bg-slate-800 text-slate-300'
                           }`}
                         >
                           {s}x
@@ -431,7 +431,7 @@ export const AcademyVideoPlayer: React.FC<AcademyVideoPlayerProps> = ({
                             setShowSettingsMenu(false);
                           }}
                           className={`w-full text-left px-2 py-1 rounded cursor-pointer ${
-                            quality === q ? 'bg-[#2563EB] text-white' : 'text-slate-300 hover:bg-slate-800'
+                            quality === q ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white' : 'text-slate-300 hover:bg-slate-800'
                           }`}
                         >
                           {q}

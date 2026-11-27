@@ -3,7 +3,7 @@ import type { Locale } from '@/types';
 export const translations = {
   en: {
     brand: {
-      name: 'CamcodeLearn',
+      name: 'Camcode',
       academy: 'Academy',
       portal: 'Learner Portal',
     },
@@ -230,11 +230,11 @@ export const translations = {
       chapters: 'Chapters',
       transcript: 'Transcript',
       lockedTitle: 'Membership Required to Watch Full Video',
-      lockedSubtitle: 'Upgrade your CamcodeLearn membership to unlock this training video and downloadable templates.',
+      lockedSubtitle: 'Upgrade your Camcode membership to unlock this training video and downloadable templates.',
       unlockPlanBtn: 'View Membership Plans',
     },
     profile: {
-      subtitle: 'Your name and details appear on earned CamcodeLearn certificates.',
+      subtitle: 'Your name and details appear on earned Camcode certificates.',
       savedNotice: 'Profile changes saved successfully.',
       uploadPhoto: 'Upload photo',
       changePhoto: 'Change photo',
@@ -247,7 +247,7 @@ export const translations = {
   },
   km: {
     brand: {
-      name: 'CamcodeLearn',
+      name: 'Camcode',
       academy: 'Academy',
       portal: 'តំបន់សិក្សា',
     },
@@ -474,11 +474,11 @@ export const translations = {
       chapters: 'ជំពូកវីដេអូ',
       transcript: 'អត្ថបទសម្តី',
       lockedTitle: 'ត្រូវការសមាជិកភាពដើម្បីទស្សនាពេញលេញ',
-      lockedSubtitle: 'ដំឡើងគម្រោងសមាជិកភាព CamcodeLearn ដើម្បីទស្សនាវីដេអូបណ្តុះបណ្តាលនេះ។',
+      lockedSubtitle: 'ដំឡើងគម្រោងសមាជិកភាព Camcode ដើម្បីទស្សនាវីដេអូបណ្តុះបណ្តាលនេះ។',
       unlockPlanBtn: 'មើលគម្រោងសមាជិក',
     },
     profile: {
-      subtitle: 'ឈ្មោះ និងព័ត៌មានរបស់អ្នកនឹងបង្ហាញនៅលើវិញ្ញាបនបត្រ CamcodeLearn។',
+      subtitle: 'ឈ្មោះ និងព័ត៌មានរបស់អ្នកនឹងបង្ហាញនៅលើវិញ្ញាបនបត្រ Camcode។',
       savedNotice: 'បានរក្សាទុកការផ្លាស់ប្តូរប្រវត្តិរូបដោយជោគជ័យ។',
       uploadPhoto: 'បង្ហោះរូបភាព',
       changePhoto: 'ប្តូររូបភាព',

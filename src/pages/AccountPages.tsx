@@ -35,8 +35,8 @@ export const NotificationsPage: React.FC = () => {
     <div className="max-w-3xl space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="text-[26px] font-bold text-[#0F172A]">{t.nav.notifications}</h1>
-          <p className="text-[14px] text-[#64748B]">
+          <h1 className="font-serif-display text-[28px] sm:text-[32px] leading-[1.1] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">{t.nav.notifications}</h1>
+          <p className="text-[14px] text-[#6e6a62] dark:text-[#A3ACA6]">
             Updates about your lessons, assessments, certificates, and billing.
           </p>
         </div>
@@ -44,7 +44,7 @@ export const NotificationsPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setFilter(filter === 'all' ? 'unread' : 'all')}
-            className="px-3 py-1.5 rounded-[8px] border border-[#E2E8F0] dark:border-slate-700 bg-white dark:bg-slate-900 text-[13px] font-medium cursor-pointer"
+            className="px-3 py-1.5 rounded-[8px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[13px] font-medium cursor-pointer"
           >
             {filter === 'all' ? 'Unread only' : 'Show all'}
           </button>
@@ -56,15 +56,15 @@ export const NotificationsPage: React.FC = () => {
 
       <div className="space-y-3">
         {items.length === 0 ? (
-          <div className="glass-card rounded-[16px] p-10 text-center space-y-2">
-            <Bell className="h-9 w-9 text-[#94A3B8] mx-auto" />
-            <p className="text-[15px] font-semibold text-[#0F172A]">You are all caught up!</p>
+          <div className="card-note rounded-[16px] p-10 text-center space-y-2">
+            <Bell className="h-9 w-9 text-[#6e6a62] mx-auto" />
+            <p className="text-[15px] font-semibold text-[#141312] dark:text-[#f6f3ec]">You are all caught up!</p>
           </div>
         ) : (
           items.map((n) => (
             <div
               key={n.id}
-              className={`glass-card rounded-[14px] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+              className={`card-note rounded-[14px] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                 !n.read ? 'border-l-4 border-l-[#2563EB]' : ''
               }`}
             >
@@ -73,10 +73,10 @@ export const NotificationsPage: React.FC = () => {
                   <Badge tone={n.type === 'achievement' ? 'success' : n.type === 'assessment' ? 'warning' : 'primary'}>
                     {n.type}
                   </Badge>
-                  <span className="text-[12px] text-[#94A3B8]">{n.createdAt}</span>
+                  <span className="text-[12px] text-[#6e6a62]">{n.createdAt}</span>
                 </div>
-                <h3 className="text-[15px] font-bold text-[#0F172A]">{pickText(n.title)}</h3>
-                <p className="text-[13.5px] text-[#475569]">{pickText(n.message)}</p>
+                <h3 className="text-[15px] font-bold text-[#141312] dark:text-[#f6f3ec]">{pickText(n.title)}</h3>
+                <p className="text-[13.5px] text-[#4c4842] dark:text-[#D5D1C8]">{pickText(n.message)}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 {!n.read && (
@@ -201,15 +201,15 @@ export const ProfilePage: React.FC = () => {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <h1 className="text-[26px] font-bold text-[#0F172A]">{t.nav.profile}</h1>
-        <p className="text-[14px] text-[#64748B]">{t.profile.subtitle}</p>
+        <h1 className="font-serif-display text-[28px] sm:text-[32px] leading-[1.1] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">{t.nav.profile}</h1>
+        <p className="text-[14px] text-[#6e6a62] dark:text-[#A3ACA6]">{t.profile.subtitle}</p>
       </div>
 
       {saved && <Alert tone="success">{t.profile.savedNotice}</Alert>}
       {avatarError && <Alert tone="error">{avatarError}</Alert>}
 
-      <form onSubmit={handleSubmit} className="glass-panel rounded-[18px] p-6 space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0] dark:border-slate-800">
+      <form onSubmit={handleSubmit} className="card-note rounded-[18px] p-6 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#ded8ca] dark:border-[#2A332E]">
           <div className="flex items-center gap-4">
             <input
               ref={fileInputRef}
@@ -223,7 +223,7 @@ export const ProfilePage: React.FC = () => {
               type="button"
               onClick={() => fileInputRef.current?.click()}
               title={avatarUrl ? t.profile.changePhoto : t.profile.uploadPhoto}
-              className="relative group h-16 w-16 rounded-2xl overflow-hidden text-white text-[22px] font-bold flex items-center justify-center shrink-0 cursor-pointer border border-[#E2E8F0] dark:border-slate-700 shadow-2xs"
+              className="relative group h-16 w-16 rounded-2xl overflow-hidden text-white text-[22px] font-bold flex items-center justify-center shrink-0 cursor-pointer border border-[#ded8ca] dark:border-[#2A332E] shadow-2xs"
               style={!avatarUrl ? { backgroundColor: user.avatarColor } : undefined}
             >
               {avatarUrl ? (
@@ -240,11 +240,11 @@ export const ProfilePage: React.FC = () => {
               </span>
             </button>
             <div>
-              <p className="text-[18px] font-bold text-[#0F172A]">{user.fullName}</p>
-              <p className="text-[13px] text-[#64748B]">
+              <p className="text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec]">{user.fullName}</p>
+              <p className="text-[13px] text-[#6e6a62] dark:text-[#A3ACA6]">
                 {user.jobTitle} · {user.organization}
               </p>
-              <p className="text-[11.5px] text-[#94A3B8] mt-0.5">{t.profile.avatarHint}</p>
+              <p className="text-[11.5px] text-[#6e6a62] mt-0.5">{t.profile.avatarHint}</p>
             </div>
           </div>
 
@@ -282,12 +282,12 @@ export const ProfilePage: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-[13px] font-medium text-[#0F172A] mb-1.5">Short Bio</label>
+          <label className="block text-[13px] font-medium text-[#141312] dark:text-[#f6f3ec] mb-1.5">Short Bio</label>
           <textarea
             rows={3}
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            className="w-full rounded-[8px] border border-[#E2E8F0] dark:border-slate-700 bg-white dark:bg-slate-900 p-3 text-[14px] text-[#0F172A] outline-none focus:border-[#2563EB]"
+            className="w-full rounded-[8px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] p-3 text-[14px] text-[#141312] dark:text-[#f6f3ec] outline-none focus:border-[#1c5b48] dark:border-[#7CD4B5]"
           />
         </div>
 
@@ -310,8 +310,8 @@ export const SettingsPage: React.FC = () => {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <h1 className="text-[26px] font-bold text-[#0F172A]">{t.nav.settings}</h1>
-        <p className="text-[14px] text-[#64748B]">
+        <h1 className="font-serif-display text-[28px] sm:text-[32px] leading-[1.1] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">{t.nav.settings}</h1>
+        <p className="text-[14px] text-[#6e6a62] dark:text-[#A3ACA6]">
           Customize language, appearance, video playback, and learning reminders.
         </p>
       </div>
@@ -320,7 +320,7 @@ export const SettingsPage: React.FC = () => {
         <Alert tone="info">Demo learner progress has been restored to default sample data.</Alert>
       )}
 
-      <div className="glass-panel rounded-[18px] p-6 space-y-6">
+      <div className="card-note rounded-[18px] p-6 space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Dropdown<'en' | 'km'>
             fullWidth
@@ -345,9 +345,9 @@ export const SettingsPage: React.FC = () => {
           />
         </div>
 
-        <div className="pt-4 border-t border-[#E2E8F0] dark:border-slate-800 space-y-3">
-          <h2 className="text-[15px] font-bold text-[#0F172A] flex items-center gap-2">
-            <SettingsIcon className="h-4 w-4 text-[#2563EB]" />
+        <div className="pt-4 border-t border-[#ded8ca] dark:border-[#2A332E] space-y-3">
+          <h2 className="text-[15px] font-bold text-[#141312] dark:text-[#f6f3ec] flex items-center gap-2">
+            <SettingsIcon className="h-4 w-4 text-[#1c5b48] dark:text-[#7CD4B5]" />
             Video & Workspace Preferences
           </h2>
 
@@ -371,9 +371,9 @@ export const SettingsPage: React.FC = () => {
           ].map((item) => (
             <label
               key={item.key}
-              className="flex items-center justify-between p-3 rounded-[10px] bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 cursor-pointer"
+              className="flex items-center justify-between p-3 rounded-[10px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] cursor-pointer"
             >
-              <span className="text-[14px] text-[#0F172A]">{item.label}</span>
+              <span className="text-[14px] text-[#141312] dark:text-[#f6f3ec]">{item.label}</span>
               <input
                 type="checkbox"
                 checked={settings[item.key]}
@@ -384,10 +384,10 @@ export const SettingsPage: React.FC = () => {
           ))}
         </div>
 
-        <div className="pt-4 border-t border-[#E2E8F0] dark:border-slate-800 flex items-center justify-between gap-4">
+        <div className="pt-4 border-t border-[#ded8ca] dark:border-[#2A332E] flex items-center justify-between gap-4">
           <div>
-            <p className="text-[14px] font-semibold text-[#0F172A]">Reset Demo Learning State</p>
-            <p className="text-[12.5px] text-[#64748B]">
+            <p className="text-[14px] font-semibold text-[#141312] dark:text-[#f6f3ec]">Reset Demo Learning State</p>
+            <p className="text-[12.5px] text-[#6e6a62] dark:text-[#A3ACA6]">
               Restore sample enrollments, certificates, and progress.
             </p>
           </div>
@@ -421,7 +421,7 @@ export const HelpSupportPage: React.FC = () => {
       a: 'Your lesson progress and last video timestamp are saved automatically. Click "Resume Lesson" on your Dashboard or open any course in My Courses.',
     },
     {
-      q: 'How do I earn an official CamcodeLearn certificate?',
+      q: 'How do I earn an official Camcode certificate?',
       a: 'Complete all lessons inside a certificate-eligible course, or pass a graded Certification Exam in the Assessments tab with the required passing score.',
     },
     {
@@ -445,15 +445,15 @@ export const HelpSupportPage: React.FC = () => {
   return (
     <div className="max-w-4xl space-y-8">
       <div>
-        <h1 className="text-[26px] font-bold text-[#0F172A]">{t.nav.help}</h1>
-        <p className="text-[14.5px] text-[#475569] mt-1">
-          Find quick answers or send a support request to the CamcodeLearn Academy team.
+        <h1 className="font-serif-display text-[28px] sm:text-[32px] leading-[1.1] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">{t.nav.help}</h1>
+        <p className="text-[14.5px] text-[#4c4842] dark:text-[#D5D1C8] mt-1">
+          Find quick answers or send a support request to the Camcode Academy team.
         </p>
       </div>
 
       <section className="space-y-3">
-        <h2 className="text-[18px] font-bold text-[#0F172A] flex items-center gap-2">
-          <HelpCircle className="h-5 w-5 text-[#2563EB]" />
+        <h2 className="text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec] flex items-center gap-2">
+          <HelpCircle className="h-5 w-5 text-[#1c5b48] dark:text-[#7CD4B5]" />
           Frequently Asked Questions
         </h2>
         <div className="space-y-2.5">
@@ -462,18 +462,18 @@ export const HelpSupportPage: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="glass-card rounded-[14px] overflow-hidden"
+                className="card-note rounded-[14px] overflow-hidden"
               >
                 <button
                   type="button"
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full px-5 py-4 flex items-center justify-between text-left font-semibold text-[14.5px] text-[#0F172A] cursor-pointer"
+                  className="w-full px-5 py-4 flex items-center justify-between text-left font-semibold text-[14.5px] text-[#141312] dark:text-[#f6f3ec] cursor-pointer"
                 >
                   <span>{item.q}</span>
                   {isOpen ? <ChevronUp className="h-4 w-4 shrink-0" /> : <ChevronDown className="h-4 w-4 shrink-0" />}
                 </button>
                 {isOpen && (
-                  <p className="px-5 pb-4 text-[13.5px] text-[#475569] leading-relaxed">
+                  <p className="px-5 pb-4 text-[13.5px] text-[#4c4842] dark:text-[#D5D1C8] leading-relaxed">
                     {item.a}
                   </p>
                 )}
@@ -483,9 +483,9 @@ export const HelpSupportPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="glass-panel rounded-[18px] p-6 space-y-4">
-        <h2 className="text-[18px] font-bold text-[#0F172A] flex items-center gap-2">
-          <Mail className="h-5 w-5 text-[#2563EB]" />
+      <section className="card-note rounded-[18px] p-6 space-y-4">
+        <h2 className="text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec] flex items-center gap-2">
+          <Mail className="h-5 w-5 text-[#1c5b48] dark:text-[#7CD4B5]" />
           Contact Academy Support
         </h2>
         {sent && (
@@ -502,7 +502,7 @@ export const HelpSupportPage: React.FC = () => {
             required
           />
           <div>
-            <label className="block text-[13px] font-medium text-[#0F172A] mb-1.5">
+            <label className="block text-[13px] font-medium text-[#141312] dark:text-[#f6f3ec] mb-1.5">
               How can we help?
             </label>
             <textarea
@@ -511,7 +511,7 @@ export const HelpSupportPage: React.FC = () => {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Describe your question or course name..."
               required
-              className="w-full rounded-[8px] border border-[#E2E8F0] dark:border-slate-700 bg-white dark:bg-slate-900 p-3 text-[14px] text-[#0F172A] outline-none focus:border-[#2563EB]"
+              className="w-full rounded-[8px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] p-3 text-[14px] text-[#141312] dark:text-[#f6f3ec] outline-none focus:border-[#1c5b48] dark:border-[#7CD4B5]"
             />
           </div>
           <Button type="submit" leftIcon={<Send className="h-4 w-4" />}>

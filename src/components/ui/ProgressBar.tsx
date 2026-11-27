@@ -8,9 +8,9 @@ interface ProgressBarProps {
 }
 
 const barColors = {
-  primary: 'bg-[#2563EB]',
-  success: 'bg-[#16A34A]',
-  warning: 'bg-[#D97706]',
+  primary: 'bg-[#1c5b48] dark:bg-[#2D7A62]',
+  success: 'bg-[#15463a] dark:bg-[#7CD4B5]',
+  warning: 'bg-[#8a5008] dark:bg-[#F59E0B]',
 };
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({
@@ -24,7 +24,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 
   return (
     <div
-      className={`w-full ${heightClass} rounded-full bg-[#E2E8F0] dark:bg-slate-800 overflow-hidden ${className}`}
+      className={`w-full ${heightClass} rounded-full bg-[#e5dfd2] dark:bg-[#1E2622] overflow-hidden ${className}`}
       role="progressbar"
       aria-valuenow={clamped}
       aria-valuemin={0}
@@ -37,4 +37,3 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     </div>
   );
 };
-

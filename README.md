@@ -1,6 +1,6 @@
-# CamcodeLearn Academy — User Learning Application (Port 3001)
+# Camcode Academy — User Learning Application (Port 3001)
 
-Bilingual (**English + Khmer**) learner portal for **CamcodeLearn**, built with **Vite + React 19 + TypeScript + Tailwind CSS v4** on **Port 3001** (`camcode-learninguser`), sharing the visual identity and data ecosystem of `camcode-learningonline` (Port 3000).
+Bilingual (**English + Khmer**) learner portal for **Camcode**, built with **Vite + React 19 + TypeScript + Tailwind CSS v4** on **Port 3001** (`camcode-learninguser`), sharing the visual identity and data ecosystem of `camcode-learningonline` (Port 3000).
 
 ## Quick Start
 

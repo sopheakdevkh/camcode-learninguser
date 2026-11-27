@@ -18,10 +18,10 @@ export const LearningPathsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-[26px] sm:text-[30px] font-bold text-[#0F172A] tracking-tight">
+        <h1 className="font-serif-display text-[28px] sm:text-[34px] leading-[1.1] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">
           {t.nav.learningPaths}
         </h1>
-        <p className="text-[14.5px] text-[#475569] mt-1">
+        <p className="text-[14.5px] text-[#4c4842] dark:text-[#D5D1C8] mt-1">
           Step-by-step career tracks combining curated courses into job-ready certifications.
         </p>
       </div>
@@ -33,10 +33,10 @@ export const LearningPathsPage: React.FC = () => {
           return (
             <div
               key={path.id}
-              className="glass-card glass-card-interactive rounded-[18px] overflow-hidden flex flex-col"
+              className="card-tile group rounded-[18px] overflow-hidden flex flex-col"
             >
               <div
-                className={`p-5 bg-gradient-to-br ${path.thumbnailTheme} border-b border-white/70 dark:border-slate-700 space-y-3`}
+                className={`p-5 bg-gradient-to-br ${path.thumbnailTheme} border-b border-white/70 dark:border-[#2A332E] space-y-3`}
               >
                 <div className="flex items-center justify-between gap-2">
                   <Badge tone="primary">
@@ -47,23 +47,23 @@ export const LearningPathsPage: React.FC = () => {
                     {isEnrolled ? 'Enrolled' : path.level}
                   </Badge>
                 </div>
-                <h2 className="text-[19px] font-bold text-[#0F172A] leading-snug">
+                <h2 className="text-[19px] font-bold text-[#141312] dark:text-[#f6f3ec] leading-snug">
                   {pickText(path.title)}
                 </h2>
               </div>
 
               <div className="flex-1 p-5 flex flex-col justify-between gap-5">
                 <div className="space-y-4">
-                  <p className="text-[13.5px] text-[#475569] leading-relaxed">
+                  <p className="text-[13.5px] text-[#4c4842] dark:text-[#D5D1C8] leading-relaxed">
                     {pickText(path.subtitle)}
                   </p>
 
-                  <div className="flex items-center gap-4 text-[12.5px] text-[#64748B]">
+                  <div className="flex items-center gap-4 text-[12.5px] text-[#6e6a62] dark:text-[#A3ACA6]">
                     <span className="inline-flex items-center gap-1">
-                      <Clock className="h-4 w-4 text-[#94A3B8]" />
+                      <Clock className="h-4 w-4 text-[#6e6a62]" />
                       {path.estimatedHours} {t.common.hours}
                     </span>
-                    <span className="inline-flex items-center gap-1 text-[#2563EB] font-medium">
+                    <span className="inline-flex items-center gap-1 text-[#1c5b48] dark:text-[#7CD4B5] font-medium">
                       <Award className="h-4 w-4" />
                       {pickText(path.badgeName)}
                     </span>
@@ -71,8 +71,8 @@ export const LearningPathsPage: React.FC = () => {
 
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-[12px]">
-                      <span className="text-[#64748B]">Track progress</span>
-                      <span className="font-mono-custom font-bold text-[#2563EB]">
+                      <span className="text-[#6e6a62] dark:text-[#A3ACA6]">Track progress</span>
+                      <span className="font-mono-custom font-bold text-[#1c5b48] dark:text-[#7CD4B5]">
                         {stats.completed}/{stats.total} ({stats.percent}%)
                       </span>
                     </div>
@@ -117,8 +117,8 @@ export const LearningPathDetailPage: React.FC = () => {
   const path = slug ? catalogService.getLearningPathBySlug(slug) : undefined;
   if (!path) {
     return (
-      <div className="glass-card rounded-[16px] p-10 text-center space-y-4">
-        <h2 className="text-[20px] font-bold text-[#0F172A]">Learning path not found</h2>
+      <div className="card-note rounded-[16px] p-10 text-center space-y-4">
+        <h2 className="text-[20px] font-bold text-[#141312] dark:text-[#f6f3ec]">Learning path not found</h2>
         <Link to="/learning-paths">
           <Button>{t.nav.learningPaths}</Button>
         </Link>
@@ -136,13 +136,13 @@ export const LearningPathDetailPage: React.FC = () => {
     <div className="space-y-6">
       <Link
         to="/learning-paths"
-        className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#64748B] hover:text-[#2563EB]"
+        className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#6e6a62] dark:text-[#A3ACA6] hover:text-[#1c5b48] dark:text-[#7CD4B5]"
       >
         <ArrowLeft className="h-4 w-4" />
         <span>Back to {t.nav.learningPaths}</span>
       </Link>
 
-      <section className="glass-panel rounded-[20px] p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+      <section className="card-note rounded-[20px] p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
         <div className="space-y-3 max-w-2xl">
           <div className="flex items-center gap-2">
             <Badge tone="primary">
@@ -154,15 +154,15 @@ export const LearningPathDetailPage: React.FC = () => {
               {pickText(path.badgeName)}
             </Badge>
           </div>
-          <h1 className="text-[26px] sm:text-[32px] font-bold text-[#0F172A]">
+          <h1 className="font-serif-display text-[28px] sm:text-[36px] leading-[1.08] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">
             {pickText(path.title)}
           </h1>
-          <p className="text-[15px] text-[#475569]">{pickText(path.description)}</p>
+          <p className="text-[15px] text-[#4c4842] dark:text-[#D5D1C8]">{pickText(path.description)}</p>
           <div className="flex flex-wrap gap-3 pt-1">
             {path.outcomes.map((o, i) => (
               <span
                 key={i}
-                className="inline-flex items-center gap-1.5 text-[13px] text-[#334155] bg-white/80 dark:bg-slate-900 px-3 py-1 rounded-full border border-[#E2E8F0] dark:border-slate-700"
+                className="inline-flex items-center gap-1.5 text-[13px] text-[#4c4842] dark:text-[#D5D1C8] bg-white/80 dark:bg-[#151A17] px-3 py-1 rounded-full border border-[#ded8ca] dark:border-[#2A332E]"
               >
                 <CheckCircle2 className="h-3.5 w-3.5 text-[#16A34A]" />
                 {pickText(o)}
@@ -171,13 +171,13 @@ export const LearningPathDetailPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-full lg:w-72 rounded-[16px] bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-700 p-5 space-y-3 shrink-0">
+        <div className="w-full lg:w-72 rounded-[16px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] p-5 space-y-3 shrink-0">
           <div className="flex justify-between text-[13px]">
-            <span className="font-medium text-[#64748B]">Overall Completion</span>
-            <span className="font-mono-custom font-bold text-[#2563EB]">{stats.percent}%</span>
+            <span className="font-medium text-[#6e6a62] dark:text-[#A3ACA6]">Overall Completion</span>
+            <span className="font-mono-custom font-bold text-[#1c5b48] dark:text-[#7CD4B5]">{stats.percent}%</span>
           </div>
           <ProgressBar value={stats.percent} heightClass="h-2.5" />
-          <p className="text-[12px] text-[#64748B]">
+          <p className="text-[12px] text-[#6e6a62] dark:text-[#A3ACA6]">
             {stats.completed} of {stats.total} courses completed
           </p>
           {!isEnrolled && (
@@ -189,7 +189,7 @@ export const LearningPathDetailPage: React.FC = () => {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-[19px] font-bold text-[#0F172A]">Ordered Path Curriculum</h2>
+        <h2 className="text-[19px] font-bold text-[#141312] dark:text-[#f6f3ec]">Ordered Path Curriculum</h2>
         <div className="space-y-4">
           {courses.map((course, idx) => {
             const cStats = getCourseCompletion(course);
@@ -200,7 +200,7 @@ export const LearningPathDetailPage: React.FC = () => {
                     className={`h-9 w-9 rounded-full flex items-center justify-center font-bold text-[14px] ${
                       cStats.status === 'completed'
                         ? 'bg-[#16A34A] text-white'
-                        : 'bg-[#EFF6FF] dark:bg-blue-950 text-[#2563EB] border border-[#BFDBFE] dark:border-blue-800'
+                        : 'bg-[#e4ede7] dark:bg-[#1B3028] dark:bg-[#1B3028] text-[#1c5b48] dark:text-[#7CD4B5] border border-[#c5d6cb] dark:border-[#2A4D3E] dark:border-blue-800'
                     }`}
                   >
                     {idx + 1}

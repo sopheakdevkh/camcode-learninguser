@@ -33,8 +33,8 @@ export const VideoPlayerPage: React.FC = () => {
 
   if (!video) {
     return (
-      <div className="glass-card rounded-[16px] p-10 text-center space-y-4">
-        <h2 className="text-[20px] font-bold text-[#0F172A]">Video not found</h2>
+      <div className="card-note rounded-[16px] p-10 text-center space-y-4">
+        <h2 className="text-[20px] font-bold text-[#141312] dark:text-[#f6f3ec]">Video not found</h2>
         <Link to="/videos">
           <Button>{t.nav.videos}</Button>
         </Link>
@@ -53,7 +53,7 @@ export const VideoPlayerPage: React.FC = () => {
     <div className="space-y-6">
       <Link
         to="/videos"
-        className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#64748B] hover:text-[#2563EB]"
+        className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#6e6a62] dark:text-[#A3ACA6] hover:text-[#1c5b48] dark:text-[#7CD4B5]"
       >
         <ArrowLeft className="h-4 w-4" />
         <span>Back to {t.nav.videos}</span>
@@ -83,7 +83,7 @@ export const VideoPlayerPage: React.FC = () => {
           />
 
           {/* Video Details Card */}
-          <div className="glass-card rounded-[18px] p-5 sm:p-6 space-y-4">
+          <div className="card-note rounded-[18px] p-5 sm:p-6 space-y-4">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="space-y-2 max-w-2xl">
                 <div className="flex flex-wrap items-center gap-2">
@@ -96,7 +96,7 @@ export const VideoPlayerPage: React.FC = () => {
                         : t.common.basic}
                   </Badge>
                 </div>
-                <h1 className="text-[22px] sm:text-[26px] font-bold text-[#0F172A]">
+                <h1 className="font-serif-display text-[24px] sm:text-[28px] leading-[1.15] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">
                   {pickText(video.title)}
                 </h1>
               </div>
@@ -117,12 +117,12 @@ export const VideoPlayerPage: React.FC = () => {
               </Button>
             </div>
 
-            <p className="text-[14.5px] text-[#475569] leading-relaxed">
+            <p className="text-[14.5px] text-[#4c4842] dark:text-[#D5D1C8] leading-relaxed">
               {pickText(video.description)}
             </p>
 
-            <div className="flex flex-wrap items-center gap-5 pt-2 border-t border-[#E2E8F0] dark:border-slate-800 text-[13px] text-[#64748B]">
-              <span className="font-semibold text-[#0F172A]">{instructor?.name}</span>
+            <div className="flex flex-wrap items-center gap-5 pt-2 border-t border-[#ded8ca] dark:border-[#2A332E] text-[13px] text-[#6e6a62] dark:text-[#A3ACA6]">
+              <span className="font-semibold text-[#141312] dark:text-[#f6f3ec]">{instructor?.name}</span>
               <span className="inline-flex items-center gap-1.5">
                 <Clock className="h-4 w-4" />
                 {formatNumber(video.durationMinutes)} {t.common.minutes}
@@ -138,9 +138,9 @@ export const VideoPlayerPage: React.FC = () => {
         {/* Right Sidebar: Chapters & Transcript */}
         <aside className={`${theaterMode ? 'xl:col-span-12' : 'xl:col-span-4'} space-y-5`}>
           {video.chapters && video.chapters.length > 0 && (
-            <div className="glass-card rounded-[18px] p-5 space-y-3">
-              <h2 className="text-[16px] font-bold text-[#0F172A] flex items-center gap-2">
-                <ListVideo className="h-4.5 w-4.5 text-[#2563EB]" />
+            <div className="card-note rounded-[18px] p-5 space-y-3">
+              <h2 className="text-[16px] font-bold text-[#141312] dark:text-[#f6f3ec] flex items-center gap-2">
+                <ListVideo className="h-4.5 w-4.5 text-[#1c5b48] dark:text-[#7CD4B5]" />
                 {t.player.chapters}
               </h2>
               <div className="space-y-1.5">
@@ -150,12 +150,12 @@ export const VideoPlayerPage: React.FC = () => {
                     type="button"
                     disabled={!canWatch}
                     onClick={() => setSeekOverride(ch.timeSeconds)}
-                    className="w-full text-left px-3 py-2.5 rounded-[10px] bg-[#F8FAFC] dark:bg-slate-900 hover:bg-[#EFF6FF] dark:hover:bg-slate-800 border border-[#E2E8F0] dark:border-slate-800 flex items-center justify-between gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full text-left px-3 py-2.5 rounded-[10px] bg-[#f6f3ec] dark:bg-[#101412] dark:bg-[#151A17] hover:bg-[#e4ede7] dark:bg-[#1B3028] dark:hover:bg-slate-800 border border-[#ded8ca] dark:border-[#2A332E] flex items-center justify-between gap-2 cursor-pointer disabled:opacity-50"
                   >
-                    <span className="text-[13px] font-medium text-[#0F172A]">
+                    <span className="text-[13px] font-medium text-[#141312] dark:text-[#f6f3ec]">
                       {pickText(ch.title)}
                     </span>
-                    <span className="font-mono-custom text-[12px] text-[#2563EB] shrink-0">
+                    <span className="font-mono-custom text-[12px] text-[#1c5b48] dark:text-[#7CD4B5] shrink-0">
                       {fmtTimestamp(ch.timeSeconds)}
                     </span>
                   </button>
@@ -165,8 +165,8 @@ export const VideoPlayerPage: React.FC = () => {
           )}
 
           {video.transcript && video.transcript.length > 0 && (
-            <div className="glass-card rounded-[18px] p-5 space-y-3">
-              <h2 className="text-[16px] font-bold text-[#0F172A]">{t.player.transcript}</h2>
+            <div className="card-note rounded-[18px] p-5 space-y-3">
+              <h2 className="text-[16px] font-bold text-[#141312] dark:text-[#f6f3ec]">{t.player.transcript}</h2>
               <div className="space-y-2.5">
                 {video.transcript.map((line, i) => (
                   <button
@@ -174,12 +174,12 @@ export const VideoPlayerPage: React.FC = () => {
                     type="button"
                     disabled={!canWatch}
                     onClick={() => setSeekOverride(line.timeSeconds)}
-                    className="w-full text-left p-2.5 rounded-[10px] hover:bg-[#F8FAFC] dark:hover:bg-slate-800/70 transition-colors cursor-pointer"
+                    className="w-full text-left p-2.5 rounded-[10px] hover:bg-[#f6f3ec] dark:bg-[#101412] dark:hover:bg-slate-800/70 transition-colors cursor-pointer"
                   >
-                    <span className="font-mono-custom text-[11px] font-semibold text-[#2563EB]">
+                    <span className="font-mono-custom text-[11px] font-semibold text-[#1c5b48] dark:text-[#7CD4B5]">
                       {fmtTimestamp(line.timeSeconds)} · {line.speaker}
                     </span>
-                    <p className="text-[13px] text-[#334155] mt-0.5">{pickText(line.text)}</p>
+                    <p className="text-[13px] text-[#4c4842] dark:text-[#D5D1C8] mt-0.5">{pickText(line.text)}</p>
                   </button>
                 ))}
               </div>
@@ -190,7 +190,7 @@ export const VideoPlayerPage: React.FC = () => {
 
       {/* Related Videos */}
       <section className="space-y-4">
-        <h2 className="text-[19px] font-bold text-[#0F172A]">Related Training Videos</h2>
+        <h2 className="text-[19px] font-bold text-[#141312] dark:text-[#f6f3ec]">Related Training Videos</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {related.map((v) => (
             <VideoCard key={v.id} video={v} />

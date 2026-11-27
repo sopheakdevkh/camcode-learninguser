@@ -101,12 +101,12 @@ export const ExploreCoursesPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <h1 className="text-[26px] sm:text-[30px] font-bold text-[#0F172A] tracking-tight">
+          <h1 className="font-serif-display text-[28px] sm:text-[34px] leading-[1.1] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">
             {t.explore.title}
           </h1>
-          <p className="text-[14.5px] text-[#475569] mt-1">{t.explore.subtitle}</p>
+          <p className="text-[14.5px] text-[#4c4842] dark:text-[#D5D1C8] mt-1">{t.explore.subtitle}</p>
         </div>
-        <span className="text-[13px] font-medium text-[#64748B]">
+        <span className="text-[13px] font-medium text-[#6e6a62] dark:text-[#A3ACA6]">
           {filtered.length} {t.explore.resultsCount}
         </span>
       </div>
@@ -118,8 +118,8 @@ export const ExploreCoursesPage: React.FC = () => {
           onClick={() => setSelectedCategory('')}
           className={`px-3.5 py-2 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer ${
             selectedCategory === ''
-              ? 'bg-[#2563EB] text-white'
-              : 'bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-700 text-[#334155] hover:border-[#2563EB]'
+              ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white'
+              : 'bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] text-[#4c4842] dark:text-[#D5D1C8] hover:border-[#1c5b48] dark:border-[#7CD4B5]'
           }`}
         >
           {t.explore.allCategories}
@@ -131,8 +131,8 @@ export const ExploreCoursesPage: React.FC = () => {
             onClick={() => setSelectedCategory(cat.slug)}
             className={`px-3.5 py-2 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors cursor-pointer ${
               selectedCategory === cat.slug
-                ? 'bg-[#2563EB] text-white'
-                : 'bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-700 text-[#334155] hover:border-[#2563EB]'
+                ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white'
+                : 'bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] text-[#4c4842] dark:text-[#D5D1C8] hover:border-[#1c5b48] dark:border-[#7CD4B5]'
             }`}
           >
             {pickText(cat.name)}
@@ -141,21 +141,21 @@ export const ExploreCoursesPage: React.FC = () => {
       </div>
 
       {/* Search + Filter Toolbar */}
-      <div className="glass-panel rounded-[16px] p-4 grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
-        <div className="md:col-span-5 flex items-center h-10 px-3 rounded-[9px] border border-[#E2E8F0] dark:border-slate-700 bg-white dark:bg-slate-900 focus-within:border-[#2563EB]">
-          <Search className="h-4 w-4 text-[#94A3B8] mr-2 shrink-0" />
+      <div className="card-note rounded-[16px] p-4 grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+        <div className="md:col-span-5 flex items-center h-10 px-3 rounded-[9px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] focus-within:border-[#1c5b48] dark:border-[#7CD4B5]">
+          <Search className="h-4 w-4 text-[#6e6a62] mr-2 shrink-0" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t.explore.searchPlaceholder}
-            className="w-full bg-transparent text-[13.5px] text-[#0F172A] placeholder:text-[#94A3B8] outline-none"
+            className="w-full bg-transparent text-[13.5px] text-[#141312] dark:text-[#f6f3ec] placeholder:text-[#6e6a62] outline-none"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery('')}
-              className="text-[#94A3B8] hover:text-[#475569] cursor-pointer"
+              className="text-[#6e6a62] hover:text-[#4c4842] dark:text-[#D5D1C8] cursor-pointer"
             >
               <X className="h-4 w-4" />
             </button>
@@ -193,7 +193,7 @@ export const ExploreCoursesPage: React.FC = () => {
         </div>
 
         <div className="md:col-span-3 flex items-center gap-2">
-          <SlidersHorizontal className="h-4 w-4 text-[#64748B] shrink-0 hidden sm:block" />
+          <SlidersHorizontal className="h-4 w-4 text-[#6e6a62] dark:text-[#A3ACA6] shrink-0 hidden sm:block" />
           <Dropdown<CourseSortOption>
             fullWidth
             value={sortBy}
@@ -217,7 +217,7 @@ export const ExploreCoursesPage: React.FC = () => {
           <button
             type="button"
             onClick={resetAll}
-            className="text-[13px] font-medium text-[#2563EB] hover:underline cursor-pointer"
+            className="text-[13px] font-medium text-[#1c5b48] dark:text-[#7CD4B5] hover:underline cursor-pointer"
           >
             {t.common.resetFilters}
           </button>
@@ -226,10 +226,10 @@ export const ExploreCoursesPage: React.FC = () => {
 
       {/* Course Grid */}
       {displayed.length === 0 ? (
-        <div className="glass-card rounded-[18px] p-10 text-center space-y-3">
-          <BookOpen className="h-10 w-10 text-[#94A3B8] mx-auto" />
-          <h3 className="text-[18px] font-bold text-[#0F172A]">{t.explore.emptyTitle}</h3>
-          <p className="text-[14px] text-[#64748B]">{t.explore.emptySubtitle}</p>
+        <div className="card-note rounded-[18px] p-10 text-center space-y-3">
+          <BookOpen className="h-10 w-10 text-[#6e6a62] mx-auto" />
+          <h3 className="text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec]">{t.explore.emptyTitle}</h3>
+          <p className="text-[14px] text-[#6e6a62] dark:text-[#A3ACA6]">{t.explore.emptySubtitle}</p>
           <Button variant="outline" onClick={resetAll}>
             {t.common.resetFilters}
           </Button>

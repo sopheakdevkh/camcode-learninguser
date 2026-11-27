@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   Award,
@@ -12,7 +12,6 @@ import {
   CreditCard,
   Film,
   Globe,
-  GraduationCap,
   HelpCircle,
   LayoutDashboard,
   Map,
@@ -40,6 +39,23 @@ interface NavItem {
   badge?: number;
 }
 
+const BrandMark: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <span
+    className={`inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#1c5b48] dark:bg-[#2D7A62] text-white shrink-0 shadow-xs ${className}`}
+    aria-hidden="true"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path
+        d="M3 5.5H13M3 10.5C5.2 8.9 6.8 12.1 9 10.5C10.5 9.4 11.7 9.6 13 10.5"
+        stroke="currentColor"
+        strokeWidth="1.65"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </span>
+);
+
 export const AppShell: React.FC = () => {
   const { t, locale, toggleLocale, pickText } = useI18n();
   const { isDark, toggleTheme } = useTheme();
@@ -64,6 +80,24 @@ export const AppShell: React.FC = () => {
   const [searchFocused, setSearchFocused] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileDrawerOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!mobileDrawerOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileDrawerOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [mobileDrawerOpen]);
 
   const navGroups: { title: string; items: NavItem[] }[] = useMemo(
     () => [
@@ -110,7 +144,7 @@ export const AppShell: React.FC = () => {
         ],
       },
     ],
-    [t, unreadNotificationCount],
+    [t, unreadNotificationCount, enrolledCount],
   );
 
   // Page title & breadcrumb based on active route
@@ -170,7 +204,7 @@ export const AppShell: React.FC = () => {
       {navGroups.map((group) => (
         <div key={group.title}>
           {!collapsed && (
-            <p className="px-3 mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
+            <p className="font-mono-tech px-3 mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#6e6a62]">
               {group.title}
             </p>
           )}
@@ -184,11 +218,11 @@ export const AppShell: React.FC = () => {
                 title={collapsed ? item.label : undefined}
                 className={({ isActive }) =>
                   `flex items-center ${
-                    collapsed ? 'justify-center px-2' : 'justify-between px-3'
-                  } py-2 rounded-[10px] text-[13.5px] font-medium transition-colors ${
+                    collapsed ? 'justify-center px-2' : 'justify-between px-3.5'
+                  } py-2.5 rounded-full text-[13.5px] font-medium transition-colors duration-[0.22s] ${
                     isActive
-                      ? 'bg-[#EFF6FF] dark:bg-blue-950/60 text-[#2563EB] dark:text-blue-300 font-semibold border-l-3 border-[#2563EB]'
-                      : 'text-[#334155] dark:text-slate-300 hover:bg-[#F8FAFC] hover:text-[#1D4ED8] dark:hover:bg-slate-800/80 dark:hover:text-white'
+                      ? 'bg-[#e4ede7] dark:bg-[#1B3028] text-[#1c5b48] dark:text-[#7CD4B5] font-semibold'
+                      : 'text-[#4c4842] dark:text-[#D5D1C8] hover:bg-[#e5dfd2]/75 dark:hover:bg-[#181E1B] hover:text-[#141312] dark:hover:text-[#f6f3ec]'
                   }`
                 }
               >
@@ -197,7 +231,7 @@ export const AppShell: React.FC = () => {
                   {!collapsed && <span className="truncate">{item.label}</span>}
                 </span>
                 {!collapsed && item.badge !== undefined && item.badge > 0 && (
-                  <span className="px-2 py-0.5 rounded-full bg-[#2563EB] text-white text-[10.5px] font-bold leading-none">
+                  <span className="font-mono-tech px-2 py-0.5 rounded-full bg-[#1c5b48] dark:bg-[#2D7A62] text-white text-[10.5px] font-semibold leading-none tabular-nums">
                     {item.badge}
                   </span>
                 )}
@@ -210,28 +244,26 @@ export const AppShell: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen flex bg-transparent">
+    <div className="min-h-screen flex bg-[#f6f3ec] dark:bg-[#101412] text-[#141312] dark:text-[#f6f3ec]">
       <div className="bg-environment" />
       <div className="grid-floor" />
 
       {/* Desktop Sidebar */}
       <aside
-        className={`no-print hidden lg:flex flex-col sticky top-0 h-screen shrink-0 border-r border-[#E2E8F0] dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl transition-all duration-200 z-30 ${
-          sidebarCollapsed ? 'w-[76px]' : 'w-[258px]'
+        className={`no-print hidden lg:flex flex-col sticky top-0 h-screen shrink-0 border-r border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1]/92 dark:bg-[#151A17]/92 backdrop-blur-xl transition-all duration-200 z-30 ${
+          sidebarCollapsed ? 'w-[76px]' : 'w-[264px]'
         }`}
       >
         {/* Brand Header */}
-        <div className="h-16 px-4 flex items-center justify-between border-b border-[#E2E8F0] dark:border-slate-800 shrink-0">
+        <div className="h-16 px-4 flex items-center justify-between border-b border-[#ded8ca] dark:border-[#2A332E] shrink-0">
           <Link to="/" className="flex items-center gap-2.5 min-w-0">
-            <div className="h-9 w-9 rounded-[10px] bg-gradient-to-br from-[#2563EB] to-[#0891B2] text-white flex items-center justify-center shadow-sm shrink-0">
-              <GraduationCap className="h-5 w-5" />
-            </div>
+            <BrandMark />
             {!sidebarCollapsed && (
               <div className="min-w-0">
-                <p className="text-[15px] font-bold text-[#0F172A] dark:text-white leading-tight truncate">
+                <p className="font-serif-display text-[19px] font-normal text-[#141312] dark:text-[#f6f3ec] leading-none truncate">
                   {t.brand.name}
                 </p>
-                <p className="text-[11px] font-medium text-[#2563EB] leading-tight">
+                <p className="font-mono-tech text-[9.5px] uppercase tracking-[0.1em] text-[#1c5b48] dark:text-[#7CD4B5] leading-tight mt-0.5">
                   {t.brand.academy}
                 </p>
               </div>
@@ -243,18 +275,20 @@ export const AppShell: React.FC = () => {
 
         {/* Sidebar Footer Membership Pill */}
         {!sidebarCollapsed && (
-          <div className="p-3 border-t border-[#E2E8F0] dark:border-slate-800">
+          <div className="p-3.5 border-t border-[#ded8ca] dark:border-[#2A332E]">
             <Link
               to="/membership"
-              className="flex items-center justify-between p-2.5 rounded-[10px] bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 hover:border-[#2563EB]/40 transition-colors"
+              className="flex items-center justify-between p-3 rounded-2xl bg-[#f6f3ec] dark:bg-[#101412] border border-[#ded8ca] dark:border-[#2A332E] hover:border-[#1c5b48] dark:hover:border-[#7CD4B5] transition-colors"
             >
               <div>
-                <p className="text-[11px] text-[#64748B]">{t.dashboard.membershipTitle}</p>
-                <p className="text-[13px] font-semibold text-[#0F172A] capitalize">
+                <p className="font-mono-tech text-[10px] uppercase tracking-[0.08em] text-[#6e6a62]">
+                  {t.dashboard.membershipTitle}
+                </p>
+                <p className="text-[13px] font-semibold text-[#141312] dark:text-[#f6f3ec] capitalize mt-0.5">
                   {user.activePlan} {t.dashboard.planLabel}
                 </p>
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-[#EFF6FF] dark:bg-blue-950 text-[#2563EB] dark:text-blue-300 text-[11px] font-semibold">
+              <span className="font-mono-tech px-2.5 py-1 rounded-full bg-[#e4ede7] dark:bg-[#1B3028] text-[#1c5b48] dark:text-[#7CD4B5] text-[10px] uppercase tracking-[0.06em] font-semibold">
                 {user.activePlan === 'premium' ? t.dashboard.fullBadge : t.dashboard.upgradeBadge}
               </span>
             </Link>
@@ -262,86 +296,94 @@ export const AppShell: React.FC = () => {
         )}
       </aside>
 
-      {/* Mobile Navigation Drawer */}
-      {mobileDrawerOpen && (
+      {/* Full-Screen Right-to-Left Mobile Drawer */}
+      <div
+        className={`fixed inset-0 z-50 lg:hidden transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          mobileDrawerOpen ? 'pointer-events-auto opacity-100 visible' : 'pointer-events-none opacity-0 invisible'
+        }`}
+        onClick={() => setMobileDrawerOpen(false)}
+        aria-hidden={!mobileDrawerOpen}
+      >
         <div
-          className="fixed inset-0 z-50 lg:hidden bg-[#0F172A]/50 backdrop-blur-xs flex"
-          onClick={() => setMobileDrawerOpen(false)}
+          aria-hidden="true"
+          className={`absolute inset-0 bg-[#141312]/45 backdrop-blur-[2px] transition-opacity duration-500 ${
+            mobileDrawerOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+        <div
+          className={`relative ml-auto w-full h-dvh bg-[#f6f3ec] dark:bg-[#101412] flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${
+            mobileDrawerOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          <div
-            className="w-[272px] max-w-[85vw] h-full bg-white dark:bg-slate-950 border-r border-[#E2E8F0] dark:border-slate-800 flex flex-col shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="h-16 px-4 flex items-center justify-between border-b border-[#E2E8F0] dark:border-slate-800">
-              <Link
-                to="/"
-                onClick={() => setMobileDrawerOpen(false)}
-                className="flex items-center gap-2.5"
-              >
-                <div className="h-8 w-8 rounded-[9px] bg-[#2563EB] text-white flex items-center justify-center">
-                  <GraduationCap className="h-4.5 w-4.5" />
-                </div>
-                <span className="font-bold text-[15px] text-[#0F172A]">
-                  {t.brand.name} {t.brand.academy}
-                </span>
-              </Link>
-              <button
-                type="button"
-                onClick={() => setMobileDrawerOpen(false)}
-                className="p-1.5 rounded-lg text-[#64748B] hover:bg-[#F1F5F9]"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            {renderSidebarLinks(false, () => setMobileDrawerOpen(false))}
+          <div className="h-16 px-5 flex items-center justify-between border-b border-[#ded8ca] dark:border-[#2A332E]">
+            <Link
+              to="/"
+              onClick={() => setMobileDrawerOpen(false)}
+              className="flex items-center gap-2.5"
+            >
+              <BrandMark />
+              <span className="font-serif-display text-[20px] font-medium text-[#141312] dark:text-[#f6f3ec]">
+                {t.brand.name}
+              </span>
+            </Link>
+            <button
+              type="button"
+              onClick={() => setMobileDrawerOpen(false)}
+              aria-label="Close drawer"
+              className="grid size-10 place-items-center rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[#141312] dark:text-[#f6f3ec] cursor-pointer"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
+          {renderSidebarLinks(false, () => setMobileDrawerOpen(false))}
         </div>
-      )}
+      </div>
 
       {/* Main Content Area */}
       <div className="flex-1 min-w-0 flex flex-col">
         {/* Top Navigation Bar */}
-        <header className="no-print sticky top-0 z-20 h-16 px-4 sm:px-6 lg:px-8 border-b border-[#E2E8F0]/80 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl flex items-center justify-between gap-4">
+        <header className="no-print sticky top-0 z-20 h-16 px-4 sm:px-6 lg:px-8 border-b border-[#ded8ca] dark:border-[#2A332E] bg-[rgb(246_243_236/0.86)] dark:bg-[rgb(16_20_18/0.86)] [backdrop-filter:blur(14px)] flex items-center justify-between gap-4">
           {/* Left: Collapse / Menu + Breadcrumb */}
           <div className="flex items-center gap-2.5 min-w-0">
             <button
               type="button"
               onClick={() => setMobileDrawerOpen(true)}
               aria-label={t.topbar.openMenu}
-              className="lg:hidden p-2 rounded-[8px] text-[#475569] hover:bg-[#F1F5F9] cursor-pointer"
+              className="lg:hidden grid size-9 place-items-center rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[#141312] dark:text-[#f6f3ec] cursor-pointer"
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-4 w-4" />
             </button>
 
             <button
               type="button"
               onClick={() => setSidebarCollapsed((c) => !c)}
               aria-label={sidebarCollapsed ? t.topbar.expandSidebar : t.topbar.collapseSidebar}
-              className="hidden lg:inline-flex p-2 rounded-[8px] text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9] dark:hover:bg-slate-900 cursor-pointer transition-colors"
+              className="hidden lg:inline-flex size-9 items-center justify-center rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[#6e6a62] hover:text-[#141312] hover:border-[#1c5b48] dark:hover:text-[#f6f3ec] cursor-pointer transition-colors"
             >
               {sidebarCollapsed ? (
-                <PanelLeftOpen className="h-4.5 w-4.5" />
+                <PanelLeftOpen className="h-4 w-4" />
               ) : (
-                <PanelLeftClose className="h-4.5 w-4.5" />
+                <PanelLeftClose className="h-4 w-4" />
               )}
             </button>
 
-            <div className="min-w-0 flex items-center gap-1.5 text-[13px] text-[#64748B]">
-              <Link to="/" className="hover:text-[#2563EB] hidden sm:inline">
+            <div className="min-w-0 flex items-center gap-2 text-[13px] text-[#6e6a62]">
+              <Link to="/" className="font-mono-tech text-[11px] uppercase tracking-[0.08em] hover:text-[#1c5b48] dark:hover:text-[#7CD4B5] hidden sm:inline">
                 {t.brand.academy}
               </Link>
-              <span className="hidden sm:inline text-[#CBD5E1]">/</span>
-              <span className="font-semibold text-[14px] sm:text-[15px] text-[#0F172A] truncate">
+              <span className="hidden sm:inline text-[#c2baa8] dark:text-[#2A332E]">/</span>
+              <span className="font-serif-display text-[17px] text-[#141312] dark:text-[#f6f3ec] truncate">
                 {currentTitle}
               </span>
             </div>
           </div>
 
-          {/* Right Utility Cluster: Search + EN/KM + Theme + Bell + Profile */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Search Input (right-aligned icon like reference) */}
+          {/* Right Utility Cluster */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Search Pill Input */}
             <div className="relative hidden md:block w-60 lg:w-72">
-              <div className="flex items-center h-9 px-3 rounded-[9px] border border-[#E2E8F0] dark:border-slate-700 bg-[#F8FAFC] dark:bg-slate-900 focus-within:border-[#2563EB] focus-within:bg-white dark:focus-within:bg-slate-900 transition-colors">
+              <div className="flex items-center h-9 px-3.5 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] focus-within:border-[#1c5b48] dark:focus-within:border-[#2D7A62] transition-colors">
                 <input
                   type="text"
                   value={searchQuery}
@@ -349,32 +391,32 @@ export const AppShell: React.FC = () => {
                   onBlur={() => setTimeout(() => setSearchFocused(false), 180)}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t.topbar.searchPlaceholder}
-                  className="w-full bg-transparent text-[13px] text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] outline-none pr-2"
+                  className="w-full bg-transparent text-[13px] text-[#141312] dark:text-[#f6f3ec] placeholder:text-[#6e6a62]/70 outline-none pr-2"
                 />
                 {searchQuery ? (
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
-                    className="text-[#94A3B8] hover:text-[#475569] cursor-pointer shrink-0"
+                    className="text-[#6e6a62] hover:text-[#141312] cursor-pointer shrink-0"
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 ) : (
-                  <Search className="h-4 w-4 text-[#94A3B8] shrink-0" />
+                  <Search className="h-3.5 w-3.5 text-[#6e6a62] shrink-0" />
                 )}
               </div>
 
               {searchFocused && searchQuery.trim().length > 0 && (
-                <div className="absolute left-0 right-0 top-11 rounded-[12px] bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-700 shadow-xl p-2 z-40 max-h-96 overflow-y-auto">
+                <div className="absolute left-0 right-0 top-11 rounded-2xl bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] shadow-xl p-2 z-40 max-h-96 overflow-y-auto">
                   {!hasSearchMatches ? (
-                    <p className="p-3 text-[13px] text-[#64748B] text-center">
+                    <p className="p-3 text-[13px] text-[#6e6a62] text-center">
                       {t.topbar.noSearchResults}
                     </p>
                   ) : (
                     <div className="space-y-2">
                       {searchResults.courses.length > 0 && (
                         <div>
-                          <p className="px-2.5 py-1 text-[11px] font-semibold uppercase text-[#64748B]">
+                          <p className="font-mono-tech px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#6e6a62]">
                             Courses
                           </p>
                           {searchResults.courses.map((c) => (
@@ -385,19 +427,21 @@ export const AppShell: React.FC = () => {
                                 navigate(`/courses/${c.slug}`);
                                 setSearchQuery('');
                               }}
-                              className="w-full text-left px-2.5 py-2 rounded-[8px] hover:bg-[#EFF6FF] dark:hover:bg-slate-800 flex items-center justify-between gap-2 cursor-pointer"
+                              className="w-full text-left px-2.5 py-2 rounded-xl hover:bg-[#e4ede7] dark:hover:bg-[#1B3028] flex items-center justify-between gap-2 cursor-pointer"
                             >
-                              <span className="text-[13px] font-medium text-[#0F172A] truncate">
+                              <span className="text-[13px] font-medium text-[#141312] dark:text-[#f6f3ec] truncate">
                                 {pickText(c.title)}
                               </span>
-                              <span className="text-[11px] text-[#2563EB] shrink-0">Course</span>
+                              <span className="font-mono-tech text-[10px] uppercase text-[#1c5b48] dark:text-[#7CD4B5] shrink-0">
+                                Course
+                              </span>
                             </button>
                           ))}
                         </div>
                       )}
                       {searchResults.videos.length > 0 && (
                         <div>
-                          <p className="px-2.5 py-1 text-[11px] font-semibold uppercase text-[#64748B]">
+                          <p className="font-mono-tech px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#6e6a62]">
                             Videos
                           </p>
                           {searchResults.videos.map((v) => (
@@ -408,19 +452,21 @@ export const AppShell: React.FC = () => {
                                 navigate(`/videos/${v.slug}`);
                                 setSearchQuery('');
                               }}
-                              className="w-full text-left px-2.5 py-2 rounded-[8px] hover:bg-[#EFF6FF] dark:hover:bg-slate-800 flex items-center justify-between gap-2 cursor-pointer"
+                              className="w-full text-left px-2.5 py-2 rounded-xl hover:bg-[#e4ede7] dark:hover:bg-[#1B3028] flex items-center justify-between gap-2 cursor-pointer"
                             >
-                              <span className="text-[13px] font-medium text-[#0F172A] truncate">
+                              <span className="text-[13px] font-medium text-[#141312] dark:text-[#f6f3ec] truncate">
                                 {pickText(v.title)}
                               </span>
-                              <span className="text-[11px] text-[#0891B2] shrink-0">Video</span>
+                              <span className="font-mono-tech text-[10px] uppercase text-[#1c5b48] dark:text-[#7CD4B5] shrink-0">
+                                Video
+                              </span>
                             </button>
                           ))}
                         </div>
                       )}
                       {searchResults.paths.length > 0 && (
                         <div>
-                          <p className="px-2.5 py-1 text-[11px] font-semibold uppercase text-[#64748B]">
+                          <p className="font-mono-tech px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#6e6a62]">
                             Learning Paths
                           </p>
                           {searchResults.paths.map((lp) => (
@@ -431,12 +477,14 @@ export const AppShell: React.FC = () => {
                                 navigate(`/learning-paths/${lp.slug}`);
                                 setSearchQuery('');
                               }}
-                              className="w-full text-left px-2.5 py-2 rounded-[8px] hover:bg-[#EFF6FF] dark:hover:bg-slate-800 flex items-center justify-between gap-2 cursor-pointer"
+                              className="w-full text-left px-2.5 py-2 rounded-xl hover:bg-[#e4ede7] dark:hover:bg-[#1B3028] flex items-center justify-between gap-2 cursor-pointer"
                             >
-                              <span className="text-[13px] font-medium text-[#0F172A] truncate">
+                              <span className="text-[13px] font-medium text-[#141312] dark:text-[#f6f3ec] truncate">
                                 {pickText(lp.title)}
                               </span>
-                              <span className="text-[11px] text-[#16A34A] shrink-0">Path</span>
+                              <span className="font-mono-tech text-[10px] uppercase text-[#1c5b48] dark:text-[#7CD4B5] shrink-0">
+                                Path
+                              </span>
                             </button>
                           ))}
                         </div>
@@ -447,15 +495,15 @@ export const AppShell: React.FC = () => {
               )}
             </div>
 
-            {/* Language EN / KM */}
+            {/* Language EN / ខ្មែរ */}
             <button
               type="button"
               onClick={toggleLocale}
               aria-label="Switch language"
-              className="inline-flex items-center gap-1 h-8 px-2.5 rounded-[8px] text-[12px] font-semibold text-[#475569] hover:text-[#2563EB] hover:bg-[#F1F5F9] dark:hover:bg-slate-900 cursor-pointer transition-colors"
+              className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] font-mono-tech text-[11px] font-semibold uppercase tracking-[0.06em] text-[#141312] dark:text-[#f6f3ec] hover:border-[#1c5b48] cursor-pointer transition-colors"
             >
-              <Globe className="h-3.5 w-3.5 text-[#2563EB]" />
-              <span>{locale === 'en' ? 'EN' : 'KM'}</span>
+              <Globe className="h-3.5 w-3.5 text-[#1c5b48] dark:text-[#7CD4B5]" />
+              <span>{locale === 'en' ? 'EN' : 'ខ្មែរ'}</span>
             </button>
 
             {/* Theme Toggle */}
@@ -463,7 +511,7 @@ export const AppShell: React.FC = () => {
               type="button"
               onClick={toggleTheme}
               aria-label={t.topbar.toggleTheme}
-              className="inline-flex items-center justify-center h-8 w-8 rounded-[8px] text-[#475569] hover:text-[#2563EB] hover:bg-[#F1F5F9] dark:hover:bg-slate-900 cursor-pointer transition-colors"
+              className="inline-flex items-center justify-center size-9 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[#6e6a62] hover:text-[#141312] hover:border-[#1c5b48] dark:hover:text-[#f6f3ec] cursor-pointer transition-colors"
             >
               {isDark ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4" />}
             </button>
@@ -477,29 +525,29 @@ export const AppShell: React.FC = () => {
                   setProfileMenuOpen(false);
                 }}
                 aria-label={t.topbar.notifications}
-                className="relative inline-flex items-center justify-center h-8 w-8 rounded-[8px] text-[#475569] hover:text-[#2563EB] hover:bg-[#F1F5F9] dark:hover:bg-slate-900 cursor-pointer transition-colors"
+                className="relative inline-flex items-center justify-center size-9 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[#6e6a62] hover:text-[#141312] hover:border-[#1c5b48] dark:hover:text-[#f6f3ec] cursor-pointer transition-colors"
               >
-                <Bell className="h-4.5 w-4.5" />
+                <Bell className="h-4 w-4" />
                 {unreadNotificationCount > 0 && (
-                  <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white dark:ring-slate-950" />
+                  <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-[#1c5b48] dark:bg-[#7CD4B5] ring-2 ring-[#efebe1] dark:ring-[#151A17]" />
                 )}
               </button>
 
               {notifOpen && (
-                <div className="absolute right-0 top-11 w-80 sm:w-96 rounded-[14px] bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-700 shadow-2xl z-40 overflow-hidden">
-                  <div className="px-4 py-3 border-b border-[#E2E8F0] dark:border-slate-800 flex items-center justify-between">
-                    <span className="font-semibold text-[14px] text-[#0F172A]">
+                <div className="absolute right-0 top-11 w-80 sm:w-96 rounded-2xl bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] shadow-2xl z-40 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-[#ded8ca] dark:border-[#2A332E] flex items-center justify-between">
+                    <span className="font-serif-display text-[16px] font-medium text-[#141312] dark:text-[#f6f3ec]">
                       {t.topbar.notifications}
                     </span>
                     <button
                       type="button"
                       onClick={markAllNotificationsRead}
-                      className="text-[12px] font-medium text-[#2563EB] hover:underline cursor-pointer"
+                      className="font-mono-tech text-[11px] uppercase tracking-[0.06em] font-medium text-[#1c5b48] dark:text-[#7CD4B5] hover:underline cursor-pointer"
                     >
                       {t.topbar.markAllRead}
                     </button>
                   </div>
-                  <div className="max-h-80 overflow-y-auto divide-y divide-[#E2E8F0]/70 dark:divide-slate-800">
+                  <div className="max-h-80 overflow-y-auto divide-y divide-[#ded8ca] dark:divide-[#2A332E]">
                     {notifications.slice(0, 4).map((n) => (
                       <button
                         key={n.id}
@@ -509,27 +557,29 @@ export const AppShell: React.FC = () => {
                           setNotifOpen(false);
                           if (n.actionUrl) navigate(n.actionUrl);
                         }}
-                        className={`w-full text-left px-4 py-3 hover:bg-[#F8FAFC] dark:hover:bg-slate-800/70 transition-colors cursor-pointer ${
-                          !n.read ? 'bg-[#EFF6FF]/50 dark:bg-blue-950/20' : ''
+                        className={`w-full text-left px-4 py-3 hover:bg-[#e5dfd2]/55 dark:hover:bg-[#181E1B] transition-colors cursor-pointer ${
+                          !n.read ? 'bg-[#e4ede7]/55 dark:bg-[#1B3028]/35' : ''
                         }`}
                       >
                         <div className="flex items-start justify-between gap-2">
-                          <p className="text-[13px] font-semibold text-[#0F172A]">
+                          <p className="text-[13px] font-semibold text-[#141312] dark:text-[#f6f3ec]">
                             {pickText(n.title)}
                           </p>
-                          {!n.read && <span className="mt-1.5 h-2 w-2 rounded-full bg-[#2563EB] shrink-0" />}
+                          {!n.read && (
+                            <span className="mt-1.5 h-2 w-2 rounded-full bg-[#1c5b48] dark:bg-[#7CD4B5] shrink-0" />
+                          )}
                         </div>
-                        <p className="text-[12px] text-[#64748B] line-clamp-2 mt-0.5">
+                        <p className="text-[12px] text-[#6e6a62] line-clamp-2 mt-0.5">
                           {pickText(n.message)}
                         </p>
-                        <p className="text-[11px] text-[#94A3B8] mt-1">{n.createdAt}</p>
+                        <p className="font-mono-tech text-[10.5px] text-[#6e6a62] mt-1">{n.createdAt}</p>
                       </button>
                     ))}
                   </div>
                   <Link
                     to="/notifications"
                     onClick={() => setNotifOpen(false)}
-                    className="block text-center py-2.5 text-[12.5px] font-semibold text-[#2563EB] bg-[#F8FAFC] dark:bg-slate-800/50 border-t border-[#E2E8F0] dark:border-slate-800 hover:underline"
+                    className="block text-center py-2.5 text-[12.5px] font-semibold text-[#1c5b48] dark:text-[#7CD4B5] bg-[#e5dfd2]/60 dark:bg-[#181E1B] border-t border-[#ded8ca] dark:border-[#2A332E] hover:underline"
                   >
                     {t.topbar.viewAllNotifications}
                   </Link>
@@ -537,46 +587,45 @@ export const AppShell: React.FC = () => {
               )}
             </div>
 
-            {/* User Avatar & Dropdown (clean avatar + name + chevron) */}
-            <div className="relative pl-1">
+            {/* User Avatar & Dropdown */}
+            <div className="relative pl-0.5">
               <button
                 type="button"
                 onClick={() => {
                   setProfileMenuOpen((p) => !p);
                   setNotifOpen(false);
                 }}
-                className="flex items-center gap-2 py-1 px-1.5 rounded-[10px] hover:bg-[#F1F5F9] dark:hover:bg-slate-900 transition-colors cursor-pointer"
+                className="flex items-center gap-2 py-1 pl-1 pr-2.5 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] hover:border-[#1c5b48] transition-colors cursor-pointer"
               >
                 {user.avatarUrl ? (
                   <img
                     src={user.avatarUrl}
                     alt={user.fullName}
-                    className="h-8 w-8 rounded-full object-cover shrink-0 border border-[#E2E8F0] dark:border-slate-700 shadow-2xs"
+                    className="h-7 w-7 rounded-full object-cover shrink-0 border border-[#ded8ca] dark:border-[#2A332E]"
                   />
                 ) : (
-                  <span
-                    className="h-8 w-8 rounded-full text-white text-[12px] font-bold flex items-center justify-center shrink-0 shadow-2xs"
-                    style={{ backgroundColor: user.avatarColor }}
-                  >
+                  <span className="h-7 w-7 rounded-full bg-[#1c5b48] text-white text-[11px] font-bold flex items-center justify-center shrink-0">
                     {initials}
                   </span>
                 )}
-                <span className="hidden sm:inline text-[13.5px] font-medium text-[#0F172A] max-w-[130px] truncate">
+                <span className="hidden sm:inline text-[13px] font-medium text-[#141312] dark:text-[#f6f3ec] max-w-[120px] truncate">
                   {user.fullName}
                 </span>
-                <ChevronDown className="hidden sm:inline h-4 w-4 text-[#64748B]" />
+                <ChevronDown className="hidden sm:inline h-3.5 w-3.5 text-[#6e6a62]" />
               </button>
 
               {profileMenuOpen && (
-                <div className="absolute right-0 top-11 w-64 rounded-[14px] bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-700 shadow-2xl p-2 z-40">
-                  <div className="px-3 py-2.5 border-b border-[#E2E8F0] dark:border-slate-800">
-                    <p className="text-[14px] font-semibold text-[#0F172A] truncate">{user.fullName}</p>
-                    <p className="text-[12px] text-[#64748B] truncate">{user.email}</p>
+                <div className="absolute right-0 top-11 w-64 rounded-2xl bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] shadow-2xl p-2 z-40">
+                  <div className="px-3 py-2.5 border-b border-[#ded8ca] dark:border-[#2A332E]">
+                    <p className="text-[14px] font-semibold text-[#141312] dark:text-[#f6f3ec] truncate">
+                      {user.fullName}
+                    </p>
+                    <p className="text-[12px] text-[#6e6a62] truncate">{user.email}</p>
                   </div>
 
-                  {/* Quick Demo Plan Switcher for easy QA testing */}
-                  <div className="px-3 py-2 border-b border-[#E2E8F0] dark:border-slate-800">
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-[#64748B] mb-1.5">
+                  {/* Quick Demo Plan Switcher */}
+                  <div className="px-3 py-2.5 border-b border-[#ded8ca] dark:border-[#2A332E]">
+                    <p className="font-mono-tech text-[10px] font-semibold uppercase tracking-[0.08em] text-[#6e6a62] mb-1.5">
                       {t.topbar.demoAccountSwitcher}
                     </p>
                     <div className="grid grid-cols-3 gap-1">
@@ -585,10 +634,10 @@ export const AppShell: React.FC = () => {
                           key={tier}
                           type="button"
                           onClick={() => switchDemoPlan(tier)}
-                          className={`py-1 rounded-md text-[11px] font-semibold capitalize cursor-pointer ${
+                          className={`py-1 rounded-full text-[11px] font-semibold capitalize cursor-pointer transition-colors ${
                             user.activePlan === tier
-                              ? 'bg-[#2563EB] text-white'
-                              : 'bg-[#F1F5F9] dark:bg-slate-800 text-[#475569]'
+                              ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white'
+                              : 'bg-[#e5dfd2] dark:bg-[#181E1B] text-[#6e6a62]'
                           }`}
                         >
                           {tier}
@@ -601,33 +650,33 @@ export const AppShell: React.FC = () => {
                     <Link
                       to="/profile"
                       onClick={() => setProfileMenuOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-[8px] text-[#0F172A] hover:bg-[#F8FAFC] dark:hover:bg-slate-800"
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl text-[#141312] dark:text-[#f6f3ec] hover:bg-[#e4ede7] dark:hover:bg-[#1B3028]"
                     >
-                      <UserIcon className="h-4 w-4 text-[#64748B]" />
+                      <UserIcon className="h-4 w-4 text-[#6e6a62]" />
                       {t.nav.profile}
                     </Link>
                     <Link
                       to="/certifications"
                       onClick={() => setProfileMenuOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-[8px] text-[#0F172A] hover:bg-[#F8FAFC] dark:hover:bg-slate-800"
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl text-[#141312] dark:text-[#f6f3ec] hover:bg-[#e4ede7] dark:hover:bg-[#1B3028]"
                     >
-                      <CheckCircle2 className="h-4 w-4 text-[#64748B]" />
+                      <CheckCircle2 className="h-4 w-4 text-[#6e6a62]" />
                       {t.nav.certifications}
                     </Link>
                     <Link
                       to="/membership"
                       onClick={() => setProfileMenuOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-[8px] text-[#0F172A] hover:bg-[#F8FAFC] dark:hover:bg-slate-800"
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl text-[#141312] dark:text-[#f6f3ec] hover:bg-[#e4ede7] dark:hover:bg-[#1B3028]"
                     >
-                      <CreditCard className="h-4 w-4 text-[#64748B]" />
+                      <CreditCard className="h-4 w-4 text-[#6e6a62]" />
                       {t.nav.membership}
                     </Link>
                     <Link
                       to="/settings"
                       onClick={() => setProfileMenuOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-[8px] text-[#0F172A] hover:bg-[#F8FAFC] dark:hover:bg-slate-800"
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl text-[#141312] dark:text-[#f6f3ec] hover:bg-[#e4ede7] dark:hover:bg-[#1B3028]"
                     >
-                      <Settings className="h-4 w-4 text-[#64748B]" />
+                      <Settings className="h-4 w-4 text-[#6e6a62]" />
                       {t.nav.settings}
                     </Link>
                   </div>
@@ -645,7 +694,7 @@ export const AppShell: React.FC = () => {
         {/* Mobile Bottom Navigation */}
         <nav
           aria-label="Mobile navigation"
-          className="no-print lg:hidden fixed bottom-0 left-0 right-0 z-30 h-16 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-t border-[#E2E8F0] dark:border-slate-800 grid grid-cols-5"
+          className="no-print lg:hidden fixed bottom-0 left-0 right-0 z-30 h-16 bg-[#efebe1]/95 dark:bg-[#151A17]/95 [backdrop-filter:blur(14px)] border-t border-[#ded8ca] dark:border-[#2A332E] grid grid-cols-5"
         >
           {[
             { to: '/', label: t.nav.bottom.home, icon: <LayoutDashboard className="h-5 w-5" /> },
@@ -659,8 +708,8 @@ export const AppShell: React.FC = () => {
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) =>
-                `flex flex-col items-center justify-center gap-0.5 text-[11px] font-medium ${
-                  isActive ? 'text-[#2563EB]' : 'text-[#64748B]'
+                `flex flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors ${
+                  isActive ? 'text-[#1c5b48] dark:text-[#7CD4B5] font-semibold' : 'text-[#6e6a62]'
                 }`
               }
             >
@@ -673,4 +722,3 @@ export const AppShell: React.FC = () => {
     </div>
   );
 };
-
