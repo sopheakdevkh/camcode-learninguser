@@ -51,7 +51,7 @@ export const MOCK_CATEGORIES: Category[] = [
     icon: 'Briefcase',
     courseCount: 21,
     videoCount: 53,
-    accentColor: '#D97706',
+    accentColor: '#8a5008',
   },
   {
     id: 'cat-5',
@@ -77,7 +77,7 @@ export const MOCK_CATEGORIES: Category[] = [
     icon: 'Film',
     courseCount: 12,
     videoCount: 77,
-    accentColor: '#DC2626',
+    accentColor: '#a5331f',
   },
 ];
 
@@ -132,7 +132,7 @@ export const MOCK_INSTRUCTORS: Instructor[] = [
       en: 'Helps SMEs and founders build clear financial models and team training.',
       km: 'ជួយសហគ្រាសធុនតូច និងមធ្យម រៀបចំផែនការហិរញ្ញវត្ថុ និងការបណ្តុះបណ្តាលបុគ្គលិក។',
     },
-    avatarColor: '#D97706',
+    avatarColor: '#8a5008',
     initials: 'BK',
     rating: 4.7,
     studentsCount: 7600,
@@ -251,8 +251,8 @@ export const MOCK_COURSES: Course[] = [
                 timeSeconds: 0,
                 speaker: 'John Vannak',
                 text: {
-                  en: 'Welcome to CamcodeLearn Academy. In this first module, we build a clear foundation before touching any ad manager.',
-                  km: 'សូមស្វាគមន៍មកកាន់ CamcodeLearn Academy។ នៅជំពូកដំបូងនេះ យើងនឹងកសាងមូលដ្ឋានគ្រឹះច្បាស់លាស់ជាមុនសិន។',
+                  en: 'Welcome to Camcode Academy. In this first module, we build a clear foundation before touching any ad manager.',
+                  km: 'សូមស្វាគមន៍មកកាន់ Camcode Academy។ នៅជំពូកដំបូងនេះ យើងនឹងកសាងមូលដ្ឋានគ្រឹះច្បាស់លាស់ជាមុនសិន។',
                 },
               },
               {
@@ -632,7 +632,7 @@ export const MOCK_COURSES: Course[] = [
             resources: [
               {
                 id: 'res-c3-1',
-                title: { en: 'CamcodeLearn Figma Token Kit' },
+                title: { en: 'Camcode Figma Token Kit' },
                 fileType: 'FIG',
                 sizeLabel: '4.1 MB',
                 description: { en: 'Starter Variables library for light & dark mode' },

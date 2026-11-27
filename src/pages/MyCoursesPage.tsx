@@ -40,10 +40,10 @@ export const MyCoursesPage: React.FC = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <h1 className="text-[26px] sm:text-[30px] font-bold text-[#0F172A] tracking-tight">
+          <h1 className="font-serif-display text-[28px] sm:text-[34px] leading-[1.1] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">
             {t.myCourses.title}
           </h1>
-          <p className="text-[14.5px] text-[#475569] mt-1">{t.myCourses.subtitle}</p>
+          <p className="text-[14.5px] text-[#4c4842] dark:text-[#D5D1C8] mt-1">{t.myCourses.subtitle}</p>
         </div>
         <div className="flex items-center gap-2">
           <Link to="/certifications">
@@ -60,7 +60,7 @@ export const MyCoursesPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar border-b border-[#E2E8F0] dark:border-slate-800 pb-3">
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar border-b border-[#ded8ca] dark:border-[#2A332E] pb-3">
         {tabs.map((tab) => (
           <button
             key={tab.key}
@@ -68,8 +68,8 @@ export const MyCoursesPage: React.FC = () => {
             onClick={() => setActiveTab(tab.key)}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-[10px] text-[13.5px] font-semibold whitespace-nowrap transition-colors cursor-pointer ${
               activeTab === tab.key
-                ? 'bg-[#2563EB] text-white'
-                : 'bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-700 text-[#475569] hover:border-[#2563EB]'
+                ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white'
+                : 'bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] text-[#4c4842] dark:text-[#D5D1C8] hover:border-[#1c5b48] dark:border-[#7CD4B5]'
             }`}
           >
             <span>{tab.label}</span>
@@ -77,7 +77,7 @@ export const MyCoursesPage: React.FC = () => {
               className={`px-1.5 py-0.5 rounded-full text-[11px] ${
                 activeTab === tab.key
                   ? 'bg-white/20 text-white'
-                  : 'bg-[#F1F5F9] dark:bg-slate-800 text-[#64748B]'
+                  : 'bg-[#e5dfd2] dark:bg-[#181E1B] text-[#6e6a62] dark:text-[#A3ACA6]'
               }`}
             >
               {tab.count}
@@ -88,10 +88,10 @@ export const MyCoursesPage: React.FC = () => {
 
       {/* Course Grid */}
       {list.length === 0 ? (
-        <div className="glass-card rounded-[18px] p-10 text-center space-y-3">
-          <BookOpen className="h-10 w-10 text-[#94A3B8] mx-auto" />
-          <h3 className="text-[18px] font-bold text-[#0F172A]">{t.myCourses.emptyTitle}</h3>
-          <p className="text-[14px] text-[#64748B]">{t.myCourses.emptySubtitle}</p>
+        <div className="card-note rounded-[18px] p-10 text-center space-y-3">
+          <BookOpen className="h-10 w-10 text-[#6e6a62] mx-auto" />
+          <h3 className="text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec]">{t.myCourses.emptyTitle}</h3>
+          <p className="text-[14px] text-[#6e6a62] dark:text-[#A3ACA6]">{t.myCourses.emptySubtitle}</p>
           <Link to="/explore" className="inline-block">
             <Button>{t.nav.explore}</Button>
           </Link>

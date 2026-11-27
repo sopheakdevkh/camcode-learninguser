@@ -100,158 +100,174 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     toggleSavedCourse(course.id);
   };
 
+  const difficultyLabel =
+    course.difficulty === 'beginner'
+      ? t.common.beginner
+      : course.difficulty === 'intermediate'
+        ? t.common.intermediate
+        : t.common.advanced;
+
   return (
-    <div className="group glass-card glass-card-interactive flex flex-col rounded-[16px] overflow-hidden">
-      <Link to={`/courses/${course.slug}`} className="block p-3.5 pb-0">
-        <div
-          className={`relative h-40 w-full rounded-[12px] bg-gradient-to-br ${course.thumbnailTheme} border border-white/80 dark:border-slate-700/60 overflow-hidden p-3 flex flex-col justify-between`}
-        >
-          <div className="flex items-center justify-between gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-white/90 dark:bg-slate-900/90 text-[11px] font-semibold text-[#0F172A] dark:text-slate-100 shadow-xs truncate max-w-[160px]">
-              {category ? pickText(category.name) : course.thumbnailLabel}
-            </span>
-            <div className="flex items-center gap-1.5">
-              {renderStatusBadge()}
-              <button
-                type="button"
-                onClick={handleBookmark}
-                aria-label={isSaved ? 'Remove from watchlist' : 'Save course'}
-                className="p-1.5 rounded-[8px] bg-white/90 dark:bg-slate-900/90 border border-[#E2E8F0] dark:border-slate-700 text-[#475569] hover:text-[#2563EB] cursor-pointer"
-              >
-                {isSaved ? (
-                  <BookmarkCheck className="h-3.5 w-3.5 text-[#2563EB]" />
-                ) : (
-                  <Bookmark className="h-3.5 w-3.5" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center my-auto">
-            <div className="group-hover:scale-105 transition-transform">
-              <CategoryIconBox categorySlug={course.categorySlug} />
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between text-[11px] font-medium text-[#475569] dark:text-slate-200">
-            <span className="px-2 py-0.5 rounded bg-white/85 dark:bg-slate-900/85">
-              {course.difficulty === 'beginner'
-                ? t.common.beginner
-                : course.difficulty === 'intermediate'
-                  ? t.common.intermediate
-                  : t.common.advanced}
-            </span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/85 dark:bg-slate-900/85">
-              <Star className="h-3 w-3 fill-[#D97706] text-[#D97706]" />
-              {course.rating.toFixed(1)}
-            </span>
-          </div>
-        </div>
-      </Link>
-
-      <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between gap-4">
-        <div className="space-y-2">
-          <div className="flex items-center justify-between gap-2 text-[12px] text-[#64748B]">
-            <span className="truncate">{instructor?.name}</span>
-            {course.certificateIncluded && (
-              <span className="inline-flex items-center gap-1 text-[#2563EB] font-medium shrink-0">
-                <Award className="h-3.5 w-3.5" />
-                {t.common.certificate}
+    <article className="card-note group flex flex-col justify-between p-5">
+      <div>
+        {/* Inset Blueprint Frame */}
+        <Link to={`/courses/${course.slug}`} className="block">
+          <div className="relative h-38 w-full rounded-xl bg-[#e5dfd2]/75 dark:bg-[#181E1B] border border-[#ded8ca] dark:border-[#2A332E] swiss-blueprint-bg overflow-hidden p-3 flex flex-col justify-between transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#3E4D45]">
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-mono-tech inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] text-[10px] font-medium uppercase tracking-[0.06em] text-[#141312] dark:text-[#f6f3ec] truncate max-w-[155px] transition-colors duration-[0.22s] group-hover:border-[#B9B3A6]">
+                <span className="swiss-dot" aria-hidden="true" />
+                <span className="truncate">{category ? pickText(category.name) : course.thumbnailLabel}</span>
               </span>
-            )}
-          </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                {renderStatusBadge()}
+                <button
+                  type="button"
+                  onClick={handleBookmark}
+                  aria-label={isSaved ? 'Remove from watchlist' : 'Save course'}
+                  className="p-1.5 rounded-full bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] text-[#6e6a62] hover:text-[#1c5b48] hover:border-[#1c5b48] cursor-pointer transition-colors"
+                >
+                  {isSaved ? (
+                    <BookmarkCheck className="h-3.5 w-3.5 text-[#1c5b48] dark:text-[#7CD4B5]" />
+                  ) : (
+                    <Bookmark className="h-3.5 w-3.5" />
+                  )}
+                </button>
+              </div>
+            </div>
 
-          <Link to={`/courses/${course.slug}`} className="block">
-            <h3 className="text-[16px] font-bold text-[#0F172A] group-hover:text-[#2563EB] transition-colors line-clamp-2 leading-snug">
+            <div className="flex items-center justify-center my-auto">
+              <div className="transition-transform duration-300 group-hover:scale-105">
+                <CategoryIconBox categorySlug={course.categorySlug} />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between font-mono-tech text-[10px] uppercase tracking-[0.08em] text-[#6e6a62] dark:text-[#A3ACA6]">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#efebe1]/95 dark:bg-[#151A17]/95 border border-[#ded8ca] dark:border-[#2A332E] transition-colors duration-[0.22s] group-hover:border-[#B9B3A6]">
+                {difficultyLabel}
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#efebe1]/95 dark:bg-[#151A17]/95 border border-[#ded8ca] dark:border-[#2A332E] tabular-nums transition-colors duration-[0.22s] group-hover:border-[#B9B3A6]">
+                <Star className="h-3 w-3 fill-[#1c5b48] text-[#1c5b48] dark:fill-[#7CD4B5] dark:text-[#7CD4B5]" />
+                {course.rating.toFixed(1)}
+              </span>
+            </div>
+          </div>
+        </Link>
+
+        {/* Card Header Row & Meta */}
+        <div className="mt-4 flex items-start justify-between gap-3">
+          <Link to={`/courses/${course.slug}`} className="block min-w-0 flex-1">
+            <h3 className="font-serif-display text-[20px] font-medium text-[#141312] dark:text-[#f6f3ec] group-hover:text-[#1c5b48] dark:group-hover:text-[#7CD4B5] transition-colors line-clamp-2 leading-snug">
               {pickText(course.title)}
             </h3>
           </Link>
+          <span aria-hidden="true" className="index-number mt-1 shrink-0">
+            {String(completion.totalCount).padStart(2, '0')}L
+          </span>
+        </div>
 
-          <p className="text-[13px] text-[#64748B] line-clamp-2 leading-relaxed">
-            {pickText(course.subtitle)}
-          </p>
+        <p className="mt-2 text-[13.5px] text-[#6e6a62] dark:text-[#A3ACA6] line-clamp-2 leading-relaxed">
+          {pickText(course.subtitle)}
+        </p>
 
-          {variant === 'enrolled' ? (
-            <div className="pt-2 space-y-1.5">
-              <div className="flex items-center justify-between text-[12px]">
-                <span className="font-medium text-[#0F172A]">
-                  {completion.completedCount}/{completion.totalCount} {t.myCourses.completedLessons}
-                </span>
-                <span className="font-mono-custom font-semibold text-[#2563EB]">
-                  {completion.percent}%
-                </span>
-              </div>
-              <ProgressBar value={completion.percent} />
-              {progress?.lastAccessedAt && (
-                <p className="text-[11px] text-[#64748B]">
-                  {t.myCourses.lastAccessed}: {progress.lastAccessedAt}
-                </p>
-              )}
+        {variant === 'enrolled' ? (
+          <div className="mt-4 space-y-2">
+            <div className="flex items-center justify-between text-[12px]">
+              <span className="font-medium text-[#141312] dark:text-[#f6f3ec]">
+                {completion.completedCount}/{completion.totalCount} {t.myCourses.completedLessons}
+              </span>
+              <span className="font-mono-custom font-semibold text-[#1c5b48] dark:text-[#7CD4B5]">
+                {completion.percent}%
+              </span>
             </div>
-          ) : (
-            <div className="flex items-center gap-4 pt-1 text-[12px] text-[#64748B]">
-              <span className="inline-flex items-center gap-1">
-                <Clock className="h-3.5 w-3.5 text-[#94A3B8]" />
+            <ProgressBar value={completion.percent} />
+            {progress?.lastAccessedAt && (
+              <p className="text-[11px] font-mono-custom text-[#6e6a62]">
+                {t.myCourses.lastAccessed}: {progress.lastAccessedAt}
+              </p>
+            )}
+          </div>
+        ) : (
+          <ul className="mt-4 flex flex-wrap gap-1.5">
+            <li>
+              <span className="inline-flex items-center gap-1 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#f6f3ec] dark:bg-[#101412] px-2.5 py-1 text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#495B51]">
+                <Clock className="h-3 w-3 opacity-75" />
                 {formatNumber(course.durationHours)} {t.common.hours}
               </span>
-              <span className="inline-flex items-center gap-1">
-                <FileText className="h-3.5 w-3.5 text-[#94A3B8]" />
+            </li>
+            <li>
+              <span className="inline-flex items-center gap-1 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#f6f3ec] dark:bg-[#101412] px-2.5 py-1 text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#495B51]">
+                <FileText className="h-3 w-3 opacity-75" />
                 {formatNumber(completion.totalCount)} {t.common.lessons}
               </span>
-            </div>
-          )}
-        </div>
-
-        <div className="pt-3 border-t border-[#E2E8F0]/80 flex items-center justify-between gap-3">
-          {variant === 'enrolled' ? (
-            <Link
-              to={`/courses/${course.slug}`}
-              className="text-[12px] font-medium text-[#64748B] hover:text-[#2563EB]"
-            >
-              {t.workspace.backToCourse}
-            </Link>
-          ) : (
-            <div>
-              {course.price === 0 ? (
-                <span className="text-[17px] font-bold text-[#16A34A]">{t.common.free}</span>
-              ) : accessState === 'purchased' || accessState === 'subscription' ? (
-                <span className="text-[13px] font-semibold text-[#16A34A]">
-                  {accessState === 'purchased' ? t.common.purchased : t.common.included}
+            </li>
+            {instructor && (
+              <li>
+                <span className="inline-flex items-center rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#f6f3ec] dark:bg-[#101412] px-2.5 py-1 text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#495B51]">
+                  {instructor.name}
                 </span>
-              ) : (
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-[17px] font-bold text-[#0F172A]">
-                    ${course.price.toFixed(0)}
-                  </span>
-                  {course.originalPrice && (
-                    <span className="text-[12px] text-[#94A3B8] line-through">
-                      ${course.originalPrice.toFixed(0)}
-                    </span>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-
-          <Link
-            to={
-              variant === 'enrolled' || accessState === 'purchased' || accessState === 'free_enrolled' || accessState === 'subscription'
-                ? `/learn/${course.slug}`
-                : `/courses/${course.slug}`
-            }
-            onClick={handlePrimaryClick}
-            className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-[8px] bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-[13px] font-medium transition-colors shrink-0"
-          >
-            {variant === 'enrolled' ? (
-              <Play className="h-3.5 w-3.5 fill-current" />
-            ) : (
-              <ArrowRight className="h-3.5 w-3.5" />
+              </li>
             )}
-            <span>{getCtaLabel()}</span>
-          </Link>
-        </div>
+          </ul>
+        )}
       </div>
-    </div>
+
+      {/* Card Footer */}
+      <div className="mt-5 pt-3.5 border-t border-[#ded8ca] dark:border-[#2A332E] transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#3E4D45] flex items-center justify-between gap-3">
+        {variant === 'enrolled' ? (
+          <Link
+            to={`/courses/${course.slug}`}
+            className="t-method hover:text-[#1c5b48] dark:hover:text-[#7CD4B5] truncate"
+          >
+            {t.workspace.backToCourse}
+          </Link>
+        ) : (
+          <div className="flex items-baseline gap-1.5">
+            {course.price === 0 ? (
+              <span className="font-serif-display text-[20px] font-medium text-[#1c5b48] dark:text-[#7CD4B5]">
+                {t.common.free}
+              </span>
+            ) : accessState === 'purchased' || accessState === 'subscription' ? (
+              <span className="text-[12.5px] font-semibold text-[#1c5b48] dark:text-[#7CD4B5]">
+                {accessState === 'purchased' ? t.common.purchased : t.common.included}
+              </span>
+            ) : (
+              <>
+                <span className="font-serif-display text-[20px] font-medium tabular-nums text-[#141312] dark:text-[#f6f3ec]">
+                  ${course.price.toFixed(0)}
+                </span>
+                {course.originalPrice && (
+                  <span className="text-[12px] text-[#6e6a62] line-through tabular-nums">
+                    ${course.originalPrice.toFixed(0)}
+                  </span>
+                )}
+              </>
+            )}
+            {course.certificateIncluded && (
+              <Award className="h-3.5 w-3.5 text-[#1c5b48] dark:text-[#7CD4B5] ml-1" />
+            )}
+          </div>
+        )}
+
+        <Link
+          to={
+            variant === 'enrolled' ||
+            accessState === 'purchased' ||
+            accessState === 'free_enrolled' ||
+            accessState === 'subscription'
+              ? `/learn/${course.slug}`
+              : `/courses/${course.slug}`
+          }
+          onClick={handlePrimaryClick}
+          className="inline-flex items-center gap-1.5 h-9 px-4 rounded-full bg-[#1c5b48] hover:bg-[#15463a] dark:bg-[#2D7A62] dark:hover:bg-[#23634F] text-white text-[12.5px] font-semibold whitespace-nowrap transition-colors shrink-0"
+        >
+          {variant === 'enrolled' ? (
+            <Play className="h-3 w-3 fill-current" />
+          ) : (
+            <ArrowRight className="h-3.5 w-3.5" />
+          )}
+          <span>{getCtaLabel()}</span>
+        </Link>
+      </div>
+    </article>
   );
 };
-

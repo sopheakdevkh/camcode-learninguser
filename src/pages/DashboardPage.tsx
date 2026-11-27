@@ -128,26 +128,30 @@ export const DashboardPage: React.FC = () => {
   );
 
   const categoryBreakdown = [
-    { label: 'Digital Marketing', sublabel: '12 hrs · 2 Courses', value: 45, color: '#2563EB' },
-    { label: 'Data & Practical AI', sublabel: '10 hrs · 2 Courses', value: 35, color: '#0891B2' },
-    { label: 'UI/UX Design', sublabel: '4 hrs · 1 Course', value: 20, color: '#16A34A' },
+    { label: 'Digital Marketing', sublabel: '12 hrs · 2 Courses', value: 45, color: '#1c5b48' },
+    { label: 'Data & Practical AI', sublabel: '10 hrs · 2 Courses', value: 35, color: '#2D7A62' },
+    { label: 'UI/UX Design', sublabel: '4 hrs · 1 Course', value: 20, color: '#B8862D' },
   ];
 
   return (
     <div className="space-y-6">
-      {/* Top Greeting Header (inspired by clean executive layout) */}
-      <section className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* Top Editorial Greeting Header */}
+      <section className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5 border-b border-[#ded8ca] dark:border-[#2A332E]">
         <div>
-          <h1 className="text-[24px] sm:text-[28px] font-bold text-[#0F172A] tracking-tight">
+          <span className="swiss-eyebrow mb-2">
+            <span className="swiss-dot" aria-hidden="true" />
+            <span>LEARNER WORKSPACE</span>
+          </span>
+          <h1 className="font-serif-display text-[28px] sm:text-[34px] leading-[1.1] tracking-[-0.02em] text-[#141312] dark:text-[#f6f3ec]">
             {t.dashboard.welcomePrefix}, {firstName}!
           </h1>
-          <p className="text-[14px] text-[#64748B] mt-0.5">{t.dashboard.subtitle}</p>
+          <p className="text-[14.5px] text-[#6e6a62] mt-1">{t.dashboard.subtitle}</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[10px] bg-white/90 dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-700 text-[12.5px]">
-            <Flame className="h-4 w-4 text-amber-500" />
-            <span className="font-semibold text-[#0F172A]">
+          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] text-[12.5px]">
+            <Flame className="h-4 w-4 text-[#B8862D]" />
+            <span className="font-semibold text-[#141312] dark:text-[#f6f3ec] tabular-nums">
               {user.streakDays} {t.dashboard.streakLabel}
             </span>
           </div>
@@ -162,66 +166,69 @@ export const DashboardPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Row 1: 4 Executive KPI Stat Cards (soft circular icon badge + bold metric + delta) */}
+      {/* Row 1: 4 Tactile Havenline KPI Stat Tiles with Icon Inversion on Hover */}
       <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {[
           {
+            idx: '01',
             label: t.dashboard.stats.enrolled,
             value: formatNumber(enrolledCourses.length),
             delta: `${activeCourses.length} ${t.dashboard.activeSuffix}`,
-            deltaPositive: true,
-            icon: <BookOpen className="h-5 w-5 text-[#2563EB]" />,
-            circleBg: 'bg-[#EFF6FF] dark:bg-blue-950/70',
+            icon: <BookOpen className="h-5 w-5" />,
             to: '/my-courses',
           },
           {
+            idx: '02',
             label: t.dashboard.stats.completed,
             value: formatNumber(completedCoursesCount),
             delta: t.dashboard.thisMonthDelta,
-            deltaPositive: true,
-            icon: <CheckCircle2 className="h-5 w-5 text-[#16A34A]" />,
-            circleBg: 'bg-[#F0FDF4] dark:bg-emerald-950/70',
+            icon: <CheckCircle2 className="h-5 w-5" />,
             to: '/my-courses',
           },
           {
+            idx: '03',
             label: t.dashboard.stats.hours,
             value: `${getLearningHoursTotal()}h`,
             delta: `${Math.round((user.weeklyMinutes / user.weeklyGoalMinutes) * 100)}% ${t.dashboard.weeklyGoalSuffix}`,
-            deltaPositive: true,
-            icon: <Clock className="h-5 w-5 text-[#0891B2]" />,
-            circleBg: 'bg-[#ECFEFF] dark:bg-cyan-950/70',
+            icon: <Clock className="h-5 w-5" />,
             to: '/achievements',
           },
           {
+            idx: '04',
             label: t.dashboard.stats.certificates,
             value: formatNumber(certificates.length),
             delta: t.dashboard.verifiedLabel,
-            deltaPositive: true,
-            icon: <Award className="h-5 w-5 text-[#D97706]" />,
-            circleBg: 'bg-[#FFFBEB] dark:bg-amber-950/70',
+            icon: <Award className="h-5 w-5" />,
             to: '/certifications',
           },
         ].map((stat) => (
           <Link
             key={stat.label}
             to={stat.to}
-            className="glass-card glass-card-interactive rounded-[14px] p-4 sm:p-5 flex items-start justify-between gap-3"
+            className="card-tile group p-5 flex flex-col justify-between gap-4"
           >
-            <div className="flex items-center gap-3.5 min-w-0">
-              <div
-                className={`h-11 w-11 rounded-full ${stat.circleBg} flex items-center justify-center shrink-0`}
-              >
+            <div className="flex items-start justify-between">
+              <span aria-hidden="true" className="icon-box">
                 {stat.icon}
-              </div>
-              <div className="min-w-0">
-                <p className="text-[22px] font-bold text-[#0F172A] leading-tight">{stat.value}</p>
-                <p className="text-[12.5px] text-[#64748B] truncate mt-0.5">{stat.label}</p>
-              </div>
+              </span>
+              <span aria-hidden="true" className="index-number">
+                {stat.idx}
+              </span>
             </div>
-            <span className="inline-flex items-center gap-0.5 text-[11.5px] font-semibold text-[#16A34A] shrink-0">
-              <TrendingUp className="h-3 w-3" />
-              {stat.delta}
-            </span>
+
+            <div>
+              <p className="font-serif-display text-[30px] leading-none tracking-[-0.02em] text-[#141312] dark:text-[#f6f3ec] tabular-nums">
+                {stat.value}
+              </p>
+              <p className="text-[13px] text-[#6e6a62] truncate mt-1.5">{stat.label}</p>
+            </div>
+
+            <div className="pt-3 border-t border-[#ded8ca] dark:border-[#2A332E] transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] flex items-center justify-between text-[11px] font-mono-tech uppercase tracking-[0.06em] text-[#1c5b48] dark:text-[#7CD4B5]">
+              <span className="inline-flex items-center gap-1">
+                <TrendingUp className="h-3 w-3" />
+                {stat.delta}
+              </span>
+            </div>
           </Link>
         ))}
       </section>
@@ -230,15 +237,15 @@ export const DashboardPage: React.FC = () => {
       <section className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
         <div className="xl:col-span-8 flex flex-col gap-5">
           <div className="relative">
-            <div className="flex justify-end mb-2 xl:mb-0 xl:absolute xl:right-52 xl:top-5 xl:z-10">
-              <div className="inline-flex rounded-[8px] border border-[#E2E8F0] dark:border-slate-700 bg-[#F8FAFC] dark:bg-slate-900 p-0.5 text-[11.5px]">
+            <div className="flex justify-end mb-2 xl:mb-0 xl:absolute xl:right-56 xl:top-5 xl:z-10">
+              <div className="inline-flex rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#e5dfd2] dark:bg-[#181E1B] p-1 text-[11.5px]">
                 <button
                   type="button"
                   onClick={() => setChartMetric('minutes')}
-                  className={`px-2.5 py-1 rounded-[6px] cursor-pointer ${
+                  className={`px-3 py-1 rounded-full cursor-pointer transition-colors ${
                     chartMetric === 'minutes'
-                      ? 'bg-[#2563EB] text-white font-semibold'
-                      : 'text-[#64748B]'
+                      ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white font-semibold'
+                      : 'text-[#6e6a62]'
                   }`}
                 >
                   {t.dashboard.minutesTab}
@@ -246,10 +253,10 @@ export const DashboardPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setChartMetric('lessons')}
-                  className={`px-2.5 py-1 rounded-[6px] cursor-pointer ${
+                  className={`px-3 py-1 rounded-full cursor-pointer transition-colors ${
                     chartMetric === 'lessons'
-                      ? 'bg-[#2563EB] text-white font-semibold'
-                      : 'text-[#64748B]'
+                      ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white font-semibold'
+                      : 'text-[#6e6a62]'
                   }`}
                 >
                   {t.dashboard.lessonsTab}
@@ -267,29 +274,29 @@ export const DashboardPage: React.FC = () => {
                 weekly: t.dashboard.weekly,
                 monthly: t.dashboard.monthly,
               }}
-              accentColor="#2563EB"
+              accentColor="#1c5b48"
             />
           </div>
 
-          {/* Compact Continue Learning Bar */}
+          {/* Compact Continue Learning Card */}
           {continueCourse && continueCompletion && (
-            <div className="glass-card rounded-[16px] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="card-note group p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5 min-w-0">
                 <CategoryIconBox categorySlug={continueCourse.categorySlug} size="md" />
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[#2563EB]">
+                    <span className="font-mono-tech text-[10.5px] font-semibold uppercase tracking-[0.08em] text-[#1c5b48] dark:text-[#7CD4B5]">
                       {t.dashboard.continueLearning}
                     </span>
-                    <span className="text-[11px] font-mono-custom text-[#64748B]">
+                    <span className="text-[11px] font-mono-custom text-[#6e6a62]">
                       {continueCompletion.percent}%
                     </span>
                   </div>
-                  <h3 className="text-[15.5px] font-bold text-[#0F172A] truncate">
+                  <h3 className="font-serif-display text-[19px] font-medium text-[#141312] dark:text-[#f6f3ec] truncate mt-0.5">
                     {pickText(continueCourse.title)}
                   </h3>
                   {continueLessonObj && (
-                    <p className="text-[12.5px] text-[#64748B] truncate">
+                    <p className="text-[12.5px] text-[#6e6a62] truncate">
                       {pickText(continueLessonObj.title)}
                       {continueProgress?.lastPositionSeconds
                         ? ` · ${formatPosition(continueProgress.lastPositionSeconds)}`
@@ -308,22 +315,22 @@ export const DashboardPage: React.FC = () => {
           )}
         </div>
 
-        {/* Right 4 cols: Active Courses List Card ("See All" like Active Projects in reference) */}
-        <div className="xl:col-span-4 glass-card rounded-[16px] p-5 flex flex-col justify-between gap-4">
+        {/* Right 4 cols: Active Courses List Card */}
+        <div className="xl:col-span-4 card-note p-5 sm:p-6 flex flex-col justify-between gap-4">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-[16px] font-bold text-[#0F172A]">
+              <h2 className="font-serif-display text-[20px] font-medium text-[#141312] dark:text-[#f6f3ec]">
                 {t.dashboard.myActiveCourses}
               </h2>
               <Link
                 to="/my-courses"
-                className="text-[12.5px] font-semibold text-[#2563EB] hover:underline"
+                className="font-mono-tech text-[11px] uppercase tracking-[0.06em] font-semibold text-[#1c5b48] dark:text-[#7CD4B5] hover:underline"
               >
                 {t.common.viewAll}
               </Link>
             </div>
 
-            <div className="divide-y divide-[#E2E8F0]/70 dark:divide-slate-800">
+            <div className="divide-y divide-[#ded8ca] dark:divide-[#2A332E]">
               {enrolledCourses.slice(0, 4).map((course) => {
                 const comp = getCourseCompletion(course);
                 return (
@@ -335,16 +342,16 @@ export const DashboardPage: React.FC = () => {
                     <div className="flex items-center gap-3 min-w-0">
                       <CategoryIconBox categorySlug={course.categorySlug} size="sm" />
                       <div className="min-w-0">
-                        <p className="text-[13.5px] font-semibold text-[#0F172A] group-hover:text-[#2563EB] truncate">
+                        <p className="text-[13.5px] font-semibold text-[#141312] dark:text-[#f6f3ec] group-hover:text-[#1c5b48] dark:group-hover:text-[#7CD4B5] truncate">
                           {pickText(course.title)}
                         </p>
-                        <p className="text-[11.5px] text-[#64748B]">
+                        <p className="text-[11.5px] font-mono-custom text-[#6e6a62]">
                           {comp.completedCount}/{comp.totalCount} {t.common.lessons} · {comp.percent}%
                         </p>
                       </div>
                     </div>
-                    <span className="inline-flex items-center gap-1 text-[11.5px] text-[#64748B] shrink-0">
-                      <Clock className="h-3.5 w-3.5 text-[#94A3B8]" />
+                    <span className="inline-flex items-center gap-1 font-mono-custom text-[11.5px] text-[#6e6a62] shrink-0">
+                      <Clock className="h-3.5 w-3.5 opacity-70" />
                       {course.durationHours}h
                     </span>
                   </Link>
@@ -353,15 +360,15 @@ export const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Compact Membership Status strip inside bottom of right column */}
-          <div className="p-3.5 rounded-[12px] bg-[#EFF6FF]/70 dark:bg-blue-950/30 border border-[#BFDBFE] dark:border-blue-900 flex items-center justify-between gap-3">
+          {/* Membership Status Strip */}
+          <div className="p-3.5 rounded-2xl bg-[#e4ede7]/65 dark:bg-[#1B3028]/55 border border-[#c5d6cb] dark:border-[#2A4D3E] flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5 min-w-0">
-              <Crown className="h-4.5 w-4.5 text-[#2563EB] shrink-0" />
+              <Crown className="h-4.5 w-4.5 text-[#1c5b48] dark:text-[#7CD4B5] shrink-0" />
               <div className="min-w-0">
-                <p className="text-[12.5px] font-bold text-[#0F172A] capitalize truncate">
+                <p className="text-[12.5px] font-bold text-[#141312] dark:text-[#f6f3ec] capitalize truncate">
                   {user.activePlan} {t.dashboard.planLabel}
                 </p>
-                <p className="text-[11px] text-[#64748B] truncate">
+                <p className="text-[11px] text-[#6e6a62] truncate">
                   {user.activePlan === 'premium' ? t.dashboard.allUnlocked : t.dashboard.upgradePrompt}
                 </p>
               </div>
@@ -386,17 +393,20 @@ export const DashboardPage: React.FC = () => {
           />
         </div>
 
-        <div className="xl:col-span-7 glass-card rounded-[16px] p-5 space-y-4">
+        <div className="xl:col-span-7 card-note p-5 sm:p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-[16px] font-bold text-[#0F172A]">
+            <h2 className="font-serif-display text-[20px] font-medium text-[#141312] dark:text-[#f6f3ec]">
               {t.dashboard.upcomingAssessments} & {t.dashboard.learningPaths}
             </h2>
-            <Link to="/assessments" className="text-[12.5px] font-semibold text-[#2563EB] hover:underline">
+            <Link
+              to="/assessments"
+              className="font-mono-tech text-[11px] uppercase tracking-[0.06em] font-semibold text-[#1c5b48] dark:text-[#7CD4B5] hover:underline"
+            >
               {t.common.viewAll}
             </Link>
           </div>
 
-          <div className="divide-y divide-[#E2E8F0]/70 dark:divide-slate-800">
+          <div className="divide-y divide-[#ded8ca] dark:divide-[#2A332E]">
             {assessments.slice(0, 3).map((assess) => {
               const attempt = assessmentAttempts[assess.id];
               return (
@@ -405,14 +415,14 @@ export const DashboardPage: React.FC = () => {
                   className="py-3 first:pt-1 last:pb-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="h-9 w-9 rounded-full bg-[#EFF6FF] dark:bg-blue-950/60 text-[#2563EB] flex items-center justify-center shrink-0">
-                      <ClipboardCheck className="h-4.5 w-4.5" />
+                    <div className="icon-box !w-9 !h-9 !rounded-xl">
+                      <ClipboardCheck className="h-4 w-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[13.5px] font-semibold text-[#0F172A] truncate">
+                      <p className="text-[13.5px] font-semibold text-[#141312] dark:text-[#f6f3ec] truncate">
                         {pickText(assess.title)}
                       </p>
-                      <p className="text-[12px] text-[#64748B]">
+                      <p className="text-[12px] font-mono-custom text-[#6e6a62]">
                         {assess.durationMinutes} {t.common.minutes} · {assess.passingScore}%
                       </p>
                     </div>
@@ -442,16 +452,16 @@ export const DashboardPage: React.FC = () => {
                   className="py-3 last:pb-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="h-9 w-9 rounded-full bg-[#F0FDF4] dark:bg-emerald-950/60 text-[#16A34A] flex items-center justify-center shrink-0">
-                      <Award className="h-4.5 w-4.5" />
+                    <div className="icon-box !w-9 !h-9 !rounded-xl">
+                      <Award className="h-4 w-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[13.5px] font-semibold text-[#0F172A] truncate">
+                      <p className="text-[13.5px] font-semibold text-[#141312] dark:text-[#f6f3ec] truncate">
                         {pickText(path.title)}
                       </p>
                       <div className="flex items-center gap-2 mt-1 w-40">
                         <ProgressBar value={pStats.percent} heightClass="h-1.5" />
-                        <span className="text-[11px] font-mono-custom text-[#64748B]">
+                        <span className="text-[11px] font-mono-custom text-[#6e6a62]">
                           {pStats.percent}%
                         </span>
                       </div>
@@ -474,15 +484,18 @@ export const DashboardPage: React.FC = () => {
 
       {/* Recommended Courses + Recent Achievements */}
       <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-[17px] font-bold text-[#0F172A]">
+        <div className="flex items-center justify-between pb-3 border-b border-[#ded8ca] dark:border-[#2A332E]">
+          <h2 className="font-serif-display text-[22px] font-medium text-[#141312] dark:text-[#f6f3ec]">
             {t.dashboard.recommendedCourses}
           </h2>
           <div className="flex items-center gap-4">
-            <span className="hidden sm:inline text-[12.5px] text-[#64748B]">
+            <span className="hidden sm:inline font-mono-tech text-[11px] uppercase tracking-[0.06em] text-[#6e6a62]">
               {achievements.filter((a) => a.unlocked).length} {t.dashboard.badgesUnlocked}
             </span>
-            <Link to="/explore" className="text-[13px] font-semibold text-[#2563EB] hover:underline">
+            <Link
+              to="/explore"
+              className="font-mono-tech text-[11.5px] uppercase tracking-[0.06em] font-semibold text-[#1c5b48] dark:text-[#7CD4B5] hover:underline"
+            >
               {t.dashboard.exploreMore}
             </Link>
           </div>

@@ -50,8 +50,8 @@ export const CourseWorkspacePage: React.FC = () => {
 
   if (!course) {
     return (
-      <div className="glass-card rounded-[16px] p-10 text-center space-y-4">
-        <h2 className="text-[20px] font-bold text-[#0F172A]">Course not found</h2>
+      <div className="card-note rounded-[16px] p-10 text-center space-y-4">
+        <h2 className="text-[20px] font-bold text-[#141312] dark:text-[#f6f3ec]">Course not found</h2>
         <Link to="/my-courses">
           <Button>{t.nav.myCourses}</Button>
         </Link>
@@ -86,7 +86,7 @@ export const CourseWorkspacePage: React.FC = () => {
 
   const handleSimulatedDownload = (resId: string, title: string) => {
     setDownloadedId(resId);
-    const blob = new Blob([`CamcodeLearn Academy Resource\n\nCourse: ${course.title.en}\nResource: ${title}\n`], {
+    const blob = new Blob([`Camcode Academy Resource\n\nCourse: ${course.title.en}\nResource: ${title}\n`], {
       type: 'text/plain;charset=utf-8',
     });
     const url = URL.createObjectURL(blob);
@@ -123,20 +123,20 @@ export const CourseWorkspacePage: React.FC = () => {
   return (
     <div className="space-y-5">
       {/* Workspace Header Bar */}
-      <div className="glass-panel rounded-[16px] p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="card-note rounded-[16px] p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0">
           <Link
             to={`/courses/${course.slug}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] border border-[#E2E8F0] dark:border-slate-700 bg-white dark:bg-slate-900 text-[13px] font-medium text-[#334155] hover:border-[#2563EB] shrink-0"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[13px] font-medium text-[#4c4842] dark:text-[#D5D1C8] hover:border-[#1c5b48] dark:border-[#7CD4B5] shrink-0"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>{t.workspace.backToCourse}</span>
           </Link>
           <div className="min-w-0">
-            <h1 className="text-[16px] sm:text-[18px] font-bold text-[#0F172A] truncate">
+            <h1 className="text-[16px] sm:text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec] truncate">
               {pickText(course.title)}
             </h1>
-            <p className="text-[12px] text-[#64748B] truncate">
+            <p className="text-[12px] text-[#6e6a62] dark:text-[#A3ACA6] truncate">
               {instructor?.name} · {completion.completedCount}/{completion.totalCount} {t.common.lessons}
             </p>
           </div>
@@ -145,8 +145,8 @@ export const CourseWorkspacePage: React.FC = () => {
         <div className="flex items-center gap-4 shrink-0">
           <div className="w-40 sm:w-48 space-y-1">
             <div className="flex justify-between text-[11.5px] font-medium">
-              <span className="text-[#64748B]">{t.workspace.courseProgress}</span>
-              <span className="font-mono-custom font-bold text-[#2563EB]">{completion.percent}%</span>
+              <span className="text-[#6e6a62] dark:text-[#A3ACA6]">{t.workspace.courseProgress}</span>
+              <span className="font-mono-custom font-bold text-[#1c5b48] dark:text-[#7CD4B5]">{completion.percent}%</span>
             </div>
             <ProgressBar value={completion.percent} />
           </div>
@@ -201,18 +201,18 @@ export const CourseWorkspacePage: React.FC = () => {
           )}
 
           {currentLesson?.type === 'reading' && (
-            <div className="glass-panel rounded-[18px] p-6 sm:p-8 space-y-6">
+            <div className="card-note rounded-[18px] p-6 sm:p-8 space-y-6">
               <div className="flex items-center justify-between gap-2">
                 <Badge tone="info">
                   <FileText className="h-3.5 w-3.5" />
                   Reading Lesson · {currentLesson.durationMinutes} min
                 </Badge>
               </div>
-              <h2 className="text-[24px] font-bold text-[#0F172A]">
+              <h2 className="text-[24px] font-bold text-[#141312] dark:text-[#f6f3ec]">
                 {pickText(currentLesson.title)}
               </h2>
               {currentLesson.summary && (
-                <p className="text-[15px] text-[#475569] leading-relaxed">
+                <p className="text-[15px] text-[#4c4842] dark:text-[#D5D1C8] leading-relaxed">
                   {pickText(currentLesson.summary)}
                 </p>
               )}
@@ -227,14 +227,14 @@ export const CourseWorkspacePage: React.FC = () => {
                 ]).map((sec, idx) => (
                   <div
                     key={idx}
-                    className="p-5 rounded-[14px] bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 space-y-2.5"
+                    className="p-5 rounded-[14px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-2.5"
                   >
-                    <h3 className="text-[17px] font-bold text-[#0F172A]">{pickText(sec.heading)}</h3>
-                    <p className="text-[14.5px] text-[#334155] leading-relaxed">{pickText(sec.body)}</p>
+                    <h3 className="text-[17px] font-bold text-[#141312] dark:text-[#f6f3ec]">{pickText(sec.heading)}</h3>
+                    <p className="text-[14.5px] text-[#4c4842] dark:text-[#D5D1C8] leading-relaxed">{pickText(sec.body)}</p>
                     {sec.bullets && (
                       <ul className="space-y-1.5 pt-1">
                         {sec.bullets.map((b, i) => (
-                          <li key={i} className="flex items-start gap-2 text-[14px] text-[#475569]">
+                          <li key={i} className="flex items-start gap-2 text-[14px] text-[#4c4842] dark:text-[#D5D1C8]">
                             <CheckCircle2 className="h-4 w-4 text-[#16A34A] shrink-0 mt-0.5" />
                             <span>{pickText(b)}</span>
                           </li>
@@ -248,7 +248,7 @@ export const CourseWorkspacePage: React.FC = () => {
           )}
 
           {currentLesson?.type === 'quiz' && (
-            <div className="glass-panel rounded-[18px] p-6 sm:p-8 space-y-6">
+            <div className="card-note rounded-[18px] p-6 sm:p-8 space-y-6">
               <div className="flex items-center justify-between">
                 <Badge tone="warning">
                   <FileQuestion className="h-3.5 w-3.5" />
@@ -256,11 +256,11 @@ export const CourseWorkspacePage: React.FC = () => {
                 </Badge>
               </div>
               <div>
-                <h2 className="text-[22px] font-bold text-[#0F172A]">
+                <h2 className="text-[22px] font-bold text-[#141312] dark:text-[#f6f3ec]">
                   {pickText(currentLesson.title)}
                 </h2>
                 {currentLesson.summary && (
-                  <p className="text-[14px] text-[#64748B] mt-1">{pickText(currentLesson.summary)}</p>
+                  <p className="text-[14px] text-[#6e6a62] dark:text-[#A3ACA6] mt-1">{pickText(currentLesson.summary)}</p>
                 )}
               </div>
 
@@ -268,9 +268,9 @@ export const CourseWorkspacePage: React.FC = () => {
                 {quizQuestions.map((q, qIdx) => (
                   <div
                     key={q.id}
-                    className="p-4 rounded-[14px] bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 space-y-3"
+                    className="p-4 rounded-[14px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-3"
                   >
-                    <p className="font-semibold text-[15px] text-[#0F172A]">
+                    <p className="font-semibold text-[15px] text-[#141312] dark:text-[#f6f3ec]">
                       {qIdx + 1}. {pickText(q.question)}
                     </p>
                     <div className="space-y-2">
@@ -278,12 +278,12 @@ export const CourseWorkspacePage: React.FC = () => {
                         const chosen = quizSelections[q.id] === oIdx;
                         const isCorrect = oIdx === q.correctIndex;
                         let style =
-                          'border-[#E2E8F0] dark:border-slate-700 hover:border-[#2563EB]';
+                          'border-[#ded8ca] dark:border-[#2A332E] hover:border-[#1c5b48] dark:border-[#7CD4B5]';
                         if (quizSubmitted) {
                           if (isCorrect) style = 'border-[#16A34A] bg-[#F0FDF4] dark:bg-emerald-950/40';
-                          else if (chosen) style = 'border-[#DC2626] bg-[#FEF2F2] dark:bg-red-950/40';
+                          else if (chosen) style = 'border-[#a5331f] bg-[#FEF2F2] dark:bg-red-950/40';
                         } else if (chosen) {
-                          style = 'border-[#2563EB] bg-[#EFF6FF] dark:bg-blue-950/40';
+                          style = 'border-[#1c5b48] dark:border-[#7CD4B5] bg-[#e4ede7] dark:bg-[#1B3028] dark:bg-[#1B3028]/40';
                         }
                         return (
                           <button
@@ -293,7 +293,7 @@ export const CourseWorkspacePage: React.FC = () => {
                             onClick={() =>
                               setQuizSelections((prev) => ({ ...prev, [q.id]: oIdx }))
                             }
-                            className={`w-full text-left p-3 rounded-[10px] border text-[14px] text-[#0F172A] transition-colors cursor-pointer ${style}`}
+                            className={`w-full text-left p-3 rounded-[10px] border text-[14px] text-[#141312] dark:text-[#f6f3ec] transition-colors cursor-pointer ${style}`}
                           >
                             {pickText(opt)}
                           </button>
@@ -301,7 +301,7 @@ export const CourseWorkspacePage: React.FC = () => {
                       })}
                     </div>
                     {quizSubmitted && (
-                      <p className="text-[13px] text-[#475569] bg-[#F8FAFC] dark:bg-slate-800 p-2.5 rounded-lg">
+                      <p className="text-[13px] text-[#4c4842] dark:text-[#D5D1C8] bg-[#f6f3ec] dark:bg-[#101412] dark:bg-[#181E1B] p-2.5 rounded-lg">
                         {pickText(q.explanation)}
                       </p>
                     )}
@@ -347,7 +347,7 @@ export const CourseWorkspacePage: React.FC = () => {
           )}
 
           {/* Action Bar: Prev / Mark Complete / Next */}
-          <div className="glass-card rounded-[14px] p-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="card-note rounded-[14px] p-4 flex flex-wrap items-center justify-between gap-3">
             <Button
               variant="outline"
               size="sm"
@@ -383,8 +383,8 @@ export const CourseWorkspacePage: React.FC = () => {
           </div>
 
           {/* Lesson Tabs: Overview, Resources, Notes */}
-          <div className="glass-card rounded-[18px] p-5 sm:p-6 space-y-5">
-            <div className="flex items-center gap-2 border-b border-[#E2E8F0] dark:border-slate-800 pb-3">
+          <div className="card-note rounded-[18px] p-5 sm:p-6 space-y-5">
+            <div className="flex items-center gap-2 border-b border-[#ded8ca] dark:border-[#2A332E] pb-3">
               {(['overview', 'resources', 'notes'] as const).map((tab) => (
                 <button
                   key={tab}
@@ -392,8 +392,8 @@ export const CourseWorkspacePage: React.FC = () => {
                   onClick={() => setActiveTab(tab)}
                   className={`px-3.5 py-1.5 rounded-[8px] text-[13.5px] font-semibold cursor-pointer transition-colors ${
                     activeTab === tab
-                      ? 'bg-[#2563EB] text-white'
-                      : 'text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9] dark:hover:bg-slate-800'
+                      ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white'
+                      : 'text-[#6e6a62] dark:text-[#A3ACA6] hover:text-[#141312] dark:text-[#f6f3ec] hover:bg-[#e5dfd2] dark:bg-[#181E1B] dark:hover:bg-slate-800'
                   }`}
                 >
                   {tab === 'overview'
@@ -408,24 +408,24 @@ export const CourseWorkspacePage: React.FC = () => {
             {activeTab === 'overview' && currentLesson && (
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-[17px] font-bold text-[#0F172A]">
+                  <h3 className="text-[17px] font-bold text-[#141312] dark:text-[#f6f3ec]">
                     {pickText(currentLesson.title)}
                   </h3>
-                  <p className="text-[14px] text-[#475569] mt-1 leading-relaxed">
+                  <p className="text-[14px] text-[#4c4842] dark:text-[#D5D1C8] mt-1 leading-relaxed">
                     {currentLesson.summary
                       ? pickText(currentLesson.summary)
                       : pickText(course.description)}
                   </p>
                 </div>
                 {currentLesson.takeaways && currentLesson.takeaways.length > 0 && (
-                  <div className="p-4 rounded-[12px] bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 space-y-2">
-                    <p className="text-[13px] font-bold text-[#0F172A] flex items-center gap-1.5">
-                      <Sparkles className="h-4 w-4 text-[#2563EB]" />
+                  <div className="p-4 rounded-[12px] bg-[#f6f3ec] dark:bg-[#101412] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-2">
+                    <p className="text-[13px] font-bold text-[#141312] dark:text-[#f6f3ec] flex items-center gap-1.5">
+                      <Sparkles className="h-4 w-4 text-[#1c5b48] dark:text-[#7CD4B5]" />
                       {t.workspace.keyTakeaways}
                     </p>
                     <ul className="space-y-1.5">
                       {currentLesson.takeaways.map((tk, i) => (
-                        <li key={i} className="flex items-start gap-2 text-[13.5px] text-[#334155]">
+                        <li key={i} className="flex items-start gap-2 text-[13.5px] text-[#4c4842] dark:text-[#D5D1C8]">
                           <CheckCircle2 className="h-4 w-4 text-[#16A34A] shrink-0 mt-0.5" />
                           <span>{pickText(tk)}</span>
                         </li>
@@ -452,17 +452,17 @@ export const CourseWorkspacePage: React.FC = () => {
                 ).map((res) => (
                   <div
                     key={res.id}
-                    className="flex items-center justify-between gap-4 p-3.5 rounded-[12px] bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800"
+                    className="flex items-center justify-between gap-4 p-3.5 rounded-[12px] bg-[#f6f3ec] dark:bg-[#101412] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E]"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <span className="px-2.5 py-1 rounded-md bg-[#EFF6FF] dark:bg-blue-950 text-[#2563EB] font-mono-custom text-[11px] font-bold">
+                      <span className="px-2.5 py-1 rounded-md bg-[#e4ede7] dark:bg-[#1B3028] dark:bg-[#1B3028] text-[#1c5b48] dark:text-[#7CD4B5] font-mono-custom text-[11px] font-bold">
                         {res.fileType}
                       </span>
                       <div className="min-w-0">
-                        <p className="text-[14px] font-semibold text-[#0F172A] truncate">
+                        <p className="text-[14px] font-semibold text-[#141312] dark:text-[#f6f3ec] truncate">
                           {pickText(res.title)}
                         </p>
-                        <p className="text-[12px] text-[#64748B] truncate">
+                        <p className="text-[12px] text-[#6e6a62] dark:text-[#A3ACA6] truncate">
                           {pickText(res.description)} · {res.sizeLabel}
                         </p>
                       </div>
@@ -487,7 +487,7 @@ export const CourseWorkspacePage: React.FC = () => {
                   value={progress?.notesByLessonId?.[currentLesson.id] ?? ''}
                   onChange={(e) => saveLessonNote(course.id, currentLesson.id, e.target.value)}
                   placeholder={t.workspace.notesPlaceholder}
-                  className="w-full rounded-[12px] border border-[#E2E8F0] dark:border-slate-700 bg-white dark:bg-slate-900 p-3.5 text-[14px] text-[#0F172A] outline-none focus:border-[#2563EB]"
+                  className="w-full rounded-[12px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] p-3.5 text-[14px] text-[#141312] dark:text-[#f6f3ec] outline-none focus:border-[#1c5b48] dark:border-[#7CD4B5]"
                 />
                 <p className="text-[12px] text-[#16A34A] font-medium">{t.workspace.notesSaved}</p>
               </div>
@@ -496,12 +496,12 @@ export const CourseWorkspacePage: React.FC = () => {
         </div>
 
         {/* Course Curriculum Sidebar */}
-        <aside className={`${theaterMode ? 'xl:col-span-12' : 'xl:col-span-4'} glass-panel rounded-[18px] p-4 sm:p-5 space-y-4 xl:sticky xl:top-22`}>
+        <aside className={`${theaterMode ? 'xl:col-span-12' : 'xl:col-span-4'} card-note rounded-[18px] p-4 sm:p-5 space-y-4 xl:sticky xl:top-22`}>
           <div className="flex items-center justify-between">
-            <h2 className="text-[16px] font-bold text-[#0F172A]">
+            <h2 className="text-[16px] font-bold text-[#141312] dark:text-[#f6f3ec]">
               {t.workspace.curriculumTitle}
             </h2>
-            <span className="text-[12px] font-mono-custom text-[#2563EB] font-semibold">
+            <span className="text-[12px] font-mono-custom text-[#1c5b48] dark:text-[#7CD4B5] font-semibold">
               {completion.completedCount}/{completion.totalCount}
             </span>
           </div>
@@ -509,7 +509,7 @@ export const CourseWorkspacePage: React.FC = () => {
           <div className="space-y-4 max-h-[65vh] overflow-y-auto thin-scrollbar pr-1">
             {course.curriculum.map((sec) => (
               <div key={sec.id} className="space-y-1.5">
-                <p className="text-[12px] font-bold uppercase tracking-wide text-[#64748B] px-1">
+                <p className="text-[12px] font-bold uppercase tracking-wide text-[#6e6a62] dark:text-[#A3ACA6] px-1">
                   {pickText(sec.title)}
                 </p>
                 <div className="space-y-1">
@@ -525,31 +525,31 @@ export const CourseWorkspacePage: React.FC = () => {
                         onClick={() => goToLesson(lesson.id)}
                         className={`w-full text-left p-2.5 rounded-[10px] border transition-colors flex items-start justify-between gap-2 cursor-pointer ${
                           active
-                            ? 'bg-[#EFF6FF] dark:bg-blue-950/50 border-[#2563EB] text-[#1D4ED8]'
-                            : 'bg-white/70 dark:bg-slate-900/70 border-transparent hover:border-[#E2E8F0] dark:hover:border-slate-700'
+                            ? 'bg-[#e4ede7] dark:bg-[#1B3028] dark:bg-[#1B3028]/50 border-[#1c5b48] dark:border-[#7CD4B5] text-[#1D4ED8]'
+                            : 'bg-white/70 dark:bg-[#151A17]/70 border-transparent hover:border-[#ded8ca] dark:border-[#2A332E] dark:hover:border-slate-700'
                         }`}
                       >
                         <div className="flex items-start gap-2.5 min-w-0">
                           {locked ? (
-                            <Lock className="h-4 w-4 text-[#94A3B8] shrink-0 mt-0.5" />
+                            <Lock className="h-4 w-4 text-[#6e6a62] shrink-0 mt-0.5" />
                           ) : done ? (
                             <CheckCircle2 className="h-4 w-4 text-[#16A34A] shrink-0 mt-0.5" />
                           ) : lesson.type === 'quiz' ? (
-                            <FileQuestion className="h-4 w-4 text-[#D97706] shrink-0 mt-0.5" />
+                            <FileQuestion className="h-4 w-4 text-[#8a5008] shrink-0 mt-0.5" />
                           ) : lesson.type === 'reading' ? (
                             <FileText className="h-4 w-4 text-[#0891B2] shrink-0 mt-0.5" />
                           ) : (
-                            <PlayCircle className="h-4 w-4 text-[#2563EB] shrink-0 mt-0.5" />
+                            <PlayCircle className="h-4 w-4 text-[#1c5b48] dark:text-[#7CD4B5] shrink-0 mt-0.5" />
                           )}
                           <span
                             className={`text-[13px] font-medium leading-snug ${
-                              active ? 'text-[#1D4ED8] dark:text-blue-300 font-semibold' : 'text-[#0F172A]'
+                              active ? 'text-[#1D4ED8] dark:text-[#7CD4B5] font-semibold' : 'text-[#141312] dark:text-[#f6f3ec]'
                             }`}
                           >
                             {pickText(lesson.title)}
                           </span>
                         </div>
-                        <span className="text-[11px] text-[#64748B] shrink-0 mt-0.5">
+                        <span className="text-[11px] text-[#6e6a62] dark:text-[#A3ACA6] shrink-0 mt-0.5">
                           {lesson.durationMinutes}m
                         </span>
                       </button>

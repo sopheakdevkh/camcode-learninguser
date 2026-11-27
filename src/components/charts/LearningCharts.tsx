@@ -17,7 +17,7 @@ export const AreaTrendChart: React.FC<{
   subtitle,
   seriesByRange,
   unitSuffix = 'min',
-  accentColor = '#2563EB',
+  accentColor = '#1c5b48',
   rangeLabels = { daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly' },
 }) => {
   const [range, setRange] = useState<'daily' | 'weekly' | 'monthly'>('weekly');
@@ -60,23 +60,25 @@ export const AreaTrendChart: React.FC<{
   const gradId = React.useId();
 
   return (
-    <div className="glass-card rounded-[16px] p-5 space-y-4">
+    <div className="card-note p-5 sm:p-6 space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-[16px] font-bold text-[#0F172A]">{title}</h2>
-          {subtitle && <p className="text-[12.5px] text-[#64748B]">{subtitle}</p>}
+          <h2 className="font-serif-display text-[20px] font-medium text-[#141312] dark:text-[#f6f3ec]">
+            {title}
+          </h2>
+          {subtitle && <p className="text-[12.5px] text-[#6e6a62] mt-0.5">{subtitle}</p>}
         </div>
 
-        <div className="inline-flex rounded-[9px] border border-[#E2E8F0] dark:border-slate-700 bg-[#F8FAFC] dark:bg-slate-900 p-0.5">
+        <div className="inline-flex rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#e5dfd2] dark:bg-[#181E1B] p-1">
           {(['daily', 'weekly', 'monthly'] as const).map((r) => (
             <button
               key={r}
               type="button"
               onClick={() => setRange(r)}
-              className={`px-3 py-1 rounded-[7px] text-[12px] font-medium capitalize transition-colors cursor-pointer ${
+              className={`px-3 py-1 rounded-full text-[11.5px] font-medium capitalize transition-colors cursor-pointer ${
                 range === r
-                  ? 'bg-white dark:bg-slate-800 text-[#0F172A] shadow-2xs font-semibold'
-                  : 'text-[#64748B] hover:text-[#0F172A]'
+                  ? 'bg-[#efebe1] dark:bg-[#151A17] text-[#141312] dark:text-[#f6f3ec] shadow-xs font-semibold'
+                  : 'text-[#6e6a62] hover:text-[#141312]'
               }`}
             >
               {rangeLabels[r]}
@@ -104,14 +106,14 @@ export const AreaTrendChart: React.FC<{
                   x2="622"
                   y2={y}
                   stroke="currentColor"
-                  className="text-[#E2E8F0] dark:text-slate-800"
+                  className="text-[#ded8ca] dark:text-[#2A332E]"
                   strokeDasharray="3 3"
                 />
                 <text
                   x="0"
                   y={y + 4}
                   fontSize="10.5"
-                  fill="#94A3B8"
+                  fill="#6e6a62"
                   className="font-mono-custom"
                 >
                   {Math.round(maxVal * ratio)}
@@ -135,7 +137,7 @@ export const AreaTrendChart: React.FC<{
                 cx={pt.x}
                 cy={pt.y}
                 r="4"
-                fill="#FFFFFF"
+                fill="#efebe1"
                 stroke={accentColor}
                 strokeWidth="2.2"
               />
@@ -145,7 +147,8 @@ export const AreaTrendChart: React.FC<{
                 y="204"
                 textAnchor="middle"
                 fontSize="11"
-                fill="#64748B"
+                fill="#6e6a62"
+                className="font-mono-custom"
               >
                 {pt.label}
               </text>
@@ -170,8 +173,10 @@ export const CategoryDonutCard: React.FC<{
   let cumulative = 0;
 
   return (
-    <div className="glass-card rounded-[16px] p-5 flex flex-col justify-between gap-4">
-      <h2 className="text-[16px] font-bold text-[#0F172A]">{title}</h2>
+    <div className="card-note p-5 sm:p-6 flex flex-col justify-between gap-4">
+      <h2 className="font-serif-display text-[20px] font-medium text-[#141312] dark:text-[#f6f3ec]">
+        {title}
+      </h2>
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-5 my-auto">
         <div className="space-y-3 w-full sm:w-auto flex-1">
@@ -182,8 +187,10 @@ export const CategoryDonutCard: React.FC<{
                 style={{ backgroundColor: item.color }}
               />
               <div className="min-w-0">
-                <p className="text-[13px] font-semibold text-[#0F172A] truncate">{item.label}</p>
-                <p className="text-[11.5px] text-[#64748B]">{item.sublabel}</p>
+                <p className="text-[13px] font-semibold text-[#141312] dark:text-[#f6f3ec] truncate">
+                  {item.label}
+                </p>
+                <p className="text-[11.5px] font-mono-custom text-[#6e6a62]">{item.sublabel}</p>
               </div>
             </div>
           ))}
@@ -197,7 +204,7 @@ export const CategoryDonutCard: React.FC<{
               r={radius}
               fill="none"
               stroke="currentColor"
-              className="text-[#F1F5F9] dark:text-slate-800"
+              className="text-[#e5dfd2] dark:text-[#1E2622]"
               strokeWidth="16"
             />
             {items.map((item) => {
@@ -221,12 +228,15 @@ export const CategoryDonutCard: React.FC<{
             })}
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span className="text-[19px] font-bold text-[#0F172A] leading-none">{centerValue}</span>
-            <span className="text-[10.5px] text-[#64748B] mt-1">{centerLabel}</span>
+            <span className="font-serif-display text-[22px] font-medium text-[#141312] dark:text-[#f6f3ec] leading-none">
+              {centerValue}
+            </span>
+            <span className="font-mono-tech text-[10px] uppercase tracking-[0.08em] text-[#6e6a62] mt-1">
+              {centerLabel}
+            </span>
           </div>
         </div>
       </div>
     </div>
   );
 };
-

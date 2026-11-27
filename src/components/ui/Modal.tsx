@@ -33,30 +33,31 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F172A]/55 backdrop-blur-[3px]"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#141312]/55 backdrop-blur-[4px]"
       role="dialog"
       aria-modal="true"
       aria-label={title}
       onClick={onClose}
     >
       <div
-        className={`w-full ${maxWidthClass} bg-white dark:bg-slate-900 rounded-[14px] border border-[#E2E8F0] dark:border-slate-700 shadow-xl overflow-hidden`}
+        className={`w-full ${maxWidthClass} bg-[#efebe1] dark:bg-[#151A17] rounded-[20px] border border-[#ded8ca] dark:border-[#2A332E] shadow-2xl overflow-hidden`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[#E2E8F0] dark:border-slate-800">
-          <h3 className="text-[17px] font-semibold text-[#0F172A] dark:text-slate-100">{title}</h3>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#ded8ca] dark:border-[#2A332E]">
+          <h3 className="font-serif-display text-[20px] font-medium text-[#141312] dark:text-[#f6f3ec]">
+            {title}
+          </h3>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close modal"
-            className="p-1.5 rounded-[8px] text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9] dark:hover:bg-slate-800 dark:hover:text-slate-100 cursor-pointer"
+            className="p-2 rounded-full border border-[#ded8ca] dark:border-[#2A332E] text-[#6e6a62] hover:text-[#141312] hover:border-[#1c5b48] dark:hover:text-[#f6f3ec] cursor-pointer transition-colors"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
-        <div className="p-5 max-h-[82vh] overflow-y-auto thin-scrollbar">{children}</div>
+        <div className="p-6 max-h-[82vh] overflow-y-auto thin-scrollbar">{children}</div>
       </div>
     </div>
   );
 };
-

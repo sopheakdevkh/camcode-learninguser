@@ -12,20 +12,20 @@ interface AlertProps {
 
 const styles: Record<AlertTone, { wrap: string; icon: React.ReactNode }> = {
   info: {
-    wrap: 'bg-[#ECFEFF] border-[#A5F3FC] text-[#0E7490] dark:bg-cyan-950/40 dark:border-cyan-800 dark:text-cyan-200',
-    icon: <Info className="h-5 w-5 text-[#0891B2] shrink-0" />,
+    wrap: 'bg-[#E6F2F0] border-[#BFE0DB] text-[#0F524C] dark:bg-[#162C29] dark:border-[#234742] dark:text-[#6EE7B7]',
+    icon: <Info className="h-5 w-5 text-[#1c5b48] dark:text-[#7CD4B5] shrink-0" />,
   },
   success: {
-    wrap: 'bg-[#F0FDF4] border-[#BBF7D0] text-[#15803D] dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-200',
-    icon: <CheckCircle2 className="h-5 w-5 text-[#16A34A] shrink-0" />,
+    wrap: 'bg-[#e4ede7] border-[#BBD6C8] text-[#15463a] dark:bg-[#1B3028] dark:border-[#2A4D3E] dark:text-[#7CD4B5]',
+    icon: <CheckCircle2 className="h-5 w-5 text-[#1c5b48] dark:text-[#7CD4B5] shrink-0" />,
   },
   warning: {
-    wrap: 'bg-[#FFFBEB] border-[#FDE68A] text-[#B45309] dark:bg-amber-950/40 dark:border-amber-800 dark:text-amber-200',
-    icon: <AlertTriangle className="h-5 w-5 text-[#D97706] shrink-0" />,
+    wrap: 'bg-[#FEF3C7] border-[#FDE68A] text-[#92400E] dark:bg-[#2E2514] dark:border-[#4D3C1D] dark:text-[#FBBF24]',
+    icon: <AlertTriangle className="h-5 w-5 text-[#8a5008] dark:text-[#FBBF24] shrink-0" />,
   },
   error: {
-    wrap: 'bg-[#FEF2F2] border-[#FECACA] text-[#B91C1C] dark:bg-red-950/40 dark:border-red-800 dark:text-red-200',
-    icon: <AlertCircle className="h-5 w-5 text-[#DC2626] shrink-0" />,
+    wrap: 'bg-[#FEE2E2] border-[#FECACA] text-[#991B1B] dark:bg-[#2F1616] dark:border-[#4D2424] dark:text-[#FCA5A5]',
+    icon: <AlertCircle className="h-5 w-5 text-[#a5331f] dark:text-[#FCA5A5] shrink-0" />,
   },
 };
 
@@ -34,7 +34,7 @@ export const Alert: React.FC<AlertProps> = ({ tone = 'info', title, children, cl
   return (
     <div
       role="alert"
-      className={`flex items-start gap-3 p-4 rounded-[12px] border ${s.wrap} ${className}`}
+      className={`flex items-start gap-3 p-4 rounded-xl border ${s.wrap} ${className}`}
     >
       {s.icon}
       <div className="text-[14px] leading-relaxed">
@@ -44,4 +44,3 @@ export const Alert: React.FC<AlertProps> = ({ tone = 'info', title, children, cl
     </div>
   );
 };
-

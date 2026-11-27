@@ -66,7 +66,7 @@ export const MOCK_LEARNING_PATHS: LearningPath[] = [
       { en: 'Automate monthly sales and cash flow summaries', km: 'រៀបចំរបាយការណ៍លក់ និងសាច់ប្រាក់ដោយស្វ័យប្រវត្តិ' },
       { en: 'Apply safe AI workflows for team documentation', km: 'ប្រើប្រាស់ AI សម្រាប់របាយការណ៍ប្រកបដោយសុវត្ថិភាព' },
     ],
-    accentColor: '#D97706',
+    accentColor: '#8a5008',
     thumbnailTheme: 'from-amber-50 to-orange-100 border-amber-200',
   },
   {
@@ -212,8 +212,8 @@ export const MOCK_ASSESSMENTS: Assessment[] = [
     dueDate: '2026-12-12',
     difficulty: 'beginner',
     certificateTitle: {
-      en: 'CamcodeLearn Certified Digital Marketer',
-      km: 'វិញ្ញាបនបត្រអ្នកទីផ្សារឌីជីថល CamcodeLearn',
+      en: 'Camcode Certified Digital Marketer',
+      km: 'វិញ្ញាបនបត្រអ្នកទីផ្សារឌីជីថល Camcode',
     },
     questions: [
       {
@@ -396,7 +396,7 @@ export const INITIAL_ACHIEVEMENTS: AchievementBadge[] = [
   {
     id: 'ach-course-finisher',
     title: { en: 'Course Finisher', km: 'អ្នកបញ្ចប់វគ្គសិក្សា' },
-    description: { en: 'Complete 3 full courses on CamcodeLearn', km: 'បញ្ចប់វគ្គសិក្សាពេញលេញចំនួន ៣ វគ្គ' },
+    description: { en: 'Complete 3 full courses on Camcode', km: 'បញ្ចប់វគ្គសិក្សាពេញលេញចំនួន ៣ វគ្គ' },
     xp: 500,
     icon: 'BookOpen',
     category: 'progress',

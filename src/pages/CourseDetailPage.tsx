@@ -50,8 +50,8 @@ export const CourseDetailPage: React.FC = () => {
 
   if (!course) {
     return (
-      <div className="glass-card rounded-[16px] p-10 text-center space-y-4">
-        <h2 className="text-[20px] font-bold text-[#0F172A]">Course not found</h2>
+      <div className="card-note rounded-[16px] p-10 text-center space-y-4">
+        <h2 className="text-[20px] font-bold text-[#141312] dark:text-[#f6f3ec]">Course not found</h2>
         <Link to="/explore">
           <Button>{t.courseDetail.backToExplore}</Button>
         </Link>
@@ -138,7 +138,7 @@ export const CourseDetailPage: React.FC = () => {
     <div className="space-y-8">
       <Link
         to="/explore"
-        className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#64748B] hover:text-[#2563EB]"
+        className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#6e6a62] dark:text-[#A3ACA6] hover:text-[#1c5b48] dark:text-[#7CD4B5]"
       >
         <ArrowLeft className="h-4 w-4" />
         <span>{t.courseDetail.backToExplore}</span>
@@ -148,7 +148,7 @@ export const CourseDetailPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left 8 columns */}
         <div className="lg:col-span-8 space-y-6">
-          <div className="glass-panel rounded-[20px] p-6 sm:p-8 space-y-5">
+          <div className="card-note rounded-[20px] p-6 sm:p-8 space-y-5">
             <div className="flex flex-wrap items-center gap-2">
               {category && <Badge tone="primary">{pickText(category.name)}</Badge>}
               <Badge tone="neutral">
@@ -166,28 +166,28 @@ export const CourseDetailPage: React.FC = () => {
               )}
             </div>
 
-            <h1 className="text-[26px] sm:text-[32px] font-bold text-[#0F172A] leading-tight">
+            <h1 className="font-serif-display text-[28px] sm:text-[36px] leading-[1.08] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec] leading-tight">
               {pickText(course.title)}
             </h1>
-            <p className="text-[15.5px] text-[#475569] leading-relaxed">
+            <p className="text-[15.5px] text-[#4c4842] dark:text-[#D5D1C8] leading-relaxed">
               {pickText(course.description)}
             </p>
 
-            <div className="flex flex-wrap items-center gap-5 pt-2 text-[13.5px] text-[#475569]">
-              <span className="inline-flex items-center gap-1.5 font-semibold text-[#0F172A]">
-                <Star className="h-4 w-4 fill-[#D97706] text-[#D97706]" />
+            <div className="flex flex-wrap items-center gap-5 pt-2 text-[13.5px] text-[#4c4842] dark:text-[#D5D1C8]">
+              <span className="inline-flex items-center gap-1.5 font-semibold text-[#141312] dark:text-[#f6f3ec]">
+                <Star className="h-4 w-4 fill-[#8a5008] text-[#8a5008]" />
                 {course.rating.toFixed(1)} ({formatNumber(course.reviewsCount)})
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Users className="h-4 w-4 text-[#64748B]" />
+                <Users className="h-4 w-4 text-[#6e6a62] dark:text-[#A3ACA6]" />
                 {formatNumber(course.studentsCount)} {t.common.students}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Clock className="h-4 w-4 text-[#64748B]" />
+                <Clock className="h-4 w-4 text-[#6e6a62] dark:text-[#A3ACA6]" />
                 {formatNumber(course.durationHours)} {t.common.hours}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Globe className="h-4 w-4 text-[#64748B]" />
+                <Globe className="h-4 w-4 text-[#6e6a62] dark:text-[#A3ACA6]" />
                 {course.language === 'bilingual'
                   ? t.common.bilingual
                   : course.language === 'km'
@@ -198,13 +198,13 @@ export const CourseDetailPage: React.FC = () => {
           </div>
 
           {/* Learning Objectives */}
-          <section className="glass-card rounded-[18px] p-6 space-y-4">
-            <h2 className="text-[18px] font-bold text-[#0F172A]">
+          <section className="card-note rounded-[18px] p-6 space-y-4">
+            <h2 className="text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec]">
               {t.courseDetail.whatYouLearn}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {course.outcomes.map((item, idx) => (
-                <div key={idx} className="flex items-start gap-2.5 text-[14px] text-[#334155]">
+                <div key={idx} className="flex items-start gap-2.5 text-[14px] text-[#4c4842] dark:text-[#D5D1C8]">
                   <CheckCircle2 className="h-4.5 w-4.5 text-[#16A34A] shrink-0 mt-0.5" />
                   <span>{pickText(item)}</span>
                 </div>
@@ -213,12 +213,12 @@ export const CourseDetailPage: React.FC = () => {
           </section>
 
           {/* Curriculum */}
-          <section className="glass-card rounded-[18px] p-6 space-y-4">
+          <section className="card-note rounded-[18px] p-6 space-y-4">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="text-[18px] font-bold text-[#0F172A]">
+              <h2 className="text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec]">
                 {t.courseDetail.curriculum}
               </h2>
-              <span className="text-[13px] text-[#64748B]">
+              <span className="text-[13px] text-[#6e6a62] dark:text-[#A3ACA6]">
                 {course.curriculum.length} {t.courseDetail.modulesLabel} · {totalLessons} {t.common.lessons}
               </span>
             </div>
@@ -229,26 +229,26 @@ export const CourseDetailPage: React.FC = () => {
                 return (
                   <div
                     key={sec.id}
-                    className="rounded-[12px] border border-[#E2E8F0] dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-900"
+                    className="rounded-[12px] border border-[#ded8ca] dark:border-[#2A332E] overflow-hidden bg-[#efebe1] dark:bg-[#151A17]"
                   >
                     <button
                       type="button"
                       onClick={() =>
                         setOpenSections((prev) => ({ ...prev, [String(idx)]: !isOpen }))
                       }
-                      className="w-full px-4 py-3.5 flex items-center justify-between gap-3 text-left bg-[#F8FAFC] dark:bg-slate-800/60 cursor-pointer"
+                      className="w-full px-4 py-3.5 flex items-center justify-between gap-3 text-left bg-[#f6f3ec] dark:bg-[#101412] dark:bg-[#181E1B]/60 cursor-pointer"
                     >
-                      <span className="font-semibold text-[14.5px] text-[#0F172A]">
+                      <span className="font-semibold text-[14.5px] text-[#141312] dark:text-[#f6f3ec]">
                         {pickText(sec.title)}
                       </span>
-                      <div className="flex items-center gap-2 text-[12px] text-[#64748B] shrink-0">
+                      <div className="flex items-center gap-2 text-[12px] text-[#6e6a62] dark:text-[#A3ACA6] shrink-0">
                         <span>{sec.lessons.length} {t.common.lessons}</span>
                         {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                       </div>
                     </button>
 
                     {isOpen && (
-                      <div className="divide-y divide-[#E2E8F0]/70 dark:divide-slate-800">
+                      <div className="divide-y divide-[#ded8ca] dark:divide-[#2A332E]/70 dark:divide-[#2A332E]">
                         {sec.lessons.map((lesson) => {
                           const done = progress?.completedLessonIds.includes(lesson.id);
                           return (
@@ -260,24 +260,24 @@ export const CourseDetailPage: React.FC = () => {
                                 {done ? (
                                   <CheckCircle2 className="h-4 w-4 text-[#16A34A] shrink-0" />
                                 ) : lesson.type === 'quiz' ? (
-                                  <FileQuestion className="h-4 w-4 text-[#D97706] shrink-0" />
+                                  <FileQuestion className="h-4 w-4 text-[#8a5008] shrink-0" />
                                 ) : lesson.type === 'reading' ? (
                                   <FileText className="h-4 w-4 text-[#0891B2] shrink-0" />
                                 ) : (
-                                  <PlayCircle className="h-4 w-4 text-[#2563EB] shrink-0" />
+                                  <PlayCircle className="h-4 w-4 text-[#1c5b48] dark:text-[#7CD4B5] shrink-0" />
                                 )}
-                                <span className="text-[#0F172A] truncate">{pickText(lesson.title)}</span>
+                                <span className="text-[#141312] dark:text-[#f6f3ec] truncate">{pickText(lesson.title)}</span>
                               </div>
                               <div className="flex items-center gap-2 shrink-0">
                                 {lesson.isPreview && !isUnlocked && (
                                   <Link
                                     to={`/learn/${course.slug}/${lesson.id}`}
-                                    className="text-[12px] font-semibold text-[#2563EB] hover:underline"
+                                    className="text-[12px] font-semibold text-[#1c5b48] dark:text-[#7CD4B5] hover:underline"
                                   >
                                     {t.courseDetail.previewBadge}
                                   </Link>
                                 )}
-                                <span className="text-[12px] text-[#64748B]">
+                                <span className="text-[12px] text-[#6e6a62] dark:text-[#A3ACA6]">
                                   {lesson.durationMinutes}m
                                 </span>
                               </div>
@@ -293,14 +293,14 @@ export const CourseDetailPage: React.FC = () => {
           </section>
 
           {/* Requirements */}
-          <section className="glass-card rounded-[18px] p-6 space-y-3">
-            <h2 className="text-[18px] font-bold text-[#0F172A]">
+          <section className="card-note rounded-[18px] p-6 space-y-3">
+            <h2 className="text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec]">
               {t.courseDetail.requirements}
             </h2>
             <ul className="space-y-2">
               {course.requirements.map((req, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-[14px] text-[#475569]">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#2563EB] shrink-0" />
+                <li key={idx} className="flex items-start gap-2 text-[14px] text-[#4c4842] dark:text-[#D5D1C8]">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#1c5b48] dark:bg-[#2D7A62] shrink-0" />
                   <span>{pickText(req)}</span>
                 </li>
               ))}
@@ -309,7 +309,7 @@ export const CourseDetailPage: React.FC = () => {
 
           {/* Instructor */}
           {instructor && (
-            <section className="glass-card rounded-[18px] p-6 flex items-start gap-4">
+            <section className="card-note rounded-[18px] p-6 flex items-start gap-4">
               <div
                 className="h-14 w-14 rounded-2xl text-white font-bold text-[18px] flex items-center justify-center shrink-0"
                 style={{ backgroundColor: instructor.avatarColor }}
@@ -317,12 +317,12 @@ export const CourseDetailPage: React.FC = () => {
                 {instructor.initials}
               </div>
               <div className="space-y-1.5">
-                <p className="text-[12px] font-semibold uppercase tracking-wider text-[#2563EB]">
+                <p className="text-[12px] font-semibold uppercase tracking-wider text-[#1c5b48] dark:text-[#7CD4B5]">
                   {t.courseDetail.instructor}
                 </p>
-                <h3 className="text-[17px] font-bold text-[#0F172A]">{instructor.name}</h3>
-                <p className="text-[13px] font-medium text-[#64748B]">{pickText(instructor.role)}</p>
-                <p className="text-[13.5px] text-[#475569] leading-relaxed">
+                <h3 className="text-[17px] font-bold text-[#141312] dark:text-[#f6f3ec]">{instructor.name}</h3>
+                <p className="text-[13px] font-medium text-[#6e6a62] dark:text-[#A3ACA6]">{pickText(instructor.role)}</p>
+                <p className="text-[13.5px] text-[#4c4842] dark:text-[#D5D1C8] leading-relaxed">
                   {pickText(instructor.bio)}
                 </p>
               </div>
@@ -332,12 +332,12 @@ export const CourseDetailPage: React.FC = () => {
 
         {/* Right 4 columns Sticky Enrollment Box */}
         <aside className="lg:col-span-4 lg:sticky lg:top-22 space-y-4">
-          <div className="glass-panel rounded-[20px] p-5 space-y-5">
+          <div className="card-note rounded-[20px] p-5 space-y-5">
             <div
-              className={`h-44 rounded-[14px] bg-gradient-to-br ${course.thumbnailTheme} border border-white/80 dark:border-slate-700 p-4 flex flex-col justify-between`}
+              className={`h-44 rounded-[14px] bg-gradient-to-br ${course.thumbnailTheme} border border-white/80 dark:border-[#2A332E] p-4 flex flex-col justify-between`}
             >
               <div className="flex justify-between items-center">
-                <span className="px-2.5 py-0.5 rounded-full bg-white/90 dark:bg-slate-900/90 text-[11px] font-semibold text-[#0F172A]">
+                <span className="px-2.5 py-0.5 rounded-full bg-white/90 dark:bg-[#151A17]/90 text-[11px] font-semibold text-[#141312] dark:text-[#f6f3ec]">
                   {course.thumbnailLabel}
                 </span>
                 {isUnlocked && <Badge tone="success">{t.common.enrolled}</Badge>}
@@ -359,11 +359,11 @@ export const CourseDetailPage: React.FC = () => {
                 </span>
               ) : (
                 <div className="flex items-baseline gap-2">
-                  <span className="text-[28px] font-bold text-[#0F172A]">
+                  <span className="text-[28px] font-bold text-[#141312] dark:text-[#f6f3ec]">
                     ${course.price.toFixed(0)}
                   </span>
                   {course.originalPrice && (
-                    <span className="text-[14px] text-[#94A3B8] line-through">
+                    <span className="text-[14px] text-[#6e6a62] line-through">
                       ${course.originalPrice.toFixed(0)}
                     </span>
                   )}
@@ -385,7 +385,7 @@ export const CourseDetailPage: React.FC = () => {
               onClick={() => toggleSavedCourse(course.id)}
               leftIcon={
                 isSaved ? (
-                  <BookmarkCheck className="h-4 w-4 text-[#2563EB]" />
+                  <BookmarkCheck className="h-4 w-4 text-[#1c5b48] dark:text-[#7CD4B5]" />
                 ) : (
                   <Bookmark className="h-4 w-4" />
                 )
@@ -394,29 +394,29 @@ export const CourseDetailPage: React.FC = () => {
               {isSaved ? t.courseDetail.savedToWatchlist : t.courseDetail.saveToWatchlist}
             </Button>
 
-            <div className="pt-3 border-t border-[#E2E8F0] dark:border-slate-800 space-y-2.5 text-[13px] text-[#475569]">
+            <div className="pt-3 border-t border-[#ded8ca] dark:border-[#2A332E] space-y-2.5 text-[13px] text-[#4c4842] dark:text-[#D5D1C8]">
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-2">
-                  <Layers className="h-4 w-4 text-[#94A3B8]" />
+                  <Layers className="h-4 w-4 text-[#6e6a62]" />
                   {t.common.lessons}
                 </span>
-                <span className="font-semibold text-[#0F172A]">{totalLessons}</span>
+                <span className="font-semibold text-[#141312] dark:text-[#f6f3ec]">{totalLessons}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-[#94A3B8]" />
+                  <Clock className="h-4 w-4 text-[#6e6a62]" />
                   Duration
                 </span>
-                <span className="font-semibold text-[#0F172A]">
+                <span className="font-semibold text-[#141312] dark:text-[#f6f3ec]">
                   {course.durationHours} {t.common.hours}
                 </span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-2">
-                  <Award className="h-4 w-4 text-[#94A3B8]" />
+                  <Award className="h-4 w-4 text-[#6e6a62]" />
                   Credential
                 </span>
-                <span className="font-semibold text-[#0F172A]">Certificate</span>
+                <span className="font-semibold text-[#141312] dark:text-[#f6f3ec]">Certificate</span>
               </div>
             </div>
           </div>
@@ -426,7 +426,7 @@ export const CourseDetailPage: React.FC = () => {
       {/* Related Courses */}
       {related.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-[20px] font-bold text-[#0F172A]">{t.courseDetail.relatedCourses}</h2>
+          <h2 className="text-[20px] font-bold text-[#141312] dark:text-[#f6f3ec]">{t.courseDetail.relatedCourses}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {related.map((c) => (
               <CourseCard key={c.id} course={c} variant="explore" />
@@ -443,24 +443,24 @@ export const CourseDetailPage: React.FC = () => {
         maxWidthClass="max-w-md"
       >
         <div className="space-y-4">
-          <div className="p-3.5 rounded-[12px] bg-[#F8FAFC] dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 flex items-center justify-between gap-3">
+          <div className="p-3.5 rounded-[12px] bg-[#f6f3ec] dark:bg-[#101412] dark:bg-[#181E1B] border border-[#ded8ca] dark:border-[#2A332E] flex items-center justify-between gap-3">
             <div>
-              <p className="text-[14px] font-bold text-[#0F172A]">{pickText(course.title)}</p>
-              <p className="text-[12px] text-[#64748B]">Lifetime individual course access</p>
+              <p className="text-[14px] font-bold text-[#141312] dark:text-[#f6f3ec]">{pickText(course.title)}</p>
+              <p className="text-[12px] text-[#6e6a62] dark:text-[#A3ACA6]">Lifetime individual course access</p>
             </div>
-            <span className="text-[18px] font-bold text-[#0F172A]">${course.price.toFixed(2)}</span>
+            <span className="text-[18px] font-bold text-[#141312] dark:text-[#f6f3ec]">${course.price.toFixed(2)}</span>
           </div>
 
           <div className="space-y-2">
-            <p className="text-[13px] font-semibold text-[#0F172A]">Payment Method</p>
+            <p className="text-[13px] font-semibold text-[#141312] dark:text-[#f6f3ec]">Payment Method</p>
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => setPaymentMethod('card')}
                 className={`p-3 rounded-[10px] border text-left text-[13px] font-medium flex items-center gap-2 cursor-pointer ${
                   paymentMethod === 'card'
-                    ? 'border-[#2563EB] bg-[#EFF6FF] dark:bg-blue-950/40 text-[#1D4ED8]'
-                    : 'border-[#E2E8F0] dark:border-slate-700 text-[#475569]'
+                    ? 'border-[#1c5b48] dark:border-[#7CD4B5] bg-[#e4ede7] dark:bg-[#1B3028] dark:bg-[#1B3028]/40 text-[#1D4ED8]'
+                    : 'border-[#ded8ca] dark:border-[#2A332E] text-[#4c4842] dark:text-[#D5D1C8]'
                 }`}
               >
                 <CreditCard className="h-4 w-4" />
@@ -471,8 +471,8 @@ export const CourseDetailPage: React.FC = () => {
                 onClick={() => setPaymentMethod('khqr')}
                 className={`p-3 rounded-[10px] border text-left text-[13px] font-medium flex items-center gap-2 cursor-pointer ${
                   paymentMethod === 'khqr'
-                    ? 'border-[#2563EB] bg-[#EFF6FF] dark:bg-blue-950/40 text-[#1D4ED8]'
-                    : 'border-[#E2E8F0] dark:border-slate-700 text-[#475569]'
+                    ? 'border-[#1c5b48] dark:border-[#7CD4B5] bg-[#e4ede7] dark:bg-[#1B3028] dark:bg-[#1B3028]/40 text-[#1D4ED8]'
+                    : 'border-[#ded8ca] dark:border-[#2A332E] text-[#4c4842] dark:text-[#D5D1C8]'
                 }`}
               >
                 <ShieldCheck className="h-4 w-4" />

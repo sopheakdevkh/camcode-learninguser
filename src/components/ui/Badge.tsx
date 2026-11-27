@@ -9,22 +9,28 @@ interface BadgeProps {
 }
 
 const toneClasses: Record<BadgeTone, string> = {
-  neutral: 'bg-[#F1F5F9] text-[#475569] border-[#E2E8F0] dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700',
-  primary: 'bg-[#EFF6FF] text-[#1D4ED8] border-[#BFDBFE] dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800',
-  success: 'bg-[#F0FDF4] text-[#15803D] border-[#BBF7D0] dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800',
-  warning: 'bg-[#FFFBEB] text-[#B45309] border-[#FDE68A] dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800',
-  error: 'bg-[#FEF2F2] text-[#B91C1C] border-[#FECACA] dark:bg-red-950/60 dark:text-red-300 dark:border-red-800',
-  info: 'bg-[#ECFEFF] text-[#0E7490] border-[#A5F3FC] dark:bg-cyan-950/60 dark:text-cyan-300 dark:border-cyan-800',
-  dark: 'bg-[#0F172A] text-white border-[#0F172A] dark:bg-slate-100 dark:text-slate-900 dark:border-slate-100',
+  neutral:
+    'bg-[#e5dfd2] text-[#6e6a62] border-[#ded8ca] dark:bg-[#181E1B] dark:text-[#A3ACA6] dark:border-[#2A332E]',
+  primary:
+    'bg-[#e4ede7] text-[#1c5b48] border-[#c5d6cb] dark:bg-[#1B3028] dark:text-[#7CD4B5] dark:border-[#2A4D3E]',
+  success:
+    'bg-[#e4ede7] text-[#15463a] border-[#BBD6C8] dark:bg-[#1B3028] dark:text-[#7CD4B5] dark:border-[#2A4D3E]',
+  warning:
+    'bg-[#FEF3C7] text-[#92400E] border-[#FDE68A] dark:bg-[#2E2514] dark:text-[#FBBF24] dark:border-[#4D3C1D]',
+  error:
+    'bg-[#FEE2E2] text-[#991B1B] border-[#FECACA] dark:bg-[#2F1616] dark:text-[#FCA5A5] dark:border-[#4D2424]',
+  info:
+    'bg-[#E6F2F0] text-[#0F524C] border-[#BFE0DB] dark:bg-[#162C29] dark:text-[#6EE7B7] dark:border-[#234742]',
+  dark:
+    'bg-[#1C2420] text-white border-[#1C2420] dark:bg-[#efebe1] dark:text-[#141312] dark:border-[#efebe1]',
 };
 
 export const Badge: React.FC<BadgeProps> = ({ tone = 'neutral', children, className = '' }) => {
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border text-[12px] font-medium whitespace-nowrap ${toneClasses[tone]} ${className}`}
+      className={`font-mono-tech inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border text-[10.5px] uppercase tracking-[0.06em] font-semibold whitespace-nowrap ${toneClasses[tone]} ${className}`}
     >
       {children}
     </span>
   );
 };
-
