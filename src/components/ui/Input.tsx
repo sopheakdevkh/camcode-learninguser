@@ -28,7 +28,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </label>
         )}
         <div
-          className={`flex items-center h-[44px] rounded-xl border bg-[#efebe1] dark:bg-[#151A17] transition-colors ${borderStyle} ${
+          className={`flex items-center h-[44px] rounded-[10px] border bg-[#efebe1] dark:bg-[#151A17] transition-colors ${borderStyle} ${
             props.disabled ? 'bg-[#e5dfd2] dark:bg-[#181E1B] opacity-70 cursor-not-allowed' : ''
           }`}
         >

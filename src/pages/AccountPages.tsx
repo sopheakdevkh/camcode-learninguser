@@ -6,7 +6,10 @@ import {
   Check,
   ChevronDown,
   ChevronUp,
+  Eye,
+  EyeOff,
   HelpCircle,
+  Lock,
   Mail,
   RotateCcw,
   Send,
@@ -15,11 +18,11 @@ import {
   Upload,
   User as UserIcon,
 } from 'lucide-react';
-import { Alert } from '@/components/ui/Alert';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Dropdown } from '@/components/ui/Dropdown';
 import { Input } from '@/components/ui/Input';
+import { useToast } from '@/components/ui/Toast';
 import { useLearner } from '@/context/LearnerContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useI18n } from '@/i18n/I18nContext';
@@ -137,7 +140,8 @@ async function processAvatarFile(file: File): Promise<string> {
 
 export const ProfilePage: React.FC = () => {
   const { t } = useI18n();
-  const { user, updateProfile } = useLearner();
+  const { toast } = useToast();
+  const { user, updateProfile, changePassword } = useLearner();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [fullName, setFullName] = useState(user.fullName);
@@ -148,8 +152,17 @@ export const ProfilePage: React.FC = () => {
   const [learningGoal, setLearningGoal] = useState(user.learningGoal);
   const [bio, setBio] = useState(user.bio);
   const [avatarUrl, setAvatarUrl] = useState<string | undefined>(user.avatarUrl);
-  const [avatarError, setAvatarError] = useState<string | null>(null);
-  const [saved, setSaved] = useState(false);
+
+  // Change password state
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [showPasswords, setShowPasswords] = useState(false);
+  const [pwdLoading, setPwdLoading] = useState(false);
+
+  const hasMinLen = newPassword.length >= 8;
+  const hasLetter = /[A-Za-z]/.test(newPassword);
+  const hasNumber = /\d/.test(newPassword);
 
   const initials = (fullName || user.fullName)
     .split(' ')
@@ -164,13 +177,12 @@ export const ProfilePage: React.FC = () => {
     e.target.value = '';
     if (!file) return;
 
-    setAvatarError(null);
     if (!file.type.startsWith('image/')) {
-      setAvatarError(t.profile.invalidImageType);
+      toast.error(t.profile.invalidImageType);
       return;
     }
     if (file.size > MAX_AVATAR_BYTES) {
-      setAvatarError(t.profile.imageTooLarge);
+      toast.error(t.profile.imageTooLarge);
       return;
     }
 
@@ -178,24 +190,52 @@ export const ProfilePage: React.FC = () => {
       const processedUrl = await processAvatarFile(file);
       setAvatarUrl(processedUrl);
       updateProfile({ avatarUrl: processedUrl });
-      setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
+      toast.success(t.profile.savedNotice);
     } catch {
-      setAvatarError(t.profile.imageProcessError);
+      toast.error(t.profile.imageProcessError);
     }
   };
 
   const handleRemoveAvatar = () => {
-    setAvatarError(null);
     setAvatarUrl(undefined);
     updateProfile({ avatarUrl: undefined });
+    toast.info('Profile photo removed.');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateProfile({ fullName, email, phone, jobTitle, organization, learningGoal, bio, avatarUrl });
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    toast.success(t.profile.savedNotice);
+  };
+
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!currentPassword) {
+      toast.error('Please enter your current password.');
+      return;
+    }
+    if (!hasMinLen || !hasLetter || !hasNumber) {
+      toast.error('Please meet all new password requirements.');
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
+      toast.error('New passwords do not match.');
+      return;
+    }
+
+    setPwdLoading(true);
+    try {
+      await changePassword({ currentPassword, newPassword });
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmNewPassword('');
+      toast.success(t.auth.resetDoneSuccess);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : t.common.errorGeneric);
+    } finally {
+      setPwdLoading(false);
+    }
   };
 
   return (
@@ -204,9 +244,6 @@ export const ProfilePage: React.FC = () => {
         <h1 className="font-serif-display text-[28px] sm:text-[32px] leading-[1.1] tracking-[-0.02em] font-medium text-[#141312] dark:text-[#f6f3ec]">{t.nav.profile}</h1>
         <p className="text-[14px] text-[#6e6a62] dark:text-[#A3ACA6]">{t.profile.subtitle}</p>
       </div>
-
-      {saved && <Alert tone="success">{t.profile.savedNotice}</Alert>}
-      {avatarError && <Alert tone="error">{avatarError}</Alert>}
 
       <form onSubmit={handleSubmit} className="card-note rounded-[18px] p-6 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#ded8ca] dark:border-[#2A332E]">
@@ -287,13 +324,92 @@ export const ProfilePage: React.FC = () => {
             rows={3}
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            className="w-full rounded-[8px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] p-3 text-[14px] text-[#141312] dark:text-[#f6f3ec] outline-none focus:border-[#1c5b48] dark:border-[#7CD4B5]"
+            className="w-full rounded-[10px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] p-3 text-[14px] text-[#141312] dark:text-[#f6f3ec] outline-none focus:border-[#1c5b48] dark:border-[#7CD4B5]"
           />
         </div>
 
         <div className="flex justify-end">
           <Button type="submit" leftIcon={<UserIcon className="h-4 w-4" />}>
             {t.common.save}
+          </Button>
+        </div>
+      </form>
+
+      {/* Change Password Card */}
+      <form onSubmit={handlePasswordSubmit} className="card-note rounded-[18px] p-6 space-y-5" noValidate>
+        <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#ded8ca] dark:border-[#2A332E]">
+          <div>
+            <h2 className="font-serif-display text-[22px] font-medium text-[#141312] dark:text-[#f6f3ec] flex items-center gap-2">
+              <Lock className="h-4.5 w-4.5 text-[#1c5b48] dark:text-[#7CD4B5]" />
+              Change Password
+            </h2>
+            <p className="text-[13px] text-[#6e6a62] dark:text-[#A3ACA6] mt-0.5">
+              Update your account password to keep your learner workspace secure.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowPasswords((s) => !s)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#181E1B] text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] hover:border-[#1c5b48] cursor-pointer transition-colors"
+          >
+            {showPasswords ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+            <span>{showPasswords ? 'Hide' : 'Show'}</span>
+          </button>
+        </div>
+
+        <Input
+          label="Current Password"
+          type={showPasswords ? 'text' : 'password'}
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          autoComplete="current-password"
+          required
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Input
+            label="New Password"
+            type={showPasswords ? 'text' : 'password'}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            autoComplete="new-password"
+            required
+          />
+          <Input
+            label={t.auth.confirmPassword}
+            type={showPasswords ? 'text' : 'password'}
+            value={confirmNewPassword}
+            onChange={(e) => setConfirmNewPassword(e.target.value)}
+            autoComplete="new-password"
+            error={
+              confirmNewPassword && confirmNewPassword !== newPassword
+                ? 'Passwords do not match'
+                : undefined
+            }
+            required
+          />
+        </div>
+
+        <div className="p-3.5 rounded-[10px] bg-[#e5dfd2]/75 dark:bg-[#181E1B] border border-[#ded8ca] dark:border-[#2A332E] space-y-1">
+          <p className="font-mono-tech text-[11px] uppercase tracking-[0.06em] font-semibold text-[#141312] dark:text-[#f6f3ec]">
+            {t.auth.passwordReqTitle}
+          </p>
+          <div className="flex flex-wrap gap-x-4 gap-y-1 text-[12px]">
+            <span className={hasMinLen ? 'text-[#1c5b48] dark:text-[#7CD4B5] font-semibold' : 'text-[#6e6a62]'}>
+              ✓ {t.auth.reqLength}
+            </span>
+            <span className={hasLetter ? 'text-[#1c5b48] dark:text-[#7CD4B5] font-semibold' : 'text-[#6e6a62]'}>
+              ✓ {t.auth.reqLetter}
+            </span>
+            <span className={hasNumber ? 'text-[#1c5b48] dark:text-[#7CD4B5] font-semibold' : 'text-[#6e6a62]'}>
+              ✓ {t.auth.reqNumber}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex justify-end">
+          <Button type="submit" loading={pwdLoading} leftIcon={<Lock className="h-4 w-4" />}>
+            {t.auth.updatePasswordBtn}
           </Button>
         </div>
       </form>
@@ -304,8 +420,8 @@ export const ProfilePage: React.FC = () => {
 export const SettingsPage: React.FC = () => {
   const { t, locale, setLocale } = useI18n();
   const { theme, setTheme } = useTheme();
+  const { toast } = useToast();
   const { settings, updateSettings, resetDemoState } = useLearner();
-  const [resetDone, setResetDone] = useState(false);
 
   return (
     <div className="max-w-3xl space-y-6">
@@ -315,10 +431,6 @@ export const SettingsPage: React.FC = () => {
           Customize language, appearance, video playback, and learning reminders.
         </p>
       </div>
-
-      {resetDone && (
-        <Alert tone="info">Demo learner progress has been restored to default sample data.</Alert>
-      )}
 
       <div className="card-note rounded-[18px] p-6 space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -368,20 +480,42 @@ export const SettingsPage: React.FC = () => {
               key: 'inAppReminders' as const,
               label: 'Show streak & assessment reminders',
             },
-          ].map((item) => (
-            <label
-              key={item.key}
-              className="flex items-center justify-between p-3 rounded-[10px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] cursor-pointer"
-            >
-              <span className="text-[14px] text-[#141312] dark:text-[#f6f3ec]">{item.label}</span>
-              <input
-                type="checkbox"
-                checked={settings[item.key]}
-                onChange={(e) => updateSettings({ [item.key]: e.target.checked })}
-                className="h-4 w-4 accent-[#2563EB]"
-              />
-            </label>
-          ))}
+          ].map((item) => {
+            const enabled = settings[item.key];
+            return (
+              <label
+                key={item.key}
+                className="flex items-center justify-between gap-4 p-3 rounded-[10px] bg-[#f6f3ec] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] hover:border-[#c2baa8] dark:hover:border-[#3E4D45] cursor-pointer transition-colors"
+              >
+                <span className="text-[14px] text-[#141312] dark:text-[#f6f3ec] select-none">
+                  {item.label}
+                </span>
+                <span className="relative inline-flex items-center shrink-0">
+                  <input
+                    type="checkbox"
+                    role="switch"
+                    aria-checked={enabled}
+                    checked={enabled}
+                    onChange={(e) => updateSettings({ [item.key]: e.target.checked })}
+                    className="peer sr-only"
+                  />
+                  <span
+                    className={`h-6 w-11 rounded-full transition-colors duration-200 flex items-center px-0.5 peer-focus-visible:ring-2 peer-focus-visible:ring-[#1c5b48]/40 ${
+                      enabled
+                        ? 'bg-[#1c5b48] dark:bg-[#2D7A62]'
+                        : 'bg-[#c2baa8] dark:bg-[#2A332E]'
+                    }`}
+                  >
+                    <span
+                      className={`h-5 w-5 rounded-full bg-[#f6f3ec] shadow-xs transition-transform duration-200 ${
+                        enabled ? 'translate-x-5' : 'translate-x-0'
+                      }`}
+                    />
+                  </span>
+                </span>
+              </label>
+            );
+          })}
         </div>
 
         <div className="pt-4 border-t border-[#ded8ca] dark:border-[#2A332E] flex items-center justify-between gap-4">
@@ -396,7 +530,7 @@ export const SettingsPage: React.FC = () => {
             size="sm"
             onClick={() => {
               resetDemoState();
-              setResetDone(true);
+              toast.info('Demo learner progress has been restored to default sample data.');
             }}
             leftIcon={<RotateCcw className="h-4 w-4" />}
           >
@@ -410,10 +544,10 @@ export const SettingsPage: React.FC = () => {
 
 export const HelpSupportPage: React.FC = () => {
   const { t } = useI18n();
+  const { toast } = useToast();
   const [openIdx, setOpenIdx] = useState<number | null>(0);
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
-  const [sent, setSent] = useState(false);
 
   const faqs = [
     {
@@ -437,7 +571,7 @@ export const HelpSupportPage: React.FC = () => {
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!subject.trim() || !message.trim()) return;
-    setSent(true);
+    toast.success('Support ticket received! Our team typically responds within 1 business day.');
     setSubject('');
     setMessage('');
   };
@@ -488,11 +622,6 @@ export const HelpSupportPage: React.FC = () => {
           <Mail className="h-5 w-5 text-[#1c5b48] dark:text-[#7CD4B5]" />
           Contact Academy Support
         </h2>
-        {sent && (
-          <Alert tone="success">
-            Support ticket received! Our team typically responds within 1 business day.
-          </Alert>
-        )}
         <form onSubmit={handleSend} className="space-y-4">
           <Input
             label="Subject"
@@ -511,7 +640,7 @@ export const HelpSupportPage: React.FC = () => {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Describe your question or course name..."
               required
-              className="w-full rounded-[8px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] p-3 text-[14px] text-[#141312] dark:text-[#f6f3ec] outline-none focus:border-[#1c5b48] dark:border-[#7CD4B5]"
+              className="w-full rounded-[10px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] p-3 text-[14px] text-[#141312] dark:text-[#f6f3ec] outline-none focus:border-[#1c5b48] dark:border-[#7CD4B5]"
             />
           </div>
           <Button type="submit" leftIcon={<Send className="h-4 w-4" />}>

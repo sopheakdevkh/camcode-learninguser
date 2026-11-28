@@ -184,7 +184,7 @@ export function Dropdown<T extends string = string>({
             if (last !== undefined) setActiveIndex(last);
           }
         }}
-        className={`inline-flex items-center justify-between gap-2 rounded-full border bg-[#efebe1] dark:bg-[#151A17] text-left font-medium text-[#141312] dark:text-[#f6f3ec] transition-colors outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[#e5dfd2] ${sizeClasses[size]} ${borderStyle} ${fullWidth ? 'w-full' : 'min-w-[9.5rem]'} ${buttonClassName}`}
+        className={`inline-flex items-center justify-between gap-2 rounded-[10px] border bg-[#efebe1] dark:bg-[#151A17] text-left font-medium text-[#141312] dark:text-[#f6f3ec] transition-colors outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[#e5dfd2] ${sizeClasses[size]} ${borderStyle} ${fullWidth ? 'w-full' : 'min-w-[9.5rem]'} ${buttonClassName}`}
       >
         <span className={`truncate ${selected ? 'text-[#141312] dark:text-[#f6f3ec]' : 'text-[#6e6a62]'}`}>
           {selected?.label ?? placeholder}

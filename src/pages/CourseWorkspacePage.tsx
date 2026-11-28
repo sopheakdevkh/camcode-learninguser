@@ -227,7 +227,7 @@ export const CourseWorkspacePage: React.FC = () => {
                 ]).map((sec, idx) => (
                   <div
                     key={idx}
-                    className="p-5 rounded-[14px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-2.5"
+                    className="p-5 rounded-[14px] bg-[#f6f3ec] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-2.5"
                   >
                     <h3 className="text-[17px] font-bold text-[#141312] dark:text-[#f6f3ec]">{pickText(sec.heading)}</h3>
                     <p className="text-[14.5px] text-[#4c4842] dark:text-[#D5D1C8] leading-relaxed">{pickText(sec.body)}</p>
@@ -268,7 +268,7 @@ export const CourseWorkspacePage: React.FC = () => {
                 {quizQuestions.map((q, qIdx) => (
                   <div
                     key={q.id}
-                    className="p-4 rounded-[14px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-3"
+                    className="p-4 rounded-[14px] bg-[#f6f3ec] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-3"
                   >
                     <p className="font-semibold text-[15px] text-[#141312] dark:text-[#f6f3ec]">
                       {qIdx + 1}. {pickText(q.question)}
@@ -487,7 +487,7 @@ export const CourseWorkspacePage: React.FC = () => {
                   value={progress?.notesByLessonId?.[currentLesson.id] ?? ''}
                   onChange={(e) => saveLessonNote(course.id, currentLesson.id, e.target.value)}
                   placeholder={t.workspace.notesPlaceholder}
-                  className="w-full rounded-[12px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] p-3.5 text-[14px] text-[#141312] dark:text-[#f6f3ec] outline-none focus:border-[#1c5b48] dark:border-[#7CD4B5]"
+                  className="w-full rounded-[10px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] p-3.5 text-[14px] text-[#141312] dark:text-[#f6f3ec] outline-none focus:border-[#1c5b48] dark:border-[#7CD4B5]"
                 />
                 <p className="text-[12px] text-[#16A34A] font-medium">{t.workspace.notesSaved}</p>
               </div>

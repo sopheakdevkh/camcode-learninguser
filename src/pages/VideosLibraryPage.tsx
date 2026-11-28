@@ -46,7 +46,7 @@ export const VideosLibraryPage: React.FC = () => {
       </div>
 
       <div className="card-note rounded-[16px] p-4 flex flex-col md:flex-row gap-3 items-stretch md:items-center">
-        <div className="flex-1 flex items-center h-10 px-3 rounded-[9px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17]">
+        <div className="flex-1 flex items-center h-10 px-3 rounded-[10px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17]">
           <Search className="h-4 w-4 text-[#6e6a62] mr-2 shrink-0" />
           <input
             type="text"

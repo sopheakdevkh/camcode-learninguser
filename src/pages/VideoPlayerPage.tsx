@@ -174,7 +174,7 @@ export const VideoPlayerPage: React.FC = () => {
                     type="button"
                     disabled={!canWatch}
                     onClick={() => setSeekOverride(line.timeSeconds)}
-                    className="w-full text-left p-2.5 rounded-[10px] hover:bg-[#f6f3ec] dark:bg-[#101412] dark:hover:bg-slate-800/70 transition-colors cursor-pointer"
+                    className="w-full text-left p-2.5 rounded-[10px] hover:bg-[#efebe1]/75 dark:hover:bg-[#181E1B] transition-colors cursor-pointer"
                   >
                     <span className="font-mono-custom text-[11px] font-semibold text-[#1c5b48] dark:text-[#7CD4B5]">
                       {fmtTimestamp(line.timeSeconds)} · {line.speaker}

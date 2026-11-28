@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Check, CreditCard, Crown, Receipt, ShieldCheck } from 'lucide-react';
-import { Alert } from '@/components/ui/Alert';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { useToast } from '@/components/ui/Toast';
 import { useLearner } from '@/context/LearnerContext';
 import { useI18n } from '@/i18n/I18nContext';
 import { catalogService } from '@/services/catalogService';
@@ -10,16 +10,15 @@ import type { BillingCycle, PlanTier } from '@/types';
 
 export const MembershipPage: React.FC = () => {
   const { t, pickText } = useI18n();
+  const { toast } = useToast();
   const { user, invoices, upgradePlan } = useLearner();
   const [billingCycle, setBillingCycle] = useState<BillingCycle>(user.billingCycle ?? 'monthly');
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const plans = catalogService.getPlans();
 
   const handleSelectPlan = (tier: PlanTier) => {
     upgradePlan(tier, billingCycle);
-    setSuccessMsg(`Your membership is now updated to ${tier.toUpperCase()} (${billingCycle}).`);
-    setTimeout(() => setSuccessMsg(null), 4000);
+    toast.success(`Your membership is now updated to ${tier.toUpperCase()} (${billingCycle}).`);
   };
 
   return (
@@ -52,8 +51,6 @@ export const MembershipPage: React.FC = () => {
           ))}
         </div>
       </div>
-
-      {successMsg && <Alert tone="success">{successMsg}</Alert>}
 
       {/* Active Plan Banner */}
       <section className="card-note rounded-[18px] p-5 sm:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">

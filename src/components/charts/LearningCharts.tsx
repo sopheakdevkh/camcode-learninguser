@@ -77,7 +77,7 @@ export const AreaTrendChart: React.FC<{
               onClick={() => setRange(r)}
               className={`px-3 py-1 rounded-full text-[11.5px] font-medium capitalize transition-colors cursor-pointer ${
                 range === r
-                  ? 'bg-[#efebe1] dark:bg-[#151A17] text-[#141312] dark:text-[#f6f3ec] shadow-xs font-semibold'
+                  ? 'bg-[#f6f3ec] dark:bg-[#151A17] text-[#141312] dark:text-[#f6f3ec] shadow-xs font-semibold'
                   : 'text-[#6e6a62] hover:text-[#141312]'
               }`}
             >
@@ -137,7 +137,7 @@ export const AreaTrendChart: React.FC<{
                 cx={pt.x}
                 cy={pt.y}
                 r="4"
-                fill="#efebe1"
+                className="fill-[#f6f3ec] dark:fill-[#151A17]"
                 stroke={accentColor}
                 strokeWidth="2.2"
               />
