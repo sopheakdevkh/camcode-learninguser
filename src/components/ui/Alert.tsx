@@ -34,7 +34,7 @@ export const Alert: React.FC<AlertProps> = ({ tone = 'info', title, children, cl
   return (
     <div
       role="alert"
-      className={`flex items-start gap-3 p-4 rounded-xl border ${s.wrap} ${className}`}
+      className={`flex items-start gap-3 p-4 rounded-[12px] border ${s.wrap} ${className}`}
     >
       {s.icon}
       <div className="text-[14px] leading-relaxed">

@@ -173,7 +173,7 @@ export const AssessmentRunnerPage: React.FC = () => {
               return (
                 <div
                   key={q.id}
-                  className="p-4 rounded-[12px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-2"
+                  className="p-4 rounded-[12px] bg-[#f6f3ec] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] space-y-2"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <p className="font-semibold text-[14.5px] text-[#141312] dark:text-[#f6f3ec]">
@@ -228,7 +228,7 @@ export const AssessmentRunnerPage: React.FC = () => {
                       className={`w-full text-left p-3.5 rounded-[10px] border text-[14px] flex items-center gap-3 transition-colors cursor-pointer ${
                         selected
                           ? 'border-[#1c5b48] dark:border-[#7CD4B5] bg-[#e4ede7] dark:bg-[#1B3028] dark:bg-[#1B3028]/40 text-[#1D4ED8] font-medium'
-                          : 'border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[#141312] dark:text-[#f6f3ec] hover:border-[#1c5b48] dark:border-[#7CD4B5]/60'
+                          : 'border-[#ded8ca] dark:border-[#2A332E] bg-[#f6f3ec] dark:bg-[#151A17] text-[#141312] dark:text-[#f6f3ec] hover:border-[#1c5b48] dark:border-[#7CD4B5]/60'
                       }`}
                     >
                       <span

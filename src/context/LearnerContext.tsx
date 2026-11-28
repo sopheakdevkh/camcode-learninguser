@@ -6,6 +6,7 @@ import {
   INITIAL_NOTIFICATIONS,
 } from '@/data/mockAcademy';
 import { MOCK_COURSES } from '@/data/mockCatalog';
+import { API_CONFIG, apiRequest, delay } from '@/services/apiClient';
 import { catalogService } from '@/services/catalogService';
 import type {
   AchievementBadge,
@@ -15,6 +16,7 @@ import type {
   Course,
   CourseProgressRecord,
   InvoiceRecord,
+  Locale,
   NotificationItem,
   PlanTier,
   User,
@@ -34,6 +36,103 @@ interface PersistedLearnerState {
   invoices: InvoiceRecord[];
   settings: UserSettings;
 }
+
+export interface DemoLearnerAccount {
+  tier: PlanTier;
+  label: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  password: string;
+  userPatch: Partial<User>;
+}
+
+export const DEMO_LEARNER_ACCOUNTS: DemoLearnerAccount[] = [
+  {
+    tier: 'free',
+    label: 'Free Learner',
+    fullName: 'Sokha Chan',
+    email: 'free@camcodelearn.edu',
+    phone: '+855 12 111 222',
+    password: 'Learner@2026',
+    userPatch: {
+      id: 'user-free-1',
+      fullName: 'Sokha Chan',
+      email: 'free@camcodelearn.edu',
+      phone: '+855 12 111 222',
+      jobTitle: 'Junior Web Developer',
+      organization: 'Phnom Penh Tech Hub',
+      avatarColor: '#1c5b48',
+      activePlan: 'free',
+      billingCycle: undefined,
+      renewalDate: undefined,
+      purchasedCourseIds: [],
+      enrolledFreeCourseIds: ['course-4', 'course-6'],
+      enrolledPathIds: [],
+      watchlistVideoIds: ['vid-1'],
+      savedCourseIds: ['course-3'],
+      streakDays: 3,
+      weeklyMinutes: 75,
+      weeklyGoalMinutes: 180,
+    },
+  },
+  {
+    tier: 'basic',
+    label: 'Basic Membership',
+    fullName: 'Alex Sovann',
+    email: 'basic@camcodelearn.edu',
+    phone: '+855 12 889 900',
+    password: 'Learner@2026',
+    userPatch: {
+      id: 'user-alex-1',
+      fullName: 'Alex Sovann',
+      email: 'basic@camcodelearn.edu',
+      phone: '+855 12 889 900',
+      jobTitle: 'Growth & Operations Specialist',
+      organization: 'Phnom Penh Digital Co.',
+      avatarColor: '#2563EB',
+      activePlan: 'basic',
+      billingCycle: 'monthly',
+      renewalDate: '2026-12-25',
+      purchasedCourseIds: ['course-1'],
+      enrolledFreeCourseIds: ['course-4', 'course-6'],
+      enrolledPathIds: ['path-1', 'path-2'],
+      watchlistVideoIds: ['vid-1', 'vid-2', 'vid-6'],
+      savedCourseIds: ['course-3', 'course-9'],
+      streakDays: 7,
+      weeklyMinutes: 195,
+      weeklyGoalMinutes: 240,
+    },
+  },
+  {
+    tier: 'premium',
+    label: 'Premium Academy',
+    fullName: 'Dara Rith',
+    email: 'premium@camcodelearn.edu',
+    phone: '+855 12 999 888',
+    password: 'Learner@2026',
+    userPatch: {
+      id: 'user-premium-1',
+      fullName: 'Dara Rith',
+      email: 'premium@camcodelearn.edu',
+      phone: '+855 12 999 888',
+      jobTitle: 'Product Engineering Lead',
+      organization: 'Mekong Cloud Labs',
+      avatarColor: '#15463a',
+      activePlan: 'premium',
+      billingCycle: 'yearly',
+      renewalDate: '2027-11-25',
+      purchasedCourseIds: ['course-1'],
+      enrolledFreeCourseIds: ['course-4', 'course-6'],
+      enrolledPathIds: ['path-1', 'path-2'],
+      watchlistVideoIds: ['vid-1', 'vid-2', 'vid-6'],
+      savedCourseIds: ['course-3', 'course-9'],
+      streakDays: 14,
+      weeklyMinutes: 240,
+      weeklyGoalMinutes: 240,
+    },
+  },
+];
 
 function createInitialState(): PersistedLearnerState {
   return {
@@ -143,8 +242,32 @@ function loadState(): PersistedLearnerState {
 
 export type CourseAccessState = 'purchased' | 'subscription' | 'free_enrolled' | 'free_available' | 'paid_locked' | 'subscription_required';
 
+export interface LearnerLoginPayload {
+  identifier: string;
+  password: string;
+  rememberMe?: boolean;
+}
+
+export interface LearnerRegisterPayload {
+  fullName: string;
+  email: string;
+  phone?: string;
+  password: string;
+  preferredLanguage: Locale;
+}
+
+export interface ChangePasswordPayload {
+  currentPassword: string;
+  newPassword: string;
+}
+
 interface LearnerContextValue {
   user: User;
+  isAuthenticated: boolean;
+  login: (payload: LearnerLoginPayload) => Promise<void>;
+  register: (payload: LearnerRegisterPayload) => Promise<void>;
+  changePassword: (payload: ChangePasswordPayload) => Promise<void>;
+  logout: () => void;
   courseProgress: Record<string, CourseProgressRecord>;
   videoResumeSeconds: Record<string, number>;
   assessmentAttempts: Record<string, AssessmentAttempt>;
@@ -194,6 +317,137 @@ const LearnerContext = createContext<LearnerContextValue | null>(null);
 
 export const LearnerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, setState] = useState<PersistedLearnerState>(() => loadState());
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [sessionPassword, setSessionPassword] = useState<string>('Learner@2026');
+
+  const login: LearnerContextValue['login'] = async (payload) => {
+    if (!API_CONFIG.useMock) {
+      const remoteUser = await apiRequest<User>('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      setState((prev) => ({
+        ...prev,
+        user: { ...prev.user, ...remoteUser },
+      }));
+      setSessionPassword(payload.password);
+      setIsAuthenticated(true);
+      return;
+    }
+
+    await delay(250);
+    const identifier = payload.identifier.trim();
+    if (!identifier || payload.password.length < 6) {
+      throw new Error('Invalid credentials. Please check your email/phone and password.');
+    }
+
+    setState((prev) => {
+      const normalized = identifier.toLowerCase();
+      const matchedDemo = DEMO_LEARNER_ACCOUNTS.find(
+        (acc) =>
+          acc.email.toLowerCase() === normalized ||
+          acc.phone === identifier ||
+          (acc.tier === 'basic' && normalized === 'alex.sovann@camcodelearn.edu'),
+      );
+      if (matchedDemo) {
+        return {
+          ...prev,
+          user: {
+            ...prev.user,
+            ...matchedDemo.userPatch,
+          },
+        };
+      }
+
+      const isEmail = identifier.includes('@');
+      const matchesExisting =
+        normalized === prev.user.email.toLowerCase() ||
+        identifier === prev.user.phone;
+      if (matchesExisting) return prev;
+      return {
+        ...prev,
+        user: {
+          ...prev.user,
+          fullName: isEmail
+            ? identifier
+                .split('@')[0]
+                .replace(/[._]/g, ' ')
+                .replace(/\b\w/g, (c) => c.toUpperCase())
+            : prev.user.fullName,
+          email: isEmail ? identifier : prev.user.email,
+          phone: isEmail ? prev.user.phone : identifier,
+          activePlan: 'free',
+          billingCycle: undefined,
+        },
+      };
+    });
+    setSessionPassword(payload.password);
+    setIsAuthenticated(true);
+  };
+
+  const register: LearnerContextValue['register'] = async (payload) => {
+    if (!API_CONFIG.useMock) {
+      const remoteUser = await apiRequest<User>('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      setState((prev) => ({
+        ...prev,
+        user: { ...prev.user, ...remoteUser },
+      }));
+      setSessionPassword(payload.password);
+      setIsAuthenticated(true);
+      return;
+    }
+
+    await delay(280);
+    setState((prev) => ({
+      ...prev,
+      user: {
+        ...prev.user,
+        id: `user-${Date.now()}`,
+        fullName: payload.fullName.trim(),
+        email: payload.email.trim(),
+        phone: payload.phone?.trim() || undefined,
+        preferredLanguage: payload.preferredLanguage,
+        activePlan: 'free',
+        billingCycle: undefined,
+      },
+    }));
+    setSessionPassword(payload.password);
+    setIsAuthenticated(true);
+  };
+
+  const changePassword: LearnerContextValue['changePassword'] = async (payload) => {
+    if (!API_CONFIG.useMock) {
+      await apiRequest('/auth/change-password', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      setSessionPassword(payload.newPassword);
+      return;
+    }
+
+    await delay(250);
+    if (!payload.currentPassword || payload.currentPassword !== sessionPassword) {
+      throw new Error('Current password is incorrect.');
+    }
+    if (
+      payload.newPassword.length < 8 ||
+      !/[A-Za-z]/.test(payload.newPassword) ||
+      !/\d/.test(payload.newPassword)
+    ) {
+      throw new Error('New password must be at least 8 characters and include a letter and a number.');
+    }
+    setSessionPassword(payload.newPassword);
+  };
+
+  const logout = () => {
+    if (!API_CONFIG.useMock) {
+      apiRequest('/auth/logout', { method: 'POST' }).catch(() => {});
+    }
+    setIsAuthenticated(false);
+  };
 
   useEffect(() => {
     try {
@@ -747,6 +1001,11 @@ export const LearnerProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const value: LearnerContextValue = {
     user: state.user,
+    isAuthenticated,
+    login,
+    register,
+    changePassword,
+    logout,
     courseProgress: state.courseProgress,
     videoResumeSeconds: state.videoResumeSeconds,
     assessmentAttempts: state.assessmentAttempts,

@@ -229,14 +229,14 @@ export const CourseDetailPage: React.FC = () => {
                 return (
                   <div
                     key={sec.id}
-                    className="rounded-[12px] border border-[#ded8ca] dark:border-[#2A332E] overflow-hidden bg-[#efebe1] dark:bg-[#151A17]"
+                    className="rounded-[12px] border border-[#ded8ca] dark:border-[#2A332E] overflow-hidden bg-[#f6f3ec] dark:bg-[#151A17]"
                   >
                     <button
                       type="button"
                       onClick={() =>
                         setOpenSections((prev) => ({ ...prev, [String(idx)]: !isOpen }))
                       }
-                      className="w-full px-4 py-3.5 flex items-center justify-between gap-3 text-left bg-[#f6f3ec] dark:bg-[#101412] dark:bg-[#181E1B]/60 cursor-pointer"
+                      className="w-full px-4 py-3.5 flex items-center justify-between gap-3 text-left bg-[#efebe1]/55 dark:bg-[#181E1B]/60 cursor-pointer"
                     >
                       <span className="font-semibold text-[14.5px] text-[#141312] dark:text-[#f6f3ec]">
                         {pickText(sec.title)}

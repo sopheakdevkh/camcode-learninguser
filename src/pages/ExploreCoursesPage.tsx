@@ -142,7 +142,7 @@ export const ExploreCoursesPage: React.FC = () => {
 
       {/* Search + Filter Toolbar */}
       <div className="card-note rounded-[16px] p-4 grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
-        <div className="md:col-span-5 flex items-center h-10 px-3 rounded-[9px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] focus-within:border-[#1c5b48] dark:border-[#7CD4B5]">
+        <div className="md:col-span-5 flex items-center h-10 px-3 rounded-[10px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] focus-within:border-[#1c5b48] dark:border-[#7CD4B5]">
           <Search className="h-4 w-4 text-[#6e6a62] mr-2 shrink-0" />
           <input
             type="text"

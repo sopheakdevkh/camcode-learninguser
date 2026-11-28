@@ -14,6 +14,7 @@ import {
   Globe,
   HelpCircle,
   LayoutDashboard,
+  LogOut,
   Map,
   Menu,
   Moon,
@@ -30,7 +31,6 @@ import { useLearner } from '@/context/LearnerContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useI18n } from '@/i18n/I18nContext';
 import { catalogService } from '@/services/catalogService';
-import type { PlanTier } from '@/types';
 
 interface NavItem {
   to: string;
@@ -41,7 +41,7 @@ interface NavItem {
 
 const BrandMark: React.FC<{ className?: string }> = ({ className = '' }) => (
   <span
-    className={`inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#1c5b48] dark:bg-[#2D7A62] text-white shrink-0 shadow-xs ${className}`}
+    className={`inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#1c5b48] dark:bg-[#2D7A62] text-white border border-white/15 shrink-0 shadow-xs ${className}`}
     aria-hidden="true"
   >
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -66,7 +66,7 @@ export const AppShell: React.FC = () => {
     getEnrolledCourses,
     markNotificationRead,
     markAllNotificationsRead,
-    switchDemoPlan,
+    logout,
   } = useLearner();
 
   const enrolledCount = getEnrolledCourses().length;
@@ -204,7 +204,7 @@ export const AppShell: React.FC = () => {
       {navGroups.map((group) => (
         <div key={group.title}>
           {!collapsed && (
-            <p className="font-mono-tech px-3 mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#6e6a62]">
+            <p className="font-mono-tech px-3 mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#A3ACA6]">
               {group.title}
             </p>
           )}
@@ -221,19 +221,29 @@ export const AppShell: React.FC = () => {
                     collapsed ? 'justify-center px-2' : 'justify-between px-3.5'
                   } py-2.5 rounded-full text-[13.5px] font-medium transition-colors duration-[0.22s] ${
                     isActive
-                      ? 'bg-[#e4ede7] dark:bg-[#1B3028] text-[#1c5b48] dark:text-[#7CD4B5] font-semibold'
-                      : 'text-[#4c4842] dark:text-[#D5D1C8] hover:bg-[#e5dfd2]/75 dark:hover:bg-[#181E1B] hover:text-[#141312] dark:hover:text-[#f6f3ec]'
+                      ? 'bg-[#f6f3ec] text-[#141312] font-semibold shadow-xs'
+                      : 'text-[#D5D1C8] hover:bg-white/10 hover:text-[#f6f3ec]'
                   }`
                 }
               >
-                <span className="flex items-center gap-2.5 min-w-0">
-                  <span className="shrink-0">{item.icon}</span>
-                  {!collapsed && <span className="truncate">{item.label}</span>}
-                </span>
-                {!collapsed && item.badge !== undefined && item.badge > 0 && (
-                  <span className="font-mono-tech px-2 py-0.5 rounded-full bg-[#1c5b48] dark:bg-[#2D7A62] text-white text-[10.5px] font-semibold leading-none tabular-nums">
-                    {item.badge}
-                  </span>
+                {({ isActive }) => (
+                  <>
+                    <span className="flex items-center gap-2.5 min-w-0">
+                      <span className="shrink-0">{item.icon}</span>
+                      {!collapsed && <span className="truncate">{item.label}</span>}
+                    </span>
+                    {!collapsed && item.badge !== undefined && item.badge > 0 && (
+                      <span
+                        className={`font-mono-tech px-2 py-0.5 rounded-full text-[10.5px] font-semibold leading-none tabular-nums ${
+                          isActive
+                            ? 'bg-[#1c5b48] text-white'
+                            : 'bg-white/15 text-[#f6f3ec]'
+                        }`}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </>
                 )}
               </NavLink>
             ))}
@@ -250,20 +260,20 @@ export const AppShell: React.FC = () => {
 
       {/* Desktop Sidebar */}
       <aside
-        className={`no-print hidden lg:flex flex-col sticky top-0 h-screen shrink-0 border-r border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1]/92 dark:bg-[#151A17]/92 backdrop-blur-xl transition-all duration-200 z-30 ${
+        className={`no-print hidden lg:flex flex-col sticky top-0 h-screen shrink-0 sidebar-accent text-[#f6f3ec] border-r border-white/10 dark:border-[#2A332E] transition-all duration-200 z-30 ${
           sidebarCollapsed ? 'w-[76px]' : 'w-[264px]'
         }`}
       >
         {/* Brand Header */}
-        <div className="h-16 px-4 flex items-center justify-between border-b border-[#ded8ca] dark:border-[#2A332E] shrink-0">
+        <div className="h-16 px-4 flex items-center justify-between border-b border-white/10 shrink-0">
           <Link to="/" className="flex items-center gap-2.5 min-w-0">
             <BrandMark />
             {!sidebarCollapsed && (
               <div className="min-w-0">
-                <p className="font-serif-display text-[19px] font-normal text-[#141312] dark:text-[#f6f3ec] leading-none truncate">
+                <p className="font-serif-display text-[19px] font-normal text-[#f6f3ec] leading-none truncate">
                   {t.brand.name}
                 </p>
-                <p className="font-mono-tech text-[9.5px] uppercase tracking-[0.1em] text-[#1c5b48] dark:text-[#7CD4B5] leading-tight mt-0.5">
+                <p className="font-mono-tech text-[9.5px] uppercase tracking-[0.1em] text-[#7CD4B5] leading-tight mt-0.5">
                   {t.brand.academy}
                 </p>
               </div>
@@ -275,13 +285,13 @@ export const AppShell: React.FC = () => {
 
         {/* Sidebar Footer Membership Pill */}
         {!sidebarCollapsed && (
-          <div className="p-3.5 border-t border-[#ded8ca] dark:border-[#2A332E]">
+          <div className="p-3.5 border-t border-white/10">
             <Link
               to="/membership"
-              className="flex items-center justify-between p-3 rounded-2xl bg-[#f6f3ec] dark:bg-[#101412] border border-[#ded8ca] dark:border-[#2A332E] hover:border-[#1c5b48] dark:hover:border-[#7CD4B5] transition-colors"
+              className="flex items-center justify-between p-3 rounded-2xl bg-[#f6f3ec] dark:bg-[#151A17] border border-white/15 dark:border-[#2A332E] hover:border-white/45 dark:hover:border-[#7CD4B5] transition-colors"
             >
               <div>
-                <p className="font-mono-tech text-[10px] uppercase tracking-[0.08em] text-[#6e6a62]">
+                <p className="font-mono-tech text-[10px] uppercase tracking-[0.08em] text-[#6e6a62] dark:text-[#A3ACA6]">
                   {t.dashboard.membershipTitle}
                 </p>
                 <p className="text-[13px] font-semibold text-[#141312] dark:text-[#f6f3ec] capitalize mt-0.5">
@@ -311,19 +321,19 @@ export const AppShell: React.FC = () => {
           }`}
         />
         <div
-          className={`relative ml-auto w-full h-dvh bg-[#f6f3ec] dark:bg-[#101412] flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${
+          className={`relative ml-auto w-full h-dvh sidebar-accent text-[#f6f3ec] flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${
             mobileDrawerOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="h-16 px-5 flex items-center justify-between border-b border-[#ded8ca] dark:border-[#2A332E]">
+          <div className="h-16 px-5 flex items-center justify-between border-b border-white/10">
             <Link
               to="/"
               onClick={() => setMobileDrawerOpen(false)}
               className="flex items-center gap-2.5"
             >
               <BrandMark />
-              <span className="font-serif-display text-[20px] font-medium text-[#141312] dark:text-[#f6f3ec]">
+              <span className="font-serif-display text-[20px] font-medium text-[#f6f3ec]">
                 {t.brand.name}
               </span>
             </Link>
@@ -331,7 +341,7 @@ export const AppShell: React.FC = () => {
               type="button"
               onClick={() => setMobileDrawerOpen(false)}
               aria-label="Close drawer"
-              className="grid size-10 place-items-center rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] text-[#141312] dark:text-[#f6f3ec] cursor-pointer"
+              className="grid size-10 place-items-center rounded-full border border-white/15 bg-white/10 text-[#D5D1C8] hover:bg-white/20 hover:text-white cursor-pointer transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
@@ -383,7 +393,7 @@ export const AppShell: React.FC = () => {
           <div className="flex items-center gap-2 sm:gap-2.5">
             {/* Search Pill Input */}
             <div className="relative hidden md:block w-60 lg:w-72">
-              <div className="flex items-center h-9 px-3.5 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] focus-within:border-[#1c5b48] dark:focus-within:border-[#2D7A62] transition-colors">
+              <div className="flex items-center h-9 px-3.5 rounded-[10px] border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1] dark:bg-[#151A17] focus-within:border-[#1c5b48] dark:focus-within:border-[#2D7A62] transition-colors">
                 <input
                   type="text"
                   value={searchQuery}
@@ -407,7 +417,7 @@ export const AppShell: React.FC = () => {
               </div>
 
               {searchFocused && searchQuery.trim().length > 0 && (
-                <div className="absolute left-0 right-0 top-11 rounded-2xl bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] shadow-xl p-2 z-40 max-h-96 overflow-y-auto">
+                <div className="absolute left-0 right-0 top-11 rounded-2xl bg-[#f6f3ec] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] shadow-xl p-2 z-40 max-h-96 overflow-y-auto">
                   {!hasSearchMatches ? (
                     <p className="p-3 text-[13px] text-[#6e6a62] text-center">
                       {t.topbar.noSearchResults}
@@ -534,7 +544,7 @@ export const AppShell: React.FC = () => {
               </button>
 
               {notifOpen && (
-                <div className="absolute right-0 top-11 w-80 sm:w-96 rounded-2xl bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] shadow-2xl z-40 overflow-hidden">
+                <div className="absolute right-0 top-11 w-80 sm:w-96 rounded-2xl bg-[#f6f3ec] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] shadow-2xl z-40 overflow-hidden">
                   <div className="px-4 py-3 border-b border-[#ded8ca] dark:border-[#2A332E] flex items-center justify-between">
                     <span className="font-serif-display text-[16px] font-medium text-[#141312] dark:text-[#f6f3ec]">
                       {t.topbar.notifications}
@@ -615,35 +625,12 @@ export const AppShell: React.FC = () => {
               </button>
 
               {profileMenuOpen && (
-                <div className="absolute right-0 top-11 w-64 rounded-2xl bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] shadow-2xl p-2 z-40">
+                <div className="absolute right-0 top-11 w-64 rounded-2xl bg-[#f6f3ec] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] shadow-2xl p-2 z-40">
                   <div className="px-3 py-2.5 border-b border-[#ded8ca] dark:border-[#2A332E]">
                     <p className="text-[14px] font-semibold text-[#141312] dark:text-[#f6f3ec] truncate">
                       {user.fullName}
                     </p>
                     <p className="text-[12px] text-[#6e6a62] truncate">{user.email}</p>
-                  </div>
-
-                  {/* Quick Demo Plan Switcher */}
-                  <div className="px-3 py-2.5 border-b border-[#ded8ca] dark:border-[#2A332E]">
-                    <p className="font-mono-tech text-[10px] font-semibold uppercase tracking-[0.08em] text-[#6e6a62] mb-1.5">
-                      {t.topbar.demoAccountSwitcher}
-                    </p>
-                    <div className="grid grid-cols-3 gap-1">
-                      {(['free', 'basic', 'premium'] as PlanTier[]).map((tier) => (
-                        <button
-                          key={tier}
-                          type="button"
-                          onClick={() => switchDemoPlan(tier)}
-                          className={`py-1 rounded-full text-[11px] font-semibold capitalize cursor-pointer transition-colors ${
-                            user.activePlan === tier
-                              ? 'bg-[#1c5b48] dark:bg-[#2D7A62] text-white'
-                              : 'bg-[#e5dfd2] dark:bg-[#181E1B] text-[#6e6a62]'
-                          }`}
-                        >
-                          {tier}
-                        </button>
-                      ))}
-                    </div>
                   </div>
 
                   <div className="py-1 space-y-0.5 text-[13px]">
@@ -679,6 +666,20 @@ export const AppShell: React.FC = () => {
                       <Settings className="h-4 w-4 text-[#6e6a62]" />
                       {t.nav.settings}
                     </Link>
+                  </div>
+
+                  <div className="pt-1 border-t border-[#ded8ca] dark:border-[#2A332E]">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProfileMenuOpen(false);
+                        logout();
+                      }}
+                      className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-[13px] font-medium text-[#a5331f] hover:bg-[#FEF2F2] dark:hover:bg-[#2F1616] cursor-pointer transition-colors"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      {t.topbar.signOut}
+                    </button>
                   </div>
                 </div>
               )}

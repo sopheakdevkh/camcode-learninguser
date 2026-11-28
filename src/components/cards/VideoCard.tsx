@@ -49,7 +49,7 @@ export const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
                 type="button"
                 onClick={handleWatchlistClick}
                 aria-label={isSaved ? 'Remove from watchlist' : 'Add to watchlist'}
-                className="p-1.5 rounded-full bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] text-[#6e6a62] hover:text-[#1c5b48] hover:border-[#1c5b48] cursor-pointer transition-colors"
+                className="p-1.5 rounded-full bg-[#f6f3ec] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] text-[#6e6a62] hover:text-[#1c5b48] hover:border-[#1c5b48] cursor-pointer transition-colors"
               >
                 {isSaved ? (
                   <BookmarkCheck className="h-4 w-4 text-[#1c5b48] dark:text-[#7CD4B5]" />
@@ -96,19 +96,19 @@ export const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
           <ul className="mt-3.5 flex flex-wrap gap-1.5">
             {category && (
               <li>
-                <span className="inline-flex items-center rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#f6f3ec] dark:bg-[#101412] px-2.5 py-1 text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#495B51]">
+                <span className="inline-flex items-center rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1]/65 dark:bg-[#101412] px-2.5 py-1 text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#495B51]">
                   {pickText(category.name)}
                 </span>
               </li>
             )}
             <li>
-              <span className="inline-flex items-center gap-1 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#f6f3ec] dark:bg-[#101412] px-2.5 py-1 text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] tabular-nums transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#495B51]">
+              <span className="inline-flex items-center gap-1 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1]/65 dark:bg-[#101412] px-2.5 py-1 text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] tabular-nums transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#495B51]">
                 <Clock className="h-3 w-3 opacity-75" />
                 {formatNumber(video.durationMinutes)} {t.common.minutes}
               </span>
             </li>
             <li>
-              <span className="inline-flex items-center gap-1 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#f6f3ec] dark:bg-[#101412] px-2.5 py-1 text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] tabular-nums transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#495B51]">
+              <span className="inline-flex items-center gap-1 rounded-full border border-[#ded8ca] dark:border-[#2A332E] bg-[#efebe1]/65 dark:bg-[#101412] px-2.5 py-1 text-[12px] font-medium text-[#4c4842] dark:text-[#D5D1C8] tabular-nums transition-colors duration-[0.22s] group-hover:border-[#B9B3A6] dark:group-hover:border-[#495B51]">
                 <Eye className="h-3 w-3 opacity-75" />
                 {formatNumber(video.viewsCount)}
               </span>

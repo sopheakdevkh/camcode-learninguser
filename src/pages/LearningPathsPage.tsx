@@ -171,7 +171,7 @@ export const LearningPathDetailPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-full lg:w-72 rounded-[16px] bg-[#efebe1] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] p-5 space-y-3 shrink-0">
+        <div className="w-full lg:w-72 rounded-[16px] bg-[#f6f3ec] dark:bg-[#151A17] border border-[#ded8ca] dark:border-[#2A332E] p-5 space-y-3 shrink-0">
           <div className="flex justify-between text-[13px]">
             <span className="font-medium text-[#6e6a62] dark:text-[#A3ACA6]">Overall Completion</span>
             <span className="font-mono-custom font-bold text-[#1c5b48] dark:text-[#7CD4B5]">{stats.percent}%</span>

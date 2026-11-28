@@ -12,7 +12,7 @@
 @theme {
   --color-canvas: #f6f3ec;
   --color-stone: #e5dfd2;
-  --color-surface: #efebe1;
+  --color-surface: #f6f3ec;
   --color-surface-strong: #e5dfd2;
   --color-ink: #141312;
   --color-body: #4c4842;
@@ -81,7 +81,7 @@
   --default-font-family: var(--font-sans);
   --default-mono-font-family: var(--font-mono);
   --color-canvas: #f6f3ec;
-  --color-surface: #efebe1;
+  --color-surface: #f6f3ec;
   --color-surface-strong: #e5dfd2;
   --color-ink: #141312;
   --color-body: #4c4842;
@@ -288,6 +288,7 @@ html.dark .swiss-blueprint-bg {
   background-color: var(--surface);
   border: 1px solid var(--grid-border);
   border-radius: 16px;
+  box-shadow: var(--shadow-raised);
   transition:
     border-color 0.28s var(--ease-tactile),
     box-shadow 0.28s var(--ease-tactile),
@@ -384,6 +385,12 @@ html.dark .glass-card-interactive:hover {
   color: var(--ink-muted);
 }
 
+.sidebar-accent {
+  background-color: #202924;
+  background-image: radial-gradient(rgba(246, 243, 236, 0.045) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
 .swiss-arrow-shift {
   transition: transform 0.24s var(--ease-tactile);
 }
@@ -451,6 +458,26 @@ html.dark .border-slate-200 {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-timeline {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
 }
 
 @media print {
